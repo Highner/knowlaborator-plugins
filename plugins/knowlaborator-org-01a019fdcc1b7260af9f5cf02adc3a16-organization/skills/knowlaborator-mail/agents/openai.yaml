@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Mail"
+  short_description: "Read mail or prepare unsent drafts"
+  default_prompt: "Use $knowlaborator-mail to inspect this message and draft a reply."

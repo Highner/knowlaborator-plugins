@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Calendar"
+  short_description: "Read and maintain calendar events"
+  default_prompt: "Use $knowlaborator-calendar to review my upcoming events."

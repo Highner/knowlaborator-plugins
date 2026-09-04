@@ -1,0 +1,36 @@
+{
+  "author": {
+    "email": "info@appligator.de",
+    "name": "Appligator"
+  },
+  "description": "Work with authorized Lausu data through Knowlaborator.",
+  "homepage": "https://orgapp-production-1b56.up.railway.app/plugin/support",
+  "interface": {
+    "brandColor": "#C2603A",
+    "capabilities": [
+      "Read",
+      "Write",
+      "MCP"
+    ],
+    "category": "Productivity",
+    "defaultPrompt": [
+      "@Lausu: show today\u0027s authorized work."
+    ],
+    "developerName": "Appligator",
+    "displayName": "Lausu",
+    "longDescription": "Organization-bound Knowlaborator tools and skills for Lausu.",
+    "shortDescription": "Work with Lausu through Knowlaborator.",
+    "websiteURL": "https://orgapp-production-1b56.up.railway.app/plugin/support"
+  },
+  "keywords": [
+    "organization",
+    "knowledge",
+    "work",
+    "mcp"
+  ],
+  "mcpServers": "./.mcp.json",
+  "name": "knowlaborator-org-01a019fdcc1b7260af9f5cf02adc3a16-organization",
+  "repository": "https://github.com/Highner/knowlaborator-plugins",
+  "skills": "./skills/",
+  "version": "4.2.0"
+}

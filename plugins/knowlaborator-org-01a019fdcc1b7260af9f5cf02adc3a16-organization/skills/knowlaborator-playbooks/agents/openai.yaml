@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Playbooks"
+  short_description: "Discover, apply and author Playbooks"
+  default_prompt: "Use $knowlaborator-playbooks to find the relevant procedure."

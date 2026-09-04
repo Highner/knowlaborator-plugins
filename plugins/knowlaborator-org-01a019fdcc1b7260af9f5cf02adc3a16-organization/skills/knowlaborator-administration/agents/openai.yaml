@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Administration"
+  short_description: "Administer membership, settings, and audit"
+  default_prompt: "Use $knowlaborator-administration to manage organization administration safely."

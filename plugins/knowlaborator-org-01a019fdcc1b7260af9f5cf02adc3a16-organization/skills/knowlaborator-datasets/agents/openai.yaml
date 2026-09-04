@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Datasets"
+  short_description: "Query records and govern Dataset schemas"
+  default_prompt: "Use $knowlaborator-datasets to query this Dataset."

@@ -1,0 +1,20 @@
+{
+  "name": "knowlaborator",
+  "interface": {
+    "displayName": "Knowlaborator"
+  },
+  "plugins": [
+    {
+      "category": "Productivity",
+      "name": "knowlaborator-org-01a019fdcc1b7260af9f5cf02adc3a16-organization",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/knowlaborator-org-01a019fdcc1b7260af9f5cf02adc3a16-organization",
+        "source": "local"
+      }
+    }
+  ]
+}

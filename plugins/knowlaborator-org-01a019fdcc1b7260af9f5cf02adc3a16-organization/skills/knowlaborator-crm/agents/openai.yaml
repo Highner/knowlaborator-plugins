@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator CRM"
+  short_description: "Manage Accounts, contacts, and interactions"
+  default_prompt: "Use $knowlaborator-crm to find or maintain shared CRM records."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Triage"
+  short_description: "Stage inbox and capture dispositions for browser approval"
+  default_prompt: "Use $knowlaborator-triage. If no narrower task is given, run the complete inbox sweep and stage only justified typed proposals for browser approval."
