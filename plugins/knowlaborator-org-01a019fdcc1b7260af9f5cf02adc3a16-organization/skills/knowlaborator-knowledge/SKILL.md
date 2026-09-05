@@ -13,6 +13,8 @@ description: Search and maintain reusable OKF knowledge, including scoped curati
   curation during an explicitly knowledge-producing request on a writable binding.
 - [email-snapshots.md](references/email-snapshots.md): derive knowledge from an
   already ingested EmailMessage.
+- [relationship-explanations.md](references/relationship-explanations.md): explain
+  Explorer connections with exact passages, or perform an authorized evidence backfill.
 
 Use Documents for files and Templates, Mail for provider-message preservation,
 and Administration for Workspace taxonomy guidance or retrieval configuration.
