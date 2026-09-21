@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Knowledge"
+  short_description: "Search and curate reusable knowledge"
+  default_prompt: "Use $knowlaborator-knowledge to research this subject."

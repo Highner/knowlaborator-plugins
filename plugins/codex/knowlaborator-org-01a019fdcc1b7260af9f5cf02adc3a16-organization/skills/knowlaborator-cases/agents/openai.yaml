@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Cases"
+  short_description: "Execute and track Cases"
+  default_prompt: "Use $knowlaborator-cases to execute and track a Case, with an Active Playbook when one applies or directly in a Workspace when none does."

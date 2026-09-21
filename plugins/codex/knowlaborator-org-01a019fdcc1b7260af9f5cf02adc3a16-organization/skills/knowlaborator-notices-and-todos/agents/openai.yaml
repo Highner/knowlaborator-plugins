@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Notices and ToDos"
+  short_description: "Read and maintain notices and ToDos"
+  default_prompt: "Use $knowlaborator-notices-and-todos to review or update notices and ToDos."

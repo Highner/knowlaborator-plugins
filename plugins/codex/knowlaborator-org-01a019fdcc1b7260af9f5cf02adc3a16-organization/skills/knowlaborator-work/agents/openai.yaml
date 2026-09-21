@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Work"
+  short_description: "Coordinate cross-function decisions"
+  default_prompt: "Use $knowlaborator-work to choose where this information belongs."

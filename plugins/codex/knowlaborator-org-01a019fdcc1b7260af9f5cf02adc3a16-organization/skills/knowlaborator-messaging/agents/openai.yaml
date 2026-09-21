@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Messaging"
+  short_description: "Review and send organization messages"
+  default_prompt: "Use $knowlaborator-messaging to review or reply to direct conversations and internal or external Workspace channels, or to read the invoking user's subscribed Microsoft Teams channels."

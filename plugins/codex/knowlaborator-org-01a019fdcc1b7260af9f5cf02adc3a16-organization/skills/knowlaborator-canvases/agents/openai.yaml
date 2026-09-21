@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Canvases"
+  short_description: "Read, author and distill shared canvases"
+  default_prompt: "Use $knowlaborator-canvases to work on this canvas."

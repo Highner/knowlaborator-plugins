@@ -1,0 +1,30 @@
+{
+  "name": "knowlaborator",
+  "owner": {
+    "name": "Appligator",
+    "email": "info@appligator.de"
+  },
+  "description": "Organization-bound Knowlaborator plugins for Claude Code.",
+  "version": "4.3.0",
+  "plugins": [
+    {
+      "author": {
+        "email": "info@appligator.de",
+        "name": "Appligator"
+      },
+      "category": "productivity",
+      "description": "Mention @Lausu for Lausu work.",
+      "displayName": "Lausu",
+      "keywords": [
+        "organization",
+        "knowledge",
+        "work",
+        "mcp",
+        "canvas"
+      ],
+      "name": "knowlaborator-org-01a019fdcc1b7260af9f5cf02adc3a16-organization",
+      "source": "./plugins/claude/knowlaborator-org-01a019fdcc1b7260af9f5cf02adc3a16-organization",
+      "version": "4.3.0"
+    }
+  ]
+}

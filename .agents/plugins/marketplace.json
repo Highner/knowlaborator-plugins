@@ -12,7 +12,7 @@
         "installation": "AVAILABLE"
       },
       "source": {
-        "path": "./plugins/knowlaborator-org-01a019fdcc1b7260af9f5cf02adc3a16-organization",
+        "path": "./plugins/codex/knowlaborator-org-01a019fdcc1b7260af9f5cf02adc3a16-organization",
         "source": "local"
       }
     }

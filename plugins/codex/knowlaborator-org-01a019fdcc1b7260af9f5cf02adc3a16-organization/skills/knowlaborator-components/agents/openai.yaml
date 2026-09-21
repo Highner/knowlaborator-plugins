@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Components"
+  short_description: "Find, invoke and govern Components"
+  default_prompt: "Use $knowlaborator-components to find an approved Component."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Documents"
+  short_description: "Find, inspect and maintain Documents"
+  default_prompt: "Use $knowlaborator-documents to inspect this Document."
