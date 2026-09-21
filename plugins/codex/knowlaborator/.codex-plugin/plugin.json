@@ -1,0 +1,36 @@
+{
+  "author": {
+    "email": "info@appligator.de",
+    "name": "Appligator"
+  },
+  "description": "Work with every authorized organization through Knowlaborator.",
+  "homepage": "https://orgapp-production-1b56.up.railway.app/plugin/support",
+  "interface": {
+    "brandColor": "#C2603A",
+    "capabilities": [
+      "Read",
+      "Write",
+      "MCP"
+    ],
+    "category": "Productivity",
+    "defaultPrompt": [
+      "@knowlaborator: show today\u0027s authorized work."
+    ],
+    "developerName": "Appligator",
+    "displayName": "Knowlaborator",
+    "longDescription": "Knowlaborator tools and skills with membership-aware organization selection.",
+    "shortDescription": "Work with your organizations through Knowlaborator.",
+    "websiteURL": "https://orgapp-production-1b56.up.railway.app/plugin/support"
+  },
+  "keywords": [
+    "organization",
+    "knowledge",
+    "work",
+    "mcp"
+  ],
+  "mcpServers": "./.mcp.json",
+  "name": "knowlaborator",
+  "repository": "https://github.com/Highner/knowlaborator-plugins",
+  "skills": "./skills/",
+  "version": "4.4.0"
+}

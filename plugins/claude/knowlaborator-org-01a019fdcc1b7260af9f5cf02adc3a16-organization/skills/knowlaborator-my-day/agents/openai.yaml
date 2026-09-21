@@ -1,4 +1,0 @@
-interface:
-  display_name: "Knowlaborator My Day"
-  short_description: "Compose the labeled cross-organization morning brief"
-  default_prompt: "Use $knowlaborator-my-day to read Today through every authorized organization plugin and compose one labeled read-only brief without acting."

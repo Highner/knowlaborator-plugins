@@ -6,13 +6,13 @@
   "plugins": [
     {
       "category": "Productivity",
-      "name": "knowlaborator-org-01a019fdcc1b7260af9f5cf02adc3a16-organization",
+      "name": "knowlaborator",
       "policy": {
         "authentication": "ON_INSTALL",
         "installation": "AVAILABLE"
       },
       "source": {
-        "path": "./plugins/codex/knowlaborator-org-01a019fdcc1b7260af9f5cf02adc3a16-organization",
+        "path": "./plugins/codex/knowlaborator",
         "source": "local"
       }
     }

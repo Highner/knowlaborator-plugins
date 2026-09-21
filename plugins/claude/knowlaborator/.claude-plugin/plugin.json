@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "author": {
+    "email": "info@appligator.de",
+    "name": "Appligator"
+  },
+  "description": "@knowlaborator provides membership-aware tools for every authorized organization.",
+  "displayName": "Knowlaborator",
+  "homepage": "https://orgapp-production-1b56.up.railway.app/plugin/support",
+  "keywords": [
+    "organization",
+    "knowledge",
+    "work",
+    "mcp",
+    "canvas"
+  ],
+  "name": "knowlaborator",
+  "version": "4.4.0"
+}
