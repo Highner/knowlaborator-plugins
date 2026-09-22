@@ -15,5 +15,6 @@ Read [teams.md](references/teams.md) for subscribed Microsoft Teams channels.
 Read [operations.md](references/operations.md) only for native state changes,
 conversation creation, sending or external-channel setup and delivery details.
 For a selected external-channel attachment, use get_channel_attachment with the
-exact channel and attachment IDs returned together, then follow the shared MCP
-file instructions. External sender names are not OrgApp membership proof.
+exact channel and attachment IDs returned together, then read the returned link
+with the client's MCP resource reader. Follow the shared MCP file instructions.
+External sender names are not OrgApp membership proof.

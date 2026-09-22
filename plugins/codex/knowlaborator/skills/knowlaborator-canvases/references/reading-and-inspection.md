@@ -71,22 +71,22 @@ treating it as fact.
 
 ## Overview image
 
-`get_canvas_overview` (optional exact `revision`) returns one deterministic
-inert `image/svg+xml` embedded resource with structured metadata `canvasId`,
-`revision`, `mediaType`, `byteSize` and `sha256`. Images and files appear as
-placeholders. Use it to orient, never as the source of item text or values;
-read the scene for content.
+`get_canvas_overview` (optional exact `revision`) returns a link to one
+deterministic inert `image/svg+xml` resource with structured metadata
+`canvasId`, `revision`, `mediaType`, `byteSize` and `sha256`. Read the link with
+the client's MCP resource reader. Images and files appear as placeholders. Use
+it to orient, never as the source of item text or values; read the scene for
+content.
 
 ## Exact asset originals
 
-`get_canvas_asset_file` with `canvasId` and `assetRevisionId` returns the
-exact original bytes of one asset revision as one embedded file resource with
-authoritative `fileName`, `mediaType`, `byteSize`, `sha256` and, for raster
-images, `width` and `height`. The shared MCP file instructions describe the
-client's resource/file support. Inspect the
-materialized original; no OCR, caption, alt text or thumbnail substitutes for
-it. `CANVAS_ASSET_TOO_LARGE` means the original exceeds the local
-materialization limit; report that rather than guessing its content.
+`get_canvas_asset_file` with `canvasId` and `assetRevisionId` returns a link to
+the exact original bytes of one asset revision with authoritative `fileName`,
+`mediaType`, `byteSize`, `sha256` and, for raster images, `width` and `height`.
+Read the link with the client's MCP resource reader before inspecting the
+original; no OCR, caption, alt text or thumbnail substitutes for it.
+`CANVAS_ASSET_TOO_LARGE` means the original exceeds the MCP resource limit;
+report that rather than guessing its content.
 
 ## Distillation reads
 
