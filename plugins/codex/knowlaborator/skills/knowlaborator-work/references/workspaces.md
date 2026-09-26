@@ -15,6 +15,13 @@ an accessible exact Workspace and only where the tool is exposed. A Realm can
 be a focus filter or default, but it does not cap ordinary interactive access.
 Active selection is a UX default, never proof of authorization.
 
+Workspace discovery includes a bounded preview of authorized Dataset names and
+IDs. `datasets.hasMore` means additional Datasets may exist. For a request about
+Workspace contents or data, inspect this preview and use `list_datasets` with the
+exact Workspace ID when more names or Dataset descriptions are needed. Use the
+Datasets skill before querying records. An empty Knowledge search or Document
+list does not establish that a Workspace has no structured data.
+
 `Viewer` permits Dataset and other Workspace-owned reads. `Contributor` adds
 ordinary writes including Dataset records and imports. `Manager` adds Dataset
 metadata, schema, lifecycle, links, and confirmed permanent removal, plus other

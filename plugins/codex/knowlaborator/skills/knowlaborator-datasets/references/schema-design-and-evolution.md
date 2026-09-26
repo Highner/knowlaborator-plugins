@@ -4,7 +4,7 @@ Use at most 100 ordered fields. Give every field a stable ID, unique machine
 key, label, type, and required flag; use `displayFieldId` only for an existing
 field. Supported types are `short_text`, `long_text`, `integer`, `decimal`,
 `boolean`, `date`, `date_time`, `single_select`, `multi_select`, and
-`record_reference`.
+`record_reference`, and `resource_reference`.
 
 Select options use stable `id`, `key`, `label`, and `retired`. A record reference
 declares one exact `targetDatasetId` and multiplicity. It may also declare a
@@ -16,6 +16,13 @@ Dataset's `displayFieldId` when that field is displayable. Inspect the target's
 current schema and preserve the exact target field ID; do not infer one from
 record values. Verify current Viewer access to a target Dataset independently;
 never reveal an inaccessible target, record ID, or label.
+
+A `resource_reference` field stores one Knowledge or Document `{kind,id}` pair,
+or up to 100 distinct ordered pairs when `multiple` is true, with at most 200
+resource-reference entries across one record. It does not set
+`targetDatasetId`. The pair remains part of the record's immutable revision.
+Its target is checked against current Workspace access and lifecycle on writes
+and reads; later loss of access renders an opaque unavailable value.
 
 Before creation or revision:
 

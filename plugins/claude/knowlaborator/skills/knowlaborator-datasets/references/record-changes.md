@@ -2,7 +2,8 @@
 
 For create or update, map values by stable field ID using the current schema:
 dates are `YYYY-MM-DD`, timestamps are UTC ISO-8601, selects use option IDs, and
-relationships use exact record IDs. An update replaces the complete values map;
+record relationships use exact record IDs, and resource references use exact
+`{kind,id}` pairs for Knowledge or Documents. An update replaces the complete values map;
 carry the current expected record revision and schema revision ID automatically.
 
 Use `set_dataset_record_status` for archive or restore. Before permanent
