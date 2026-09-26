@@ -16,6 +16,17 @@ target Dataset. Resolve current Viewer access to the target independently. A
 same-organization cross-Workspace reference is usable only while both sides are
 authorized; inaccessible targets remain `available:false` without a label.
 
+A `resource_reference` value identifies a Knowledge object or Document by
+`{kind,id}`. A multiple field accepts up to 100 distinct ordered pairs, at most
+200 resource-reference entries may occur across one record, and
+many records may reference the same target. Validate each target's current
+visibility before writing. Current record-level backlinks derive from the
+record revision and are independently authorized; historical revisions remain
+unchanged. References grant no access and an unavailable target reveals no
+label or ID in expanded reads.
+Use `list_dataset_record_backlinks` for current inbound record references to an
+exact Knowledge object or Document.
+
 ## Dataset-level links
 
 Use `list_dataset_links`, `list_dataset_backlinks`, and
