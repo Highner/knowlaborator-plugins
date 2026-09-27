@@ -8,9 +8,11 @@
 2. Prepare the bundle locally against the live manifest and host-contract
    schemas. For `okf_query`, use only the bounded declarative query described by
    the live schema. For `dataset_query`, call `get_dataset`,
-   `get_dataset_schema`, and `validate_dataset_query`; bind the exact Dataset and
-   schema revision, stable projected field IDs, bounded filters/sorts/page size,
-   `dataScope=workspace`, and the same owning Workspace as the Component. Never
+   `get_dataset_schema`, and `validate_dataset_query` for every source; bind exact
+   Dataset and schema revisions, stable projected field IDs, bounded
+   filters/sorts/page size, and record-reference joins as described in
+   [component-queries.md](component-queries.md). All sources use
+   `dataScope=workspace` and the same owning Workspace as the Component. Never
    include SQL, URLs, credentials, MCP calls, AI instructions, or executable
    expressions. A Dataset binding grants no access.
 3. Call `begin_component_upload` for the intended Component/revision and retain
