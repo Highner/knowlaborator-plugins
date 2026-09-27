@@ -5,22 +5,32 @@ description: Search and maintain reusable OKF knowledge, including scoped curati
 
 # Knowlaborator Knowledge
 
-- [reading.md](references/reading.md): search, exact records, revision history
-  and existing exports.
-- [knowledge-authoring.md](references/knowledge-authoring.md): concept writes
-  and strict local validation.
+## Fast path
+
+- Shared Explorer: call `get_active_context` once. When `explorerSceneState`
+  is `available`, answer visible-graph questions from its bounded
+  `explorerScene` titles, excerpts and relationships. Do not rerun the graph
+  query. Read exact records for full content, provenance, evidence or edits.
+- Exact record edit: read the current record once and use its version for
+  `update_knowledge`. Search only if the target is ambiguous; load guidance
+  only if it could shape the change.
+- New concept: search concise candidates, load relevant Workspace guidance,
+  then create with an idempotency key.
+
+Read only the reference needed for the requested operation:
+
+- [reading.md](references/reading.md): search, exact reads and exports.
+- [knowledge-authoring.md](references/knowledge-authoring.md): writes and validation.
 - [task-scoped-knowledge-capture.md](references/task-scoped-knowledge-capture.md):
-  curation during an explicitly knowledge-producing request on a writable binding.
-- [email-snapshots.md](references/email-snapshots.md): derive knowledge from an
-  already ingested EmailMessage.
-- [relationship-explanations.md](references/relationship-explanations.md): explain
-  Explorer connections with exact passages, or perform an authorized evidence backfill.
+  explicitly requested curation.
+- [email-snapshots.md](references/email-snapshots.md): ingested mail.
+- [relationship-explanations.md](references/relationship-explanations.md):
+  passage-backed connections.
 
 Use Documents for files and Templates, Mail for provider-message preservation,
-and Administration for Workspace taxonomy guidance or retrieval configuration.
-Resolve an unspecified durable destination through Work before writing.
-
-Search and reconcile before writes. Preserve provenance, unknown OKF fields,
-idempotency and current-version preconditions; avoid duplicates and no-op
-revisions. archive_knowledge requires fresh confirmation of the exact target
-and lifecycle effect. Read-only work never starts a capture or export operation.
+and Administration for Workspace taxonomy or retrieval configuration. Resolve
+an unspecified durable destination through Work before writing. Preserve
+provenance, unknown OKF fields, idempotency and current-version preconditions;
+avoid duplicates and no-op revisions. `archive_knowledge` requires fresh
+confirmation of the exact target and lifecycle effect. Read-only work never
+starts a capture or export operation.

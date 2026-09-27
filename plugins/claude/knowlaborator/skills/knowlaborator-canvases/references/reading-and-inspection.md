@@ -2,23 +2,29 @@
 
 If the user means the Canvas currently shared from OrgApp, call
 `get_active_context` first. Require `state: ACTIVE` and `surface: canvas`, then
-pass the returned selected Canvas ID and `canvasRevision` to
-`get_canvas_scene`. The returned lens and `selectedCanvasItems` explain the
-browser view and selection; they do not replace the complete paginated scene.
+pass the returned Canvas ID and `canvasRevision` to `get_canvas_scene` for an
+exact read of that shared view. The returned lens and `selectedCanvasItems`
+explain the browser view and selection; they contain no item payloads and do
+not replace the paginated scene. For an edit, read the current scene without a
+revision parameter and check the selected item revisions against it.
 
-1. Use `list_canvases` for bounded authorized discovery. Optional filters are
+Use only the calls needed for the request:
+
+1. Use `list_canvases` when the canvas ID is unknown and no shared active
+   context identifies it. Optional filters are
    `workspaceId`, `state` (`active` or `archived`), `query`, `cursor` and
    `pageSize` (default 50, at most 200). Each summary carries `id`,
    `workspaceId`, `title`, `state`, `revision`, `itemCount` and
    `capabilities` (`canRead`, `canEdit`, `canManage`). Follow `nextCursor`
    unchanged until it is null; a returned ID never grants access.
-2. Call `get_canvas` for the exact selected canvas. It returns metadata, the
-   current `revision`, the stored lenses, `capabilities` and `archivedAt`.
-3. Call `get_canvas_scene` for the items. Omit `revision` for the current
+2. Use `get_canvas` when metadata, capabilities or lifecycle state is needed.
+   It returns the current `revision`, stored lenses and `archivedAt`.
+3. Use `get_canvas_scene` for item content. Omit `revision` for the current
    scene, or pass an exact historical `revision` to reconstruct that state;
    `historical` is then true and removed items appear with `deleted: true`.
-   Page with `cursor` and `pageSize` (at most 200) until `nextCursor` is null.
-   A partial page is never a complete scene.
+   Page with `cursor` and `pageSize` (at most 200). For a targeted task, stop
+   once every needed item is found; for a complete scene, continue until
+   `nextCursor` is null. A partial page is never a complete scene.
 
 ## Item shape
 

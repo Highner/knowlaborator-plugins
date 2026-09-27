@@ -1,7 +1,19 @@
 # Author canvas changes
 
-Confirm the exact target Workspace and Contributor or Manager access first.
-The active Workspace is only a default. `create_canvas` takes `workspaceId`,
+For a shared-canvas item edit, resolve `get_active_context`, then read the
+current affected items with `get_canvas_scene` and apply one batch. Do not add
+`list_canvases` or `get_canvas` when the context already identifies the canvas
+and only items are changing. Compare `selectedCanvasItems` revisions with the
+current items. If they differ, reconcile the user's original selection with
+the newer content before writing; read the shared pinned revision if the
+original payload is needed. The write rechecks permission and exact item
+revisions; on a conflict, follow the recovery instructions below.
+
+For a new canvas, confirm the exact target Workspace and Contributor or Manager
+access; the active Workspace is only a default. Existing canvas item writes
+recheck that access, so a separate permission read is unnecessary when the
+authorized canvas and Workspace are already known. `create_canvas` takes
+`workspaceId`,
 `title` (1–200 characters), optional `description` (at most 2,000) and an
 `idempotencyKey`. `update_canvas` takes `canvasId`, `action` (`metadata`,
 `archive` or `restore`), the exact `expectedRevision`, an `idempotencyKey` and,

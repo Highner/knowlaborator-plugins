@@ -6,12 +6,14 @@ confirmation.
 
 ## Apply guidance progressively
 
-1. Call `get_workspace_knowledge_guidance` with the exact target Workspace ID only while authoring or
-   reorganizing knowledge. A not-configured result means to use generic open
-   OKF.
-2. Choose candidate types from the task and compact catalog. Load
-   `get_workspace_concept_guidance` with the same Workspace ID only for types or stable guidance IDs
-   that could shape the concept.
+1. Call `get_workspace_knowledge_guidance` with the exact target Workspace ID
+   when creating, reorganizing, or materially changing a concept whose type or
+   structure the guidance could shape. A narrow edit to an exact existing
+   record with unchanged type does not require a guidance lookup. A
+   not-configured result means to use generic open OKF.
+2. If guidance was loaded, choose candidate types from the task and compact
+   catalog. Load `get_workspace_concept_guidance` with the same Workspace ID
+   only for types or stable guidance IDs that could shape the concept.
 3. Treat guidance as advisory metadata, not organization facts, authorization,
    or a concept instance. Never change the guidance profile as a side effect.
 
@@ -30,9 +32,10 @@ or modify the user's project to run it.
 
 1. Resolve the stable subject, scope, sources, and epistemic status. Default a
    new concept to private; an update retains its existing access settings.
-2. Search concise projections before writing. Retrieve complete candidates only
-   when needed to decide create, material revision, no-op, ambiguity, or lack of
-   edit permission.
+2. Before creating a concept or resolving an ambiguous target, search concise
+   projections and retrieve complete candidates only as needed. For an exact
+   existing record, read its current version once to decide material revision,
+   no-op, or lack of edit permission; do not repeat discovery.
 3. Preserve authorized provenance, claim-level citations, unknown OKF fields,
    producer extensions, and unrelated content. Label estimates, hypotheses, and
    open questions honestly. New knowledge is `active` by default. Use `draft`

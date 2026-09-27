@@ -13,9 +13,13 @@ exact needed types in that Workspace.
 
 When the user refers to “this”, “here”, or “my basket” in an already-open
 organization conversation, call `get_active_context` without identifiers. Treat
-`selected`, `focus`, and ordered `basket` as relevance pointers only, then use
-the owning canonical read tools for content. If the result is stale or
-ambiguous, ask the user to re-share or choose the intended OrgApp view; never
+`selected`, `focus`, and ordered `basket` as relevance pointers. When
+`explorerSceneState` is `available`, use `explorerScene` directly to describe
+the visible graph's titles, excerpts, relationships, expanded cluster and
+clicked marker. Do not call `explore_knowledge` again for the same view. Use
+the owning canonical read tool when full content, provenance, evidence or an
+edit is needed. If there is no active view or the result is stale or ambiguous,
+ask the user to re-share or choose the intended OrgApp view; never
 pick the newest candidate. A `semantic` relationship is similarity, not fact.
 
 To guide the shared Explorer, first name the exact Knowledge record or Document
