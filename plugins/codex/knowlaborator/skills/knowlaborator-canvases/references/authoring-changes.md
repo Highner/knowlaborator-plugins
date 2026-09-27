@@ -81,6 +81,13 @@ Datasets, Cases and ToDos; the target is authorized independently and a
 reference grants no access. Do not copy content from a more restrictive
 Workspace into any item.
 
+For an image or other file already saved as a Document, create a `resource`
+item with `targetKind: "document"` and that Document's `targetId`. The canvas
+shows the Document preview to authorized viewers when available; no file read,
+download, web search, or duplicate canvas asset upload is needed to place it.
+Use an `image` or `file` item only for a canvas-owned asset. Keep the Document
+reference even if its preview is still processing or unavailable.
+
 ## Conflicts and idempotency
 
 A stale or already-existing item returns `CANVAS_ITEM_REVISION_CONFLICT` and
