@@ -7,6 +7,11 @@ originals are PNG, JPEG, GIF, WebP, PDF and non-macro DOC, DOCX and PPTX up
 to 104,857,600 bytes (100 MiB). Images render as `image` items; every other
 format is a `file` item.
 
+This upload flow is for a new canvas-owned file. If the requested image or
+other file is already a Document, place a `resource` item pointing to the
+Document ID instead; its existing preview appears in the browser. Do not
+download and re-upload that Document or search for substitute media.
+
 Asset bytes never pass through MCP arguments. Inspect the local file with the
 client's ordinary local-file tools, but do not put its path, bytes, upload
 URL, credentials or tokens in an MCP argument or summary.

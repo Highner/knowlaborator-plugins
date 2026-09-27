@@ -34,6 +34,11 @@ Read only the reference for the requested operation:
 - [distillation.md](references/distillation.md): frozen-source distillation and
   Knowledge-publication preparation.
 
+When asked to show an existing Document on a canvas, use a `resource` item that
+references its Document ID. The browser renders an authorized preview of its
+current file when available. Look for existing Documents before considering a
+new canvas asset upload, and do not search the web for a replacement image.
+
 Viewer reads; Contributor or Manager creates and changes. Agents may draft or
 revise a proposed decision but never confirm one. Decision confirmation,
 Knowledge publication, uningestion, deletion and
