@@ -6,7 +6,10 @@
    shared revision with `fork_component` instead of editing someone else's
    Component.
 2. Prepare the bundle locally against the live manifest and host-contract
-   schemas. For `okf_query`, use only the bounded declarative query described by
+   schemas. Include `index.html` for the full view and `preview.html` for the
+   compact square tile on Today. Both entry points use the same host bridge and
+   `initialize` data; design the preview for a small square rather than scaling
+   or cropping the full view. For `okf_query`, use only the bounded declarative query described by
    the live schema. For `dataset_query`, call `get_dataset`,
    `get_dataset_schema`, and `validate_dataset_query` for every source; bind exact
    Dataset and schema revisions, stable projected field IDs, bounded
@@ -24,6 +27,15 @@
    bundle code. Correct only reported validation fields.
 6. Report the stable Component ID, exact immutable revision, validation state,
    visibility, and ownership.
+
+For image Documents, declare up to eight exact `imageDocumentVersionIds` in the
+manifest. Each must be an internal PNG, JPEG, GIF, or WebP Document version in
+the Component's owning Workspace and at most 1 MiB. The host reauthorizes every
+version on invocation and sends `images` with the `initialize` message. Each
+entry has `documentVersionId` and a `dataUrl`; set an image element's `src` from
+the matching entry. Keep the version IDs in the component revision rather than
+external image URLs. If an image version becomes unavailable, invocation fails
+with `COMPONENT_IMAGE_UNAVAILABLE`.
 
 ## Submit and review
 
