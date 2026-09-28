@@ -8,9 +8,17 @@
 2. Prepare the bundle locally against the live manifest and host-contract
    schemas. Include `index.html` for the full view and `preview.html` for the
    compact square tile on Today. Both entry points use the same host bridge and
-   `initialize` data; design the preview for a small square rather than scaling
-   or cropping the full view. For `okf_query`, use only the bounded declarative query described by
-   the live schema. For `dataset_query`, call `get_dataset`,
+   `initialize` data. The tile header takes part of the square, so design
+   `preview.html` to fit an iframe as small as roughly 220 × 170 CSS pixels.
+   Show only the primary result and one or two short supporting facts; keep
+   details and controls in `index.html`. Let the actual iframe width and height
+   drive responsive layout, including long values, loading, empty, and error
+   states. Avoid fixed minimum page sizes, internal scrolling, and simply
+   scaling or cropping the full view. Before upload, check the preview at
+   220 × 170 and 280 × 235 CSS pixels and confirm that neither
+   `document.documentElement.scrollWidth` nor `scrollHeight` exceeds the
+   corresponding viewport dimension. For `okf_query`, use only the bounded
+   declarative query described by the live schema. For `dataset_query`, call `get_dataset`,
    `get_dataset_schema`, and `validate_dataset_query` for every source; bind exact
    Dataset and schema revisions, stable projected field IDs, bounded
    filters/sorts/page size, and record-reference joins as described in
@@ -30,7 +38,8 @@
 
 For image Documents, declare up to eight exact `imageDocumentVersionIds` in the
 manifest. Each must be an internal PNG, JPEG, GIF, or WebP Document version in
-the Component's owning Workspace and at most 1 MiB. The host reauthorizes every
+the Component's owning Workspace and at most 2 MiB. Combined image bytes must
+not exceed 8 MiB. The host reauthorizes every
 version on invocation and sends `images` with the `initialize` message. Each
 entry has `documentVersionId` and a `dataUrl`; set an image element's `src` from
 the matching entry. Keep the version IDs in the component revision rather than
