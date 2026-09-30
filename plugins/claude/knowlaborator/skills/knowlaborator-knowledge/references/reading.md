@@ -1,9 +1,17 @@
 # Read knowledge and existing exports
 
-Use search_content for bounded discovery across knowledge and Documents, and
-persisted Cases when kinds includes case. Read exact results through their
-owning operation. Use list_knowledge for catalog pages, get_knowledge for one
-record, and list_knowledge_revisions for history.
+Use search_content for bounded discovery across knowledge, Documents, and active
+Dataset metadata. It has no resource-kind filter. Use list_cases or get_case for
+Cases. Read exact results through their owning operation. Use list_knowledge for
+catalog pages, get_knowledge for one record, and list_knowledge_revisions for history.
+
+Search also returns independently authorized live calendar title matches, including
+hidden calendars, from seven days back through thirty days ahead by default.
+Knowledge Workspace filters do not hide related personal calendar events. Supply
+both calendarFromDate and exclusive calendarToDate for another range, up to 62 days.
+Respect CalendarFailure, source failures, MoreAvailable, and MoreSourcesAvailable.
+Empty title matches do not prove absence; verify appointments with an exact-date
+list_calendar_events read before suggesting a calendar change.
 
 Preserve revision, lifecycle, Workspace, provenance, evidence, uncertainty,
 unknown fields and redacted references. Taxonomy guidance is advisory metadata,
