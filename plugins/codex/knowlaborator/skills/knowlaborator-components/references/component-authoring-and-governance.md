@@ -2,11 +2,20 @@
 
 ## Author or revise
 
-1. Resolve ownership and the intended private Component. Fork an exact approved
+1. Read [component-host-contract.md](component-host-contract.md) and inspect the
+   exposed `begin_component_upload` and `complete_component_upload` schemas.
+   These are the authoring contract; no separate live-schema endpoint or
+   browser inspection is required. If a needed field or tool is absent, report
+   that specific capability mismatch. Do not invent a tool, scrape frontend
+   assets, or use browser automation as an alternative authoring path.
+2. Resolve ownership and the intended private Component. Fork an exact approved
    shared revision with `fork_component` instead of editing someone else's
    Component.
-2. Prepare the bundle locally against the live manifest and host-contract
-   schemas. Include `index.html` for the full view and `preview.html` for the
+3. Choose a supported data binding before preparing the bundle. For live prices
+   or other external data, follow the external-source section of the host
+   contract. Do not claim an agent-supplied snapshot will refresh automatically
+   or substitute an unrelated query just to make a Today tile eligible.
+   Include `index.html` for the full view and `preview.html` for the
    compact square tile on Today. Both entry points use the same host bridge and
    `initialize` data. The tile header takes part of the square, so design
    `preview.html` to fit an iframe as small as roughly 220 × 170 CSS pixels.
@@ -14,27 +23,34 @@
    details and controls in `index.html`. Let the actual iframe width and height
    drive responsive layout, including long values, loading, empty, and error
    states. Avoid fixed minimum page sizes, internal scrolling, and simply
-   scaling or cropping the full view. Before upload, check the preview at
-   220 × 170 and 280 × 235 CSS pixels and confirm that neither
-   `document.documentElement.scrollWidth` nor `scrollHeight` exceeds the
-   corresponding viewport dimension. For `okf_query`, use only the bounded
-   declarative query described by the live schema. For `dataset_query`, call `get_dataset`,
+   scaling or cropping the full view. Review the source for both
+   220 × 170 and 280 × 235 CSS pixels. Do not launch a browser or execute the
+   bundle locally to perform this review; report visual layout as unverified
+   unless it has actually been inspected in the supported host.
+   For `okf_query`, use the bounded declarative query in
+   [component-queries.md](component-queries.md). For `dataset_query`, call `get_dataset`,
    `get_dataset_schema`, and `validate_dataset_query` for every source; bind exact
    Dataset and schema revisions, stable projected field IDs, bounded
    filters/sorts/page size, and record-reference joins as described in
-   [component-queries.md](component-queries.md). All sources use
-   `dataScope=workspace` and the same owning Workspace as the Component. Never
-   include SQL, URLs, credentials, MCP calls, AI instructions, or executable
-   expressions. A Dataset binding grants no access.
-3. Call `begin_component_upload` for the intended Component/revision and retain
-   its IDs and required upload fields.
-4. Upload the exact bundle bytes directly with the returned method, URL, and
+   [component-queries.md](component-queries.md). All Dataset sources use
+   `dataScope=workspace` and the same owning Workspace as the Component.
+   Declarative queries must not include SQL, URLs, credentials, MCP calls,
+   AI instructions, or executable expressions. External URLs belong only in
+   the declared connection/source fields. A Dataset binding grants no access.
+4. Create the ZIP locally, compute its exact byte size and SHA-256, and call
+   `begin_component_upload` for the intended Component/revision. Retain the
+   returned IDs and required upload fields.
+5. Upload the exact bundle bytes directly with the returned method, URL, and
    headers. Never put bundle bytes, local paths, upload URLs or credentials in
    MCP arguments or summaries, persist the URL, or execute bundle code locally.
-5. Call `complete_component_upload`. The server validates but never executes
-   bundle code. Correct only reported validation fields.
-6. Report the stable Component ID, exact immutable revision, validation state,
-   visibility, and ownership.
+6. Call `complete_component_upload`. The server validates but never executes
+   bundle code. Correct reported validation errors; changed ZIP bytes require
+   a new upload with their own checksum and idempotency key.
+7. Read back with `get_component` and report the stable Component ID, exact
+   immutable revision, validation state, visibility, and ownership. Use
+   `invoke_component` for a requested preview, supplying host contract `1.0`
+   and schema-compatible input. Validation success alone does not prove that
+   the view rendered or that an external provider returned current data.
 
 For image Documents, declare up to eight exact `imageDocumentVersionIds` in the
 manifest. Each must be an internal PNG, JPEG, GIF, or WebP Document version in
