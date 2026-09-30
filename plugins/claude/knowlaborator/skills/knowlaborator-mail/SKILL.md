@@ -17,4 +17,3 @@ owner-scoped opt-in. Reads do not change provider read state.
   of one message and requested attachments.
 
 No MCP operation sends, deletes, moves, archives, labels or flags provider mail.
-Triage stages proposals through its own workflow; a proposal is not execution.

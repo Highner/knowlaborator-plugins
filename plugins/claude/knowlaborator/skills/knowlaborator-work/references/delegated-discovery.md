@@ -3,8 +3,7 @@
 Use an isolated subagent for a broad mail, Document, Knowledge or Dataset sweep
 when the client supports it and the session permits delegation. Read one or two
 exact items directly. Never delegate writes, drafts, ingestion, selection
-changes or operations requiring confirmation. Headless Triage remains on its
-single validated MCP server and does not delegate.
+changes or operations requiring confirmation.
 
 Pass the exact organization, relevant Workspace or optional Realm focus,
 question, retained Playbook catalog when useful, and coverage limits. Ordinary

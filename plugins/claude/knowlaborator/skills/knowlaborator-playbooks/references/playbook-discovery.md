@@ -3,7 +3,7 @@
 For ordinary work, call get_playbook_catalog once when the conversation first
 reads mail (including through get_today) or asks for recommendations or next
 steps. Retain it for the organization; refresh only on an explicit request or
-organization change. Triage owns its own summary-and-proposal flow.
+organization change.
 
 Match locally using triggerPhrases, appliesWhen, doesNotApplyWhen, description
 and tags. Keep each mail candidate paired with its source item; do not send

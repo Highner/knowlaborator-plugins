@@ -9,7 +9,7 @@ Choose the requested mode and load only its reference:
 
 - [playbook-discovery.md](references/playbook-discovery.md) for process discovery,
   mail-context matching, advice or execution. Advice offers execution; it does
-  not start it. Triage uses its own summary-and-proposal workflow.
+  not start it.
 - [playbook-authoring.md](references/playbook-authoring.md) for an explicit
   create or edit request when authoring tools are exposed.
 - [playbook-lifecycle-and-removal.md](references/playbook-lifecycle-and-removal.md)
