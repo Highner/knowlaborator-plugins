@@ -110,12 +110,31 @@ No message read state, ToDo, notice, draft, knowledge, or Case is changed.
    is available. Do not copy mail bodies or secrets. Personal instructions may request more
    detail, but never add coverage counts or process reports. Account for every included
    email internally; never claim complete coverage with an unprocessed email.
+   Before naming a Workspace in any suggested action or preparing its `TodoDraft`,
+   resolve the intended destination using [Workspace discovery and selection](knowlaborator-skill://knowlaborator-work/references/workspaces.md).
+   Use exact owning Workspace IDs from relevant source reads, existing ToDos, or linked
+   Cases as evidence. The destination must fit the proposed work; a supporting resource's
+   Workspace is not automatically the action's destination. When the destination is not
+   established, use `list_workspaces` to discover accessible candidates, compare their
+   purpose and relevant resources, and follow cursors when needed. Verify the selected
+   Workspace with `get_workspace`, including its exact ID, name, kind, current organization,
+   content access, and effective role. Active selection, personal mail ownership, a name
+   match, or administrator control-plane visibility alone does not establish a suitable
+   destination or permission to create a ToDo. A prepared ToDo requires Contributor or
+   Manager access; a Case-linked draft must use the Case's current Workspace. Name the
+   verified destination in the suggestion or draft context where it helps the user.
+   If available reads cannot resolve the destination or required access, keep any useful
+   textual suggestion, state the material uncertainty, and omit `TodoDraft`; never silently
+   fall back to the personal Workspace. These checks are read-only and do not change the
+   active Workspace or execute the action.
    For a suggested_action that could become a ToDo, provide optional `TodoDraft` with a
    concise Header and Description containing useful context and known browser source links.
    Set DeadlineDate and DeadlineTime only from explicit source commitments in the organization
    timezone; omit uncertain deadlines. Use exact authorized Workspace, assignee membership,
-   Case, and CRM reference IDs only when grounded in reads. Omit WorkspaceId and AssigneeIds
-   to default to the user's personal Workspace and self. An explicitly empty AssigneeIds
+   Case, and CRM reference IDs only when grounded in reads. Omit WorkspaceId only when
+   the verified destination is the user's personal Workspace; otherwise set its exact ID
+   explicitly. Omit AssigneeIds to default to self only when self is the intended assignee.
+   An explicitly empty AssigneeIds
    list means Workspace-wide. If the action concerns an existing ToDo, set `ExistingTodoId`
    instead of TodoDraft. Check the previous brief's `TodoLinks` and each history item's
    `TodoLink` before proposing another task for the same issue, and preserve item IDs. Draft metadata is separate from the visible
