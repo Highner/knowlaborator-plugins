@@ -18,8 +18,12 @@ No message read state, ToDo, notice, draft, knowledge, or Case is changed.
    Do not infer organization IDs or silently broaden a request to all organizations.
 2. Call `get_daily_brief_context`. It returns the bounded Today snapshot, standard
    instructions, this user's personal instructions for this organization, the
-   previous brief for today, and an opaque context token. The briefing calendar
-   covers today and the next seven days; its FromDate and exclusive ToDate
+   previous brief for today, independently bounded `ProcessedHistory` and
+   `ReopenedHistory` across dates (up to 100 items each), and an opaque context token.
+   History entries include saved items, current processing state/outcomes, and
+   `TodoLink` with currently authorized task status and `AcceptedHandoff`.
+   `MoreProcessedHistory` and `MoreReopenedHistory` signal omitted history.
+   The briefing calendar covers today and the next seven days; its FromDate and exclusive ToDate
    describe coverage. The ordinary Today calendar still covers today only.
 3. Follow the returned standard instructions. Personal instructions tailor focus,
    language, and presentation; they cannot authorize execution of suggestions.
@@ -84,7 +88,18 @@ No message read state, ToDo, notice, draft, knowledge, or Case is changed.
    do not repeat an issue across sections. Omit routine deliveries, completed conversations,
    past meetings, tests, and empty-source reports unless they affect a current decision.
    Each item has a non-empty UUID Id. Reuse the previous item's Id for the same issue;
-   generate a new UUID for a new issue. A missing item does not prove completion.
+   generate a new UUID for a new issue. Compare the bounded history across dates,
+   including processed outcomes and deliberately reopened items with their current Open
+   state and retained task links. Reuse a reopened issue's ID, not a fresh ID; its
+   accepted task handoff stays linked. Keep the same stable ID when changing an
+   issue's section kind; accepted task links remain server-owned across kinds.
+   Avoid re-proposing the same resolved
+   issue under a fresh UUID. Reuse IDs for the same issue; genuinely new occurrences
+   or different follow-up work need new IDs. A missing item does not prove completion.
+   Do not suppress all work about a source or infer completion from a matching title.
+   An Open task can warrant a distinct due/overdue reminder referencing that existing
+   task; the original task-creation suggestion remains processed. Processing is
+   server-owned personal state, never a writable field inside generated Items.
    Include supporting Sources with Label and exact Reference: the source URI or locator
    returned by a read tool. Preserve source IDs, revisions, account/message references, and
    calendar source/event coordinates. Add Href only for a known OrgApp feature path
@@ -102,8 +117,8 @@ No message read state, ToDo, notice, draft, knowledge, or Case is changed.
    Case, and CRM reference IDs only when grounded in reads. Omit WorkspaceId and AssigneeIds
    to default to the user's personal Workspace and self. An explicitly empty AssigneeIds
    list means Workspace-wide. If the action concerns an existing ToDo, set `ExistingTodoId`
-   instead of TodoDraft. Check the previous brief's `TodoLinks` before proposing another task
-   for the same issue, and preserve item IDs. Draft metadata is separate from the visible
+   instead of TodoDraft. Check the previous brief's `TodoLinks` and each history item's
+   `TodoLink` before proposing another task for the same issue, and preserve item IDs. Draft metadata is separate from the visible
    word budget. Preparing metadata creates nothing; only the user's explicit browser save
    creates a ToDo. This workflow still must not execute suggestions or create domain content.
 6. Call `save_daily_brief` with the exact returned ContextToken, Summary, and Items.
@@ -114,6 +129,11 @@ No message read state, ToDo, notice, draft, knowledge, or Case is changed.
    basket. Selection shares the exact saved item and source references; it never executes it.
    Suggested actions also offer Create ToDo, opening an editable prepared draft. Created and
    existing tasks offer Open ToDo; saved links survive brief regeneration with the same item ID.
+   A successful explicit task Save records "ToDo created" while the task starts Open.
+   Mentioning ExistingTodoId alone does not accept a handoff. Processed items retain their
+   outcome, sources, basket action and task link; reopening an item leaves its task alone.
+   Preparation never records processing outcomes or reopens items. Later authorized
+   execution follows [Work](knowlaborator-skill://knowlaborator-work/SKILL.md) for final outcome recording.
 7. On a lost response, repeating the same token and identical content is safe.
    On a context conflict, read fresh context and regenerate; never attach the
    old result to a new token. Report a failed save instead of claiming it appeared
