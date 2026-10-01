@@ -223,6 +223,8 @@ For an MCP source, declare a connection with the provider HTTPS origin,
 `authKind: "mcp_oauth"`, exact `mcpServerUrl`, optional `scopes`, and optional
 `viewerArguments` declarations. The source uses the same URL as `urlTemplate`,
 `transport: "mcp"`, and one or two `mcpCalls` of `{ toolName, arguments }`.
+Supply `arguments` as a JSON object, never a JSON-encoded string. For example,
+use `"arguments": { "ticker": "{{viewer.index_code}}", "limit": 30 }`.
 Only exact projected Dataset fields (`{{field_name}}`) and exact declared viewer
 fields (`{{viewer.portfolio_id}}`) can fill arguments. Tool results are keyed
 by tool name under the external source name. Missing viewer fields skip the
