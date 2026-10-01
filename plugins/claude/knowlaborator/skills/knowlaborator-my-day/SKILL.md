@@ -73,26 +73,47 @@ No message read state, ToDo, notice, draft, knowledge, or Case is changed.
    omit the check/add suggestion. Resolve other factual checks with available read-only
    tools before delegating them to the user. A failed or incomplete source cannot prove
    absence; mention uncertainty only when it materially affects a suggestion.
-   Write a scannable brief, normally 150-250 words TOTAL across Summary and
-   SuggestedActions. Use short Markdown section headings (###), blank lines,
-   bullet lists (-), and **bold** item labels in Summary, with optional source links.
-   No HTML, tables, images, or nested lists. Keep at most three short non-empty
-   sections in the user's language. Omit a repeated title/date, routine deliveries,
-   completed conversations, past meetings, tests, and empty-source reports unless
-   they affect a current decision. Keep requested topic updates selective, normally
-   at most three bullets. Do not repeat suggested actions in Summary. Include
-   normally at most five genuinely useful actions ordered by urgency, each with a
-   short plain-text description and one-sentence reason. The API's 20-action limit
-   is a safety bound, not a target. Personal instructions may request more detail,
-   but never add coverage counts or process reports. Do not copy mail bodies or secrets.
-   Mention unavailable or truncated content briefly beside an affected item only
-   when it materially changes a priority or suggestion. Account for every included
+   Write a scannable brief, normally 150-250 words TOTAL across Summary and Items.
+   Summary is a short opening paragraph. Put individual issues into structured Items:
+   `priority`, `suggested_action`, or `information`. The browser groups these into sections;
+   do not write Markdown section headings or repeat items in Summary. Give each item a
+   short plain-text Title, a one-sentence Reason explaining why it matters now (including
+   known deadlines), and optional plain-text Details for useful context or material uncertainty.
+   Normally include at most five genuinely useful suggested actions and a few selective
+   priorities or updates, ordered by urgency within each section. Combine related signals;
+   do not repeat an issue across sections. Omit routine deliveries, completed conversations,
+   past meetings, tests, and empty-source reports unless they affect a current decision.
+   Each item has a non-empty UUID Id. Reuse the previous item's Id for the same issue;
+   generate a new UUID for a new issue. A missing item does not prove completion.
+   Include supporting Sources with Label and exact Reference: the source URI or locator
+   returned by a read tool. Preserve source IDs, revisions, account/message references, and
+   calendar source/event coordinates. Add Href only for a known OrgApp feature path
+   (/mail, /knowledge, /documents, /datasets, /calendar, /todos, /notices, /messages, /workflows/cases)
+   or an HTTPS source URL. For mail, use /mail/{accountId}?message={URL-encoded messageReference}.
+   Do not invent links or revisions. Source references remain advisory; authorize and read
+   sources again before acting in a later task. Use no sources only when no exact locator
+   is available. Do not copy mail bodies or secrets. Personal instructions may request more
+   detail, but never add coverage counts or process reports. Account for every included
    email internally; never claim complete coverage with an unprocessed email.
-   A missing item does not prove a previous suggestion was completed.
-6. Call `save_daily_brief` with the exact returned context token, summary, and
-   suggestions. Save even when there are no actions to suggest. OrgApp validates
-   the current membership, organization, local date, instruction revision, and
-   brief revision. A successful save appears under **Your daily brief** on Today.
+   For a suggested_action that could become a ToDo, provide optional `TodoDraft` with a
+   concise Header and Description containing useful context and known browser source links.
+   Set DeadlineDate and DeadlineTime only from explicit source commitments in the organization
+   timezone; omit uncertain deadlines. Use exact authorized Workspace, assignee membership,
+   Case, and CRM reference IDs only when grounded in reads. Omit WorkspaceId and AssigneeIds
+   to default to the user's personal Workspace and self. An explicitly empty AssigneeIds
+   list means Workspace-wide. If the action concerns an existing ToDo, set `ExistingTodoId`
+   instead of TodoDraft. Check the previous brief's `TodoLinks` before proposing another task
+   for the same issue, and preserve item IDs. Draft metadata is separate from the visible
+   word budget. Preparing metadata creates nothing; only the user's explicit browser save
+   creates a ToDo. This workflow still must not execute suggestions or create domain content.
+6. Call `save_daily_brief` with the exact returned ContextToken, Summary, and Items.
+   The limits of 20 items and eight sources per item are safety bounds, not targets.
+   Save even when there are no items. OrgApp validates the current membership, organization,
+   local date, instruction revision, and brief revision. A successful save appears under
+   **Your daily brief** on Today. Users can expand and select each item into their context
+   basket. Selection shares the exact saved item and source references; it never executes it.
+   Suggested actions also offer Create ToDo, opening an editable prepared draft. Created and
+   existing tasks offer Open ToDo; saved links survive brief regeneration with the same item ID.
 7. On a lost response, repeating the same token and identical content is safe.
    On a context conflict, read fresh context and regenerate; never attach the
    old result to a new token. Report a failed save instead of claiming it appeared

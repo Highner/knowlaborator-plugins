@@ -3,7 +3,8 @@
 ## Author or revise
 
 1. Read [component-host-contract.md](component-host-contract.md) and inspect the
-   exposed `begin_component_upload` and `complete_component_upload` schemas.
+   exposed `create_component_from_source` schema. Use the direct upload schemas
+   only for a prebuilt ZIP or source exceeding the bounded source limit.
    These are the authoring contract; no separate live-schema endpoint or
    browser inspection is required. If a needed field or tool is absent, report
    that specific capability mismatch. Do not invent a tool, scrape frontend
@@ -14,7 +15,14 @@
 3. Choose a supported data binding before preparing the bundle. For live prices
    or other external data, follow the external-source section of the host
    contract. Do not claim an agent-supplied snapshot will refresh automatically
-   or substitute an unrelated query just to make a Today tile eligible.
+   or substitute an unrelated query just to make a Today tile eligible. Use
+   `external_only` with at least one declared source for a standalone live-data
+   tile. An MCP source declares its server URL, read tools, and argument
+   templates in the revision; each viewer connects their own account. If a
+   provider has multiple portfolios, declare a viewer argument for the chosen
+   portfolio ID and a separate list tool so the bundle can offer a choice.
+   Never pick a portfolio on the viewer's behalf or label a portfolio valuation
+   as total account wealth.
    Include `index.html` for the full view and `preview.html` for the
    compact landscape tile beside the Today title. Both entry points use the same
    host bridge and `initialize` data. The tile is 240 × 70 CSS pixels, as tall
@@ -45,15 +53,30 @@
    Declarative queries must not include SQL, URLs, credentials, MCP calls,
    AI instructions, or executable expressions. External URLs belong only in
    the declared connection/source fields. A Dataset binding grants no access.
-4. Create the ZIP locally, compute its exact byte size and SHA-256, and call
-   `begin_component_upload` for the intended Component/revision. Retain the
-   returned IDs and required upload fields.
-5. Upload the exact bundle bytes directly with the returned method, URL, and
-   headers. Never put bundle bytes, local paths, upload URLs or credentials in
-   MCP arguments or summaries, persist the URL, or execute bundle code locally.
-6. Call `complete_component_upload`. The server validates but never executes
-   bundle code. Correct reported validation errors; changed ZIP bytes require
-   a new upload with their own checksum and idempotency key.
+4. Prefer `create_component_from_source`: send the manifest and `files`, each
+   containing a relative `path` and its UTF-8 `text`. Include `index.html` and
+   `preview.html`; use at most 32 files, paths of at most 200 characters, and
+   at most 512 KiB of combined UTF-8 source text. Pass the exact owning
+   `workspaceId`, `componentId` (`null` for a new Component), and a stable
+   idempotency key of at most 200 characters. The server packages, stores, and
+   validates the ZIP without executing code. No local ZIP, checksum, signed
+   URL, separate storage transfer, or completion call is required.
+5. Retry an interrupted source request with the identical manifest, source,
+   ownership, metadata, and idempotency key. A successful retry returns the
+   same revision without writing another bundle. A storage failure may leave
+   a pending revision; the same request resumes it. Changed content or metadata
+   requires a new idempotency key. Never claim a failed or pending revision is
+   a usable Component.
+6. For a prebuilt ZIP or more than 512 KiB of source, use the existing direct
+   upload flow: create the ZIP locally, compute its exact size and SHA-256,
+   call `begin_component_upload`, transfer the exact bytes with the returned
+   method, URL, and headers, then call `complete_component_upload`. This path
+   requires the client's network to reach the storage URL. If it cannot,
+   report that transfer limitation and use bounded source creation when
+   possible. Never put ZIP bytes, base64 bundles, local paths, signed upload
+   URLs, or credentials in MCP arguments or summaries. Source text belongs
+   only in `create_component_from_source.files`. Changed ZIP bytes require a
+   new checksum and idempotency key. Neither upload path executes bundle code.
 7. Read back with `get_component` and report the stable Component ID, exact
    immutable revision, validation state, visibility, and ownership. Use
    `invoke_component` for a requested preview, supplying host contract `1.0`

@@ -6,6 +6,8 @@ description: Find and invoke approved Components, or author and govern Component
 # Knowlaborator Components
 
 Use the Component MCP tools for discovery, authoring, upload, and governance.
+Prefer `create_component_from_source` for agent-authored revisions so the
+server packages and stores the source over the existing MCP connection.
 Do not open a browser, inspect the web application, or download its JavaScript
 assets to discover schemas or create a Component. The authoring reference below
 contains the host contract; the exposed tool schemas define request fields.
