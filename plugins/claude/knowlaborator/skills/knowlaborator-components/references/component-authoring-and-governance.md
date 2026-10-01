@@ -17,18 +17,22 @@
    or substitute an unrelated query just to make a Today tile eligible.
    Include `index.html` for the full view and `preview.html` for the
    compact landscape tile beside the Today title. Both entry points use the same
-   host bridge and `initialize` data. The tile is 224 × 112 CSS pixels (2:1);
-   the host adds no header or overlay, and the whole tile opens the full view.
-   So the preview must name itself: start with a short title on one line at
-   the top, such as "MEIN WEINBESTAND", small (about 10–11 px), uppercase or
-   semibold, with an optional small icon, truncating with an ellipsis rather
-   than wrapping. Below it, lay the content out horizontally: the primary
-   result large on the left, one or two short supporting facts beside or below
-   it. Keep details and controls in `index.html`. Let the actual iframe width
-   and height drive responsive layout, including long values, loading, empty,
-   and error states. Avoid fixed minimum page sizes, internal scrolling, and
-   simply scaling or cropping the full view. Review the source for 224 × 112 and for the 200 × 100 and
-   280 × 140 CSS pixel bounds. Do not launch a browser or execute the
+   host bridge and `initialize` data. The tile is 240 × 70 CSS pixels, as tall
+   as the Today title and date; the host adds no header or overlay, and the
+   whole tile opens the full view. So the preview must name itself: start with
+   a short title on one line, such as "MEIN WEINBESTAND", small (about
+   10–11 px), uppercase or semibold, with an optional small icon, truncating
+   with an ellipsis rather than wrapping. Pin the title 10 px from the top and
+   14 px from the left on a 14 px line, pad the bottom by 8 px, and draw no
+   extra frame around the tile, so titles align across the row; never center
+   the title with the content. Below it, use one row centered in the remaining
+   space: the primary result on the left (about 20–30 px) and at most two
+   11 px lines of short supporting facts beside it. Keep details and controls
+   in `index.html`. Let the actual iframe width and height drive responsive
+   layout, including long values, loading, empty, and error states. Avoid
+   fixed minimum page sizes, internal scrolling, and simply scaling or
+   cropping the full view. Review the source for 240 × 70 and for the
+   220 × 64 and 280 × 80 CSS pixel bounds. Do not launch a browser or execute the
    bundle locally to perform this review; report visual layout as unverified
    unless it has actually been inspected in the supported host.
    For `okf_query`, use the bounded declarative query in
