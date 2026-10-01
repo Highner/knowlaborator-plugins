@@ -16,15 +16,19 @@
    contract. Do not claim an agent-supplied snapshot will refresh automatically
    or substitute an unrelated query just to make a Today tile eligible.
    Include `index.html` for the full view and `preview.html` for the
-   compact square tile on Today. Both entry points use the same host bridge and
-   `initialize` data. The tile header takes part of the square, so design
-   `preview.html` to fit an iframe as small as roughly 220 × 170 CSS pixels.
-   Show only the primary result and one or two short supporting facts; keep
-   details and controls in `index.html`. Let the actual iframe width and height
-   drive responsive layout, including long values, loading, empty, and error
-   states. Avoid fixed minimum page sizes, internal scrolling, and simply
-   scaling or cropping the full view. Review the source for both
-   220 × 170 and 280 × 235 CSS pixels. Do not launch a browser or execute the
+   compact landscape tile beside the Today title. Both entry points use the same
+   host bridge and `initialize` data. The tile is 224 × 112 CSS pixels (2:1);
+   the host adds no header or overlay, and the whole tile opens the full view.
+   So the preview must name itself: start with a short title on one line at
+   the top, such as "MEIN WEINBESTAND", small (about 10–11 px), uppercase or
+   semibold, with an optional small icon, truncating with an ellipsis rather
+   than wrapping. Below it, lay the content out horizontally: the primary
+   result large on the left, one or two short supporting facts beside or below
+   it. Keep details and controls in `index.html`. Let the actual iframe width
+   and height drive responsive layout, including long values, loading, empty,
+   and error states. Avoid fixed minimum page sizes, internal scrolling, and
+   simply scaling or cropping the full view. Review the source for 224 × 112 and for the 200 × 100 and
+   280 × 140 CSS pixel bounds. Do not launch a browser or execute the
    bundle locally to perform this review; report visual layout as unverified
    unless it has actually been inspected in the supported host.
    For `okf_query`, use the bounded declarative query in

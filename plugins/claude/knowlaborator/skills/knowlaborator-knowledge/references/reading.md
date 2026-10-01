@@ -1,7 +1,16 @@
 # Read knowledge and existing exports
 
 Use search_content for bounded discovery across knowledge, Documents, and active
-Dataset metadata. It has no resource-kind filter. Use list_cases or get_case for
+Dataset metadata and current active Dataset records. Record hits use keyword matching
+of current scalar values, visible reference labels, and Dataset names; metadata
+retains hybrid search. Records share the content limit and Workspace filter, and
+changedFrom/changedUntil apply to their update times. Document-scoped searches
+exclude records. A `dataset_record` hit carries its Dataset name in HeadingPath
+and `dataset://datasets/{datasetId}/records/{recordId}/revisions/{revisionId}`
+in ResourceUri. Read full values with get_dataset_record or the exact
+get_dataset_record_revision; a discovery hit is not the full record.
+includeHistorical does not include superseded or archived record revisions.
+It has no resource-kind filter. Use list_cases or get_case for
 Cases. Read exact results through their owning operation. Use list_knowledge for
 catalog pages, get_knowledge for one record, and list_knowledge_revisions for history.
 

@@ -1,6 +1,10 @@
 # Query Datasets
 
-1. Use `list_datasets` for bounded authorized discovery.
+1. Use `list_datasets` for bounded authorized Dataset discovery. `search_content`
+   also finds active Dataset metadata and current active record values by keyword.
+   A `dataset_record` hit provides its title, Dataset name in HeadingPath, and
+   exact Dataset/record/revision coordinates in ResourceUri. Use
+   `get_dataset_record` or `get_dataset_record_revision` for its full values.
 2. Before choosing one Dataset, apply this skill's `description` and `useWhen`
    inspection rule, then call `get_dataset` for the exact selected candidate.
 3. Read `get_dataset_schema` before constructing a query or write. Use schema
