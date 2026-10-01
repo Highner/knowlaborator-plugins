@@ -31,11 +31,41 @@ ID returns `COMPONENT_QUERY_UNAVAILABLE` and must be revised. Correct
 ## Datasets
 
 An immutable `dataset_query` Component revision can use the original single
-Dataset binding or a saved two-to-four-source join plan. Every source declares
+Dataset binding or a saved one-to-four-source plan. Every source declares
 an exact Dataset ID, schema revision ID, stable projected field IDs, bounded
 filters and scalar sorts, and page size. All sources share the Component's
 owning Workspace and use `dataScope=workspace`. A binding contains no SQL,
 credentials, organization ID, local path, or executable instruction.
+
+Always set each source's `query.projectedFieldIds` to the exact business fields
+used by the full view, preview, joins, and declared external sources. Do not
+omit the projection to fetch the entire schema. Record-reference values already
+include an authorized display `label`; do not join a target Dataset solely to
+obtain that same label.
+
+Also set top-level `recordMetadataFields` to `["id"]` when the renderer needs
+record identity (for keys or deduplication), or `[]` for values only. This applies
+to every record in a single-Dataset result or joined row. `values` always contains
+the source's projected business fields. Add other metadata only when the renderer
+uses it: `datasetId`, `status`, `revision`, `currentRecordRevisionId`,
+`schemaRevisionId`, `creatorMembershipId`, `lastEditorMembershipId`, `createdAt`,
+and `updatedAt`. Names are case-sensitive, unique, and camelCase; `null` is invalid.
+Omitting the selection retains the full record metadata for compatibility with
+older bindings. Metadata projection does not change authorization or join
+matching: the server joins complete authorized source records, then projects the
+result before enforcing its 256 KiB payload limit. Keep the existing envelope,
+source columns, record-reference value shape, and unmatched `null` rows.
+
+When revising an existing Component, inspect both entry points for business-field
+and metadata reads, preserve all fields they use, and create a new immutable
+revision. Do not alter historical revisions or silently truncate records to fit.
+Single-Dataset queries return one page and a cursor; joined plans resolve all
+bounded source pages. Reducing a joined plan's `pageSize` does not reduce its final
+payload. If a projected result remains too large, narrow its saved filters without
+misrepresenting a partial view as the complete inventory.
+For a complete bounded overview of one Dataset, use a one-source `sources` plan
+with `joins: []`; it follows pages using the same record and payload bounds.
+This allows removing label-only joins without reducing an overview to one page.
 
 For a joined plan, list the root source first. Each later source has one join
 to an earlier source. The `referenceFieldId` must be a projected, current
@@ -49,6 +79,7 @@ result whenever the Component is opened; an agent is not involved in display.
 
 ```json
 {
+  "recordMetadataFields": ["id"],
   "sources": [
     { "alias": "assets", "datasetId": "<exact-id>", "schemaRevisionId": "<exact-id>", "query": { "projectedFieldIds": ["<field-id>"], "pageSize": 50 } },
     { "alias": "rentPeriods", "datasetId": "<exact-id>", "schemaRevisionId": "<exact-id>", "query": { "projectedFieldIds": ["<asset-reference-field-id>", "<rent-field-id>"], "pageSize": 50 } }

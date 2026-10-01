@@ -50,6 +50,11 @@
    filters/sorts/page size, and record-reference joins as described in
    [component-queries.md](component-queries.md). All Dataset sources use
    `dataScope=workspace` and the same owning Workspace as the Component.
+   Select only required business fields with `query.projectedFieldIds` and
+   explicitly set top-level `recordMetadataFields` (normally `["id"]` or `[]`).
+   Inspect both entry points before revising an existing binding; preserve the
+   metadata and business fields they actually consume. Use reference labels
+   instead of a target Dataset join when no other target fields are needed.
    Declarative queries must not include SQL, URLs, credentials, MCP calls,
    AI instructions, or executable expressions. External URLs belong only in
    the declared connection/source fields. A Dataset binding grants no access.
