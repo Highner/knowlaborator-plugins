@@ -2,6 +2,11 @@
 
 1. Use `list_datasets` for bounded authorized Dataset discovery. `search_content`
    also finds active Dataset metadata and current active record values by keyword.
+   Record searches accept up to 32 distinct terms across fields and visible linked
+   labels, rank more matching terms first, and retain partial matches when extra
+   topic words are absent. Whitespace, slashes, and list punctuation separate terms.
+   For example, an address and a tenant name need not occur in the same field.
+   Read the full record to verify a partial match before relying on it.
    A `dataset_record` hit provides its title, Dataset name in HeadingPath, and
    exact Dataset/record/revision coordinates in ResourceUri. Use
    `get_dataset_record` or `get_dataset_record_revision` for its full values.

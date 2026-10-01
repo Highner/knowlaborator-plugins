@@ -2,8 +2,11 @@
 
 Use search_content for bounded discovery across knowledge, Documents, and active
 Dataset metadata and current active Dataset records. Record hits use keyword matching
-of current scalar values, visible reference labels, and Dataset names; metadata
-retains hybrid search. Records share the content limit and Workspace filter, and
+across current scalar values, visible reference labels, and Dataset names. Up to
+32 distinct terms are separated by whitespace, slashes, or list punctuation.
+Partial matches are ranked by how many terms match, so an address and a person
+name can match separate fields or linked labels even when a topic term is absent.
+Typed number and date literals retain exact matching. Metadata retains hybrid search. Records share the content limit and Workspace filter, and
 changedFrom/changedUntil apply to their update times. Document-scoped searches
 exclude records. A `dataset_record` hit carries its Dataset name in HeadingPath
 and `dataset://datasets/{datasetId}/records/{recordId}/revisions/{revisionId}`
