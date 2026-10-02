@@ -122,7 +122,19 @@ No message read state, ToDo, notice, draft, knowledge, or Case is changed.
    word budget. Preparing metadata creates nothing. A later explicit browser save or
    user-authorized MCP handoff can create or link a ToDo. This generation workflow still
    must not execute suggestions or create domain content.
-6. Call `save_daily_brief` with the exact returned ContextToken, Summary, and Items.
+6. Check `PreviousBrief.Date` against `Today.Today` in the organization timezone.
+   If a briefing exists for today, call `update_daily_brief` with the exact fresh
+   ContextToken, Summary, and item updates. For a focused addition or edit, use
+   `add_daily_brief_items` or `update_daily_brief_item` with today's exact RevisionId,
+   ExpectedMembershipId, and a new OperationId. Reuse OperationId and the entire input
+   only for an identical lost-response retry. A stale revision needs a fresh read.
+   If there is no briefing for today, call `save_daily_brief` to create today's brief.
+   Never update an earlier day's briefing. The backend enforces these boundaries.
+   Consult `OutstandingItems`: priorities and suggestions carry until processed, even
+   when read; information carries until read. Reuse their UUIDs, verify current sources,
+   and preserve accepted task links. The server retains omitted outstanding items.
+   Read/unread state belongs to the user and is separate from processing; generation
+   does not mark items read or processed. Content edits make the same item unread again.
    The limits of 20 items and eight sources per item are safety bounds, not targets.
    Save even when there are no items. OrgApp validates the current membership, organization,
    local date, instruction revision, and brief revision. A successful save appears under
@@ -144,7 +156,7 @@ No message read state, ToDo, notice, draft, knowledge, or Case is changed.
 
 For a request covering all organizations, call `list_organizations` once and
 preserve its `activeOrganizationId`. Process each returned membership separately
-with `set_active_organization`, `get_daily_brief_context`, and `save_daily_brief`.
+with `set_active_organization`, `get_daily_brief_context`, and today's appropriate create/update briefing tool.
 Complete the read, reasoning, and save within one organization before switching.
 Restore the preserved selection afterward when one existed. If there was no
 prior selection, leave the first returned membership active and say so.

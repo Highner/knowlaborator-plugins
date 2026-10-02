@@ -4,6 +4,18 @@ Use this flow for an explicit concept create, revision, reorganization, or
 strict local OKF validation. The requested non-destructive write needs no second
 confirmation.
 
+## OKF timestamp baseline
+
+Use [OKF v0.2 at revision ad30107c](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/ad30107c31c06aec8a7d5636e0d1058118604e6f/SPEC.md).
+When present, timestamp fields (`generated.at`, `verified[].at`, `stale_after`,
+`sources[].last_modified`, and `usage_window.from`/`.to`) use ISO 8601 datetimes
+with explicit offsets, such as `2026-09-23T00:00:00Z`. Do not invent timestamps.
+Knowledge exchange exports review dates at midnight UTC. It accepts legacy
+date-only `stale_after` with a compatibility warning and maps offset datetimes
+to their UTC calendar date, warning when it discards time of day.
+The local validator checks structure and producer lints; a successful check
+does not certify optional timestamp semantics.
+
 ## Apply guidance progressively
 
 1. Call `get_workspace_knowledge_guidance` with the exact target Workspace ID

@@ -70,3 +70,14 @@ not accept a handoff. An unavailable task never authorizes a silent replacement.
 Daily Brief preparation remains proposal-only: generating or saving a brief does
 not execute suggestions, mark items processed, or reopen them. Use My Day only for
 that preparation workflow; use the owning domain skill for authorized execution.
+
+## Adding briefing findings
+
+When the user requests briefing additions or updates, read the personal briefing via
+`get_daily_brief_context`. Compare `PreviousBrief.Date` to `Today.Today`: only today's
+existing briefing can be changed with `add_daily_brief_items`, `update_daily_brief_item`,
+or `update_daily_brief`. Use the exact current RevisionId and membership, preserve UUIDs
+for the same issue, and use an OperationId for narrow item writes. Reuse the complete
+input and OperationId only for a lost-response retry. If today's briefing does not
+exist, apply My Day to create it from fresh context; never append to yesterday's brief.
+Adding a suggestion is proposal-only and never authorizes or executes its work.

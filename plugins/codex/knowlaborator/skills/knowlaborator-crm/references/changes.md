@@ -19,6 +19,13 @@ exists; never create an Account as a side effect of contact extraction. Ensure
 each created or reused contact is linked to the exact source Document through
 an eligible target returned by `search_crm_link_targets`.
 
+Accounts and individual contacts may each own optional `bankDetails` with
+`recipient`, `iban`, and `bic`. These are shared with everyone authorized to read
+that record. Use only user-supplied bank details; do not infer them from affiliation.
+Recipient and IBAN are required together; BIC is required outside the EEA. Include
+the complete saved `bankDetails` in full record updates to retain it; null removes
+it. Never store a payment amount or payment reference in the CRM record.
+
 Record only the intended shared interaction summary and occurrence time. A
 mail locator is the caller-owned connected-mail account ID plus an opaque
 message reference; never copy mail content into it or expose it to another

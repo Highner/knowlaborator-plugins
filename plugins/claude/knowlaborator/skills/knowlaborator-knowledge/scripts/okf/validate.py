@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Validate an Open Knowledge Format (OKF) bundle.
 
-OKF v0.1 conformance (https://github.com/GoogleCloudPlatform/knowledge-catalog):
+OKF v0.2 structural conformance (also compatible with v0.1):
+  https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/ad30107c31c06aec8a7d5636e0d1058118604e6f/SPEC.md
   1. Every non-reserved .md file begins with a parseable YAML frontmatter block.
   2. That frontmatter contains a non-empty `type` (a string).
   3. Reserved files follow their structure when present: index.md and log.md take
@@ -13,6 +14,9 @@ ERROR. Under --strict the validator additionally reports producer-quality LINTs
 (broken links, links missing .md, orphan concepts, missing recommended fields).
 Those are NOT spec violations -- consumers MUST tolerate them -- but they still
 fail the --strict gate (exit 1) so producers can keep a bundle tidy.
+Optional timestamp semantics are not checked here. The pinned v0.2 baseline uses
+ISO 8601 datetimes with explicit offsets for timestamp-valued frontmatter keys;
+the Knowledge exchange adapter reports legacy date-only compatibility separately.
 
 Usage:
     python validate.py <bundle-path>
