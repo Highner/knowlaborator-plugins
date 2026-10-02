@@ -16,6 +16,8 @@ Read only what the request needs:
   an explicit destination, or designing a procedure's durable inputs and outputs.
 - [delegated-discovery.md](references/delegated-discovery.md) for a broad
   read-only research pass when the client supports isolated subagents.
+- [file-inspection.md](references/file-inspection.md) when staging and inspecting
+  an original file returned by any exact-file tool.
 
 A read or ordinary operational request does not authorize ambient knowledge
 capture. For explicit research, analysis, brainstorming, decision support,
@@ -30,7 +32,13 @@ saved RevisionId, and read its MembershipId and current Processing state/Version
 user's actual work request and use the owning functional skill. Recheck source
 access and current source facts before acting; advisory links never grant access.
 
-After successfully fulfilling user-authorized work that originated from this item,
+For a user-authorized ToDo handoff, use `create_todo` or `update_todo` with optional
+`dailyBriefItem` as described by
+[Notices and ToDos](knowlaborator-skill://knowlaborator-notices-and-todos/references/notices-and-todos.md).
+This atomically saves or links the task and records the item's processed outcome;
+do not separately mark it processed after a successful handoff.
+
+After successfully fulfilling other user-authorized work that originated from this item,
 call `mark_daily_brief_item_processed` as the final step. Supply the exact item and
 RevisionId, ExpectedMembershipId from the returned MembershipId, ExpectedVersion
 from Processing.Version,

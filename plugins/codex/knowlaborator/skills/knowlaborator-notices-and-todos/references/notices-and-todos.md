@@ -13,6 +13,19 @@
 ## ToDos
 
 - Use `list_todos`, `create_todo`, and `update_todo` for Workspace-owned ToDos.
+- For a user-authorized handoff from a saved Daily Brief suggested action, supply
+  optional top-level `dailyBriefItem` on `create_todo` or `update_todo`. Read the
+  exact item first through `get_active_context` or the saved brief, and supply
+  `itemId`, `revisionId`, `expectedMembershipId`, `expectedProcessingVersion`
+  (0 when no processing state exists), and a fresh `operationId` UUID. Creation
+  accepts the handoff and reuses an available advisory `ExistingTodoId`; update
+  links its explicit `todoId`, preserving current task fields for a link-only
+  handoff. The task, link, and processed outcome commit together, so do not call
+  `mark_daily_brief_item_processed` again. Reuse the entire tool input and operation
+  ID on a lost-response retry. Changed inputs, stale references, and already accepted
+  handoffs conflict; read fresh context rather than guessing or relinking. Omit the
+  reference for subsequent ordinary edits. Brief generation and basket selection
+  do not authorize a handoff.
 - Every ToDo has a required short `header` and a required `description`. Use the
   header as the concise action label and put the supporting detail in the
   description; do not combine them into a legacy body field.
@@ -33,5 +46,17 @@
   deadline.
 - Allowed transitions are `Open` to `Done` or `Closed`, and either terminal
   state back to `Open`. Do not request `Done` directly to `Closed` or vice versa.
+- For fixed-date recurrence, provide `recurrence` on `create_todo`: `frequency`
+  is `daily`, `weekly`, or `monthly`, `interval` is 1–365, optional weekly
+  `weekdays` use Sunday=0 and include the first deadline's weekday, and optional
+  `endDate` is inclusive. A first deadline date is required. Each scheduled
+  occurrence is an independent task; completion never delays the series.
+- Updates default to `editScope=occurrence`, preserving the series. To edit the
+  selected task and the template for subsequent occurrences, use `editScope=future`
+  and the exact `expectedSeriesVersion` from the latest response. Send `recurrence`
+  to change rules, set `paused` for pause/resume, or use `frequency=none` to stop.
+  A stopped series cannot restart. Historical occurrences retain their content
+  and completion state. Recurring tasks retain their captured timezone, returned
+  as `organizationTimeZone`; do not reinterpret their deadline in a changed zone.
 - Confirm the saved header, description, complete assignee set, deadline,
   status, and derived overdue state from the mutation result.

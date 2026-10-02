@@ -79,8 +79,9 @@ treating it as fact.
 
 `get_canvas_overview` (optional exact `revision`) returns a link to one
 deterministic inert `image/svg+xml` resource with structured metadata
-`canvasId`, `revision`, `mediaType`, `byteSize` and `sha256`. Read the link with
-the client's MCP resource reader. Images and files appear as placeholders. Use
+`canvasId`, `revision`, `mediaType`, `byteSize` and `sha256`. Follow the shared
+[file inspection](../../knowlaborator-work/references/file-inspection.md) flow
+to stage and verify the SVG. Images and files appear as placeholders. Use
 it to orient, never as the source of item text or values; read the scene for
 content.
 
@@ -89,7 +90,7 @@ content.
 `get_canvas_asset_file` with `canvasId` and `assetRevisionId` returns a link to
 the exact original bytes of one asset revision with authoritative `fileName`,
 `mediaType`, `byteSize`, `sha256` and, for raster images, `width` and `height`.
-Read the link with the client's MCP resource reader before inspecting the
+Use the same native staging and verification flow before inspecting the
 original; no OCR, caption, alt text or thumbnail substitutes for it.
 `CANVAS_ASSET_TOO_LARGE` means the original exceeds the MCP resource limit;
 report that rather than guessing its content.

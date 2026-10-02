@@ -52,6 +52,7 @@ commands are not success.
 
 Use get_okf_operation for an already known operation. When an export is ready
 and its actual generated file is needed, use get_okf_export_file with the exact
-operation ID, then read the returned link with the client's MCP resource reader.
-Follow the shared MCP file handoff instructions. Do not use a browser
+operation ID, then stage and verify the exact original using the shared
+[file inspection](../../knowlaborator-work/references/file-inspection.md) flow.
+Do not use a browser
 downloadPath or substitute indexed content for that file.

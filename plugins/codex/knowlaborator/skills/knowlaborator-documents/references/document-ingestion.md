@@ -42,7 +42,8 @@ bytes, upload URL, credentials, or tokens in an MCP argument or summary.
    uncertain.
 8. Use `get_document_version` to check processing. When the saved bytes must be
    verified or semantically assessed, call `get_document_file` and inspect the
-   exact original through the client's resource/file support.
+   exact original through the client's resource/file support using the shared
+   [file inspection](../../knowlaborator-work/references/file-inspection.md) flow.
    Never use indexed chunks, preview text, or metadata as
    a substitute for the actual file. A Playbook may link a Template only after
    its version is current and successfully processed.
