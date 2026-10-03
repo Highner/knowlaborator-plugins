@@ -1,6 +1,6 @@
 ---
 name: knowlaborator-administration
-description: Administer membership, organization settings, Workspace taxonomy guidance and semantic retrieval configuration.
+description: Administer membership, organization settings, optional modules, Workspace taxonomy guidance and semantic retrieval configuration.
 ---
 
 # Knowlaborator Administration
@@ -42,3 +42,23 @@ in the browser. Report only safe returned state and exact affected scope.
 Use Playbooks for Playbook authoring. Domain work requires its functional skill
 and an appropriate binding; Administration does not grant restricted content
 access or permit a silent switch to another surface.
+
+## Optional modules
+
+Use `list_organization_modules` when module installation or availability matters
+to the request. The curated IDs are `org-chart` and `projects`; they can be
+installed independently. Installation, deactivation and reactivation belong to
+organization administrators in **Organization Settings -> Modules**. The MCP
+query reports safe state and availability; it does not perform lifecycle writes.
+
+Installing a module never grants access, changes Workspace roles, or gives an
+administrator private content access. Deactivation retains authorized module
+records and history in read-only form. Module writes stop; linked core ToDos,
+Documents, Knowledge and decisions continue to work under their usual rules.
+Core capabilities are always available. Never propose permanent purge as a
+deactivation step or substitute deprecated Cases for Projects.
+
+For a stale request returning `MODULE_NOT_INSTALLED` or `MODULE_DEACTIVATED`,
+reload availability, explain the returned state, and route an explicit lifecycle
+request to the browser. Do not switch organization or use another transport to
+bypass the state.

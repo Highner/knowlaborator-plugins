@@ -24,6 +24,7 @@ description: Read, author, and distill shared Workspace canvases with exact revi
 
 Read only the reference needed for the requested operation:
 
+- [decision-links.md](references/decision-links.md): canonical exact-revision Knowledge decision links and standing.
 - [reading-and-inspection.md](references/reading-and-inspection.md): discovery,
   scenes, overview, exact assets and distillation reads.
 - [authoring-changes.md](references/authoring-changes.md): metadata and item

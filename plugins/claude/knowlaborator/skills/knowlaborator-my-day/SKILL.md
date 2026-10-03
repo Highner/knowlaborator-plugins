@@ -8,7 +8,7 @@ description: Prepare and save a personal Daily Brief for the active organization
 Prepare the user's Daily Brief from Today and save it back to OrgApp. The brief
 summarizes the day and proposes actions; suggestions are never executed. The
 plugin also has ordinary domain write tools, so this workflow's proposal-only
-boundary is procedural. Saving the brief is its only permitted content write.
+boundary is procedural. Saving the brief and the narrow payment-information preparation below are its only permitted content writes.
 No message read state, ToDo, notice, draft, knowledge, or Case is changed.
 
 ## Prepare and save
@@ -121,7 +121,18 @@ No message read state, ToDo, notice, draft, knowledge, or Case is changed.
    `TodoLink` before proposing another task for the same issue, and preserve item IDs. Draft metadata is separate from the visible
    word budget. Preparing metadata creates nothing. A later explicit browser save or
    user-authorized MCP handoff can create or link a ToDo. This generation workflow still
-   must not execute suggestions or create domain content.
+   must not execute suggestions or create domain content beyond the payment-information exception below.
+   For source-grounded EUR payment requests, read `list_payments` (follow NextOffset) and
+   existing ToDo PaymentId before preparing a payment. Reuse the same object for the same
+   obligation; recurring ToDos expose a distinct payment for each occurrence. Read `get_payment`
+   for its current paid state. Do not present an already paid payment as unpaid.
+   If no object exists and exact recipient, amount and valid IBAN are known, `create_payment`
+   may save those details as information in an authorized Workspace (personal by default).
+   Reuse its new payment UUID and identical fields on retries; put the returned Id in Item.PaymentId.
+   Never invent payment details or create speculative payments. This narrow preparation exception
+   never submits a bank transfer, marks paid, completes a ToDo or processes the brief item.
+   Do not call set_todo_payment during briefing generation. The user can open the payment modal
+   from the briefing or a linked ToDo, review the QR, mark paid manually, or confirm a Kontoflux match.
 6. Check `PreviousBrief.Date` against `Today.Today` in the organization timezone.
    If a briefing exists for today, call `update_daily_brief` with the exact fresh
    ContextToken, Summary, and item updates. For a focused addition or edit, use

@@ -24,6 +24,24 @@ capture. For explicit research, analysis, brainstorming, decision support,
 save, or import, use Knowledge's task-scoped capture guidance only when writes
 are requested or authorized by that workflow and available on this binding.
 
+## Optional module availability
+
+Org Chart (`org-chart`) and Projects (`projects`) are independent optional
+modules. When their availability matters, use `list_organization_modules` for
+the active organization's current state and discover the live tools and owning
+functional skill. Availability flags never grant record access. Use exact
+feature-authorized records; reporting relationships grant no Workspace or
+approval authority.
+
+A deactivated module retains authorized read access and history while its
+mutations are paused. Continue permitted work on linked core ToDos, Documents,
+Knowledge and decisions through their own operations. Core work does not require
+installing a module. On `MODULE_NOT_INSTALLED` or `MODULE_DEACTIVATED`, refresh
+availability and explain what remains possible. Administrator lifecycle changes
+belong in **Organization Settings -> Modules**; never bypass the state through
+another organization, endpoint or copied tool list. Deprecated Cases are not
+project entities.
+
 ## Work from a Daily Brief item
 
 A selected recommendation is context, not authorization to execute source or domain
