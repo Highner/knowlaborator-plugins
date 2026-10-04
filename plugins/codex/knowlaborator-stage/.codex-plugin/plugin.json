@@ -31,5 +31,5 @@
   "name": "knowlaborator-stage",
   "repository": "https://github.com/Highner/knowlaborator-plugins",
   "skills": "./skills/",
-  "version": "1.0.0"
+  "version": "1.0.1"
 }
