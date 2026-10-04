@@ -29,6 +29,9 @@ only for authoring, upload, revision, fork, publication review or removal, and
 only where the corresponding tools are exposed. For creation or revision, also
 read [component-host-contract.md](references/component-host-contract.md) for
 the manifest, ZIP requirements, bridge example, and external-data limits.
+When the Component should also appear on the Stage, read
+[component-stage-templates.md](references/component-stage-templates.md) and add
+a `stage.json` template to the bundle.
 Loading this skill grants no authority; permissions still apply independently
 to the Component, its owning
 Workspace, and its Dataset.
