@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "author": {
+    "email": "info@appligator.de",
+    "name": "Appligator"
+  },
+  "description": "@knowlaborator-stage directs your open Knowlaborator Stage with four presentation tools.",
+  "displayName": "Knowlaborator Stage",
+  "homepage": "https://orgapp-production-1b56.up.railway.app/plugin/support",
+  "keywords": [
+    "presentation",
+    "knowledge",
+    "stage",
+    "mcp"
+  ],
+  "name": "knowlaborator-stage",
+  "version": "1.0.0"
+}

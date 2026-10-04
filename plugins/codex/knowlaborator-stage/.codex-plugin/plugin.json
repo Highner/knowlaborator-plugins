@@ -1,0 +1,35 @@
+{
+  "author": {
+    "email": "info@appligator.de",
+    "name": "Appligator"
+  },
+  "description": "Present records side by side on your open Knowlaborator Stage.",
+  "homepage": "https://orgapp-production-1b56.up.railway.app/plugin/support",
+  "interface": {
+    "brandColor": "#4C747A",
+    "capabilities": [
+      "Read",
+      "MCP"
+    ],
+    "category": "Productivity",
+    "defaultPrompt": [
+      "@knowlaborator-stage: show how these records relate on my Stage."
+    ],
+    "developerName": "Appligator",
+    "displayName": "Knowlaborator Stage",
+    "longDescription": "Four Stage tools and one skill: show records, highlight exact passages, connect and narrate.",
+    "shortDescription": "Explain how records relate on your Knowlaborator Stage.",
+    "websiteURL": "https://orgapp-production-1b56.up.railway.app/plugin/support"
+  },
+  "keywords": [
+    "presentation",
+    "knowledge",
+    "stage",
+    "mcp"
+  ],
+  "mcpServers": "./.mcp.json",
+  "name": "knowlaborator-stage",
+  "repository": "https://github.com/Highner/knowlaborator-plugins",
+  "skills": "./skills/",
+  "version": "1.0.0"
+}

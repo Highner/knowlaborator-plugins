@@ -13,6 +13,10 @@ Install Knowlaborator and sign in when prompted. The plugin discovers only the
 organizations available to the signed-in user. If more than one is available,
 use `list_organizations` and `set_active_organization` to select the active context.
 
+Install Knowlaborator Stage as well to let your agent present records on the Stage page:
+it places record cards, highlights exact passages and connects them while you watch. Its
+connection follows the organization in which you opened the Stage.
+
 The repository contains generated skills, client-specific manifests, and public MCP
 URLs. It contains no credentials, installation keys, documents, or organization data.
 Installing a plugin grants no access: Knowlaborator checks the signed-in account,

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Stage"
+  short_description: "Explain records side by side on the person's open Stage"
+  default_prompt: "Use $knowlaborator-stage to show how these records relate on my Stage."
