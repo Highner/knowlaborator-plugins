@@ -1,20 +1,55 @@
 # Decisions and required reviews
 
-## Author a decision OKF record
+## Author a compact decision OKF record
 
-- **Title:** State the decision in a very short, easy-to-understand sentence.
-  Use plain language and make the chosen action clear, for example, "Use one
-  shared customer directory" rather than "Customer directory decision".
-- **Body:** Add brief context and explain why the decision was made and what it
-  means. Keep the explanation concise; preserve uncertainty or proposed status
-  when the decision has not yet been made.
-- **References:** Reference the relevant OKF records that informed the decision
-  or are affected by it, using their verified record links or identifiers and
-  briefly explaining their relevance. Read the relevant records before citing
-  them; do not invent references or copy their full content into the decision.
+A decision records the choice and its reason. Supporting facts stay in the existing
+OKF records; link to them instead of maintaining a second copy.
 
-Authoring the record does not establish final standing or approval. Use the
-operations below for the user's requested decision or review action.
+- **Title:** One very short, plain-language statement of the chosen action, for
+  example, "Use one shared customer directory".
+- **Body:** Usually 1–3 short sentences: why this choice, plus only the conditions
+  or scope needed to understand it. Do not restate the title or summarize each
+  source. Preserve uncertainty and proposed status.
+- **References:** A few verified links to the relevant evidence or affected OKF
+  records, using descriptive labels. Read the records before citing them. Keep
+  research, alternatives, detailed plans and implementation instructions in those
+  records. Do not add a mini-summary to every link.
+- **Provenance:** Use the existing structured decision fields for maker, date,
+  recorder, source and standing. Do not repeat those fields in the body or invent
+  missing provenance. Authoring text alone never establishes approval.
+
+Example:
+
+> **Use one shared customer directory**
+>
+> One directory avoids duplicate customer maintenance. Each team keeps its own
+> access permissions.
+>
+> References: [Customer data policy](verified-record-link),
+> [Access requirements](verified-record-link).
+
+## Edit wording or change the decision
+
+Read the current content and `get_knowledge_decision` first. Use current revision,
+Knowledge version, standing version and an operation UUID; reuse the UUID only
+for an identical retry.
+
+- `correct_knowledge_decision_wording` is for an explicitly authorized editorial
+  correction. Set `meaningUnchangedConfirmed` only when the user has confirmed
+  that the choice, scope and conditions remain unchanged; never infer this for a
+  substantive change. It preserves standing and original provenance, creates a
+  correction trail and links to the original text. Signatures remain on that
+  original revision. Pending reviews cannot be bypassed.
+- `revise_knowledge_decision` changes the choice, scope or conditions. It saves a
+  new proposed revision, without inherited approval. Recording, human review and
+  superseding the earlier decision remain separate explicit actions.
+
+Both commands accept a short title and Markdown body containing the rationale and
+record links. Other Knowledge metadata remains unchanged. If these commands are
+not available on the connected server, do not emulate them by re-recording or
+copying approval claims. For an explicitly requested text-only UX test on a current
+unspecified revision, ordinary `update_knowledge` is suitable; preserve all other
+fields and explain that it creates an unfinalized revision.
 
 ## Standing and human review
 
