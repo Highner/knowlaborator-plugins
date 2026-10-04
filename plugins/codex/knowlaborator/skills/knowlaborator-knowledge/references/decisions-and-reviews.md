@@ -1,5 +1,23 @@
 # Decisions and required reviews
 
+## Author a decision OKF record
+
+- **Title:** State the decision in a very short, easy-to-understand sentence.
+  Use plain language and make the chosen action clear, for example, "Use one
+  shared customer directory" rather than "Customer directory decision".
+- **Body:** Add brief context and explain why the decision was made and what it
+  means. Keep the explanation concise; preserve uncertainty or proposed status
+  when the decision has not yet been made.
+- **References:** Reference the relevant OKF records that informed the decision
+  or are affected by it, using their verified record links or identifiers and
+  briefly explaining their relevance. Read the relevant records before citing
+  them; do not invent references or copy their full content into the decision.
+
+Authoring the record does not establish final standing or approval. Use the
+operations below for the user's requested decision or review action.
+
+## Standing and human review
+
 Publication `active` means available Knowledge, not a final decision or human
 approval. Read `get_knowledge_decision` for the exact revision's authoritative
 standing, version, current review and provenance. Use

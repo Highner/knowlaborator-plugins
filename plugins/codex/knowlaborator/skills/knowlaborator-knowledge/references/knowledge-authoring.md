@@ -4,6 +4,9 @@ Use this flow for an explicit concept create, revision, reorganization, or
 strict local OKF validation. The requested non-destructive write needs no second
 confirmation.
 
+For a decision OKF record, also read the title, body and record-reference guidance
+in [decisions-and-reviews.md](decisions-and-reviews.md).
+
 ## OKF timestamp baseline
 
 Use [OKF v0.2 at revision ad30107c](https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/ad30107c31c06aec8a7d5636e0d1058118604e6f/SPEC.md).

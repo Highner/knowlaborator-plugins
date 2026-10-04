@@ -19,7 +19,7 @@ description: Search and maintain reusable OKF knowledge, including scoped curati
 
 Read only the reference needed for the requested operation:
 
-- [decisions-and-reviews.md](references/decisions-and-reviews.md): exact-revision standing, direct recording and browser human review.
+- [decisions-and-reviews.md](references/decisions-and-reviews.md): decision OKF authoring, exact-revision standing, direct recording and browser human review.
 - [reading.md](references/reading.md): search, exact reads and exports.
 - [knowledge-authoring.md](references/knowledge-authoring.md): writes and validation.
 - [task-scoped-knowledge-capture.md](references/task-scoped-knowledge-capture.md):
