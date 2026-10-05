@@ -102,7 +102,7 @@ Compose these with their own operations; each takes a new `card` ID and a cell l
 | Op | Shows | Needs | Size |
 | --- | --- | --- | --- |
 | `excerpt` | One highlight enlarged as a quote with its source | `from: {card, highlight}` | 2x1–3x2 |
-| `timeline` | 2–8 records on a time axis | `items: [{card}|{resource, dateField?}]` | 3x1–6x2 |
+| `timeline` | 2–10 entries on a time axis | `items: [{card}|{resource, dateField?}|{date, label}]` | 3x1–6x2 |
 | `agenda` | Your steps for the walk-through | `steps` (≤6 × 80 chars), `current` | 2x1+ |
 | `people` | An account's contacts or a unit's positions | `resource` (crm_account, org_chart_unit) | 2x1+ |
 | `diff` | Two revisions, word by word (records: field by field) | `resource` (later revision), `fromRevisionId` | 2x2+ |
@@ -113,8 +113,13 @@ Compose these with their own operations; each takes a new `card` ID and a cell l
 - Dates on a timeline come from the records (sent, revised, starts, due, decided); pass
   `dateField` to date a field card by one of its fields. Ticks that are also cards on the
   layer get a ring.
+- A timeline can also hold your own dated entries, `{date, label}` (date `yyyy-MM-dd` or an
+  ISO timestamp with offset, label ≤80 characters), alone or mixed with records, for
+  deadlines, plans or events that are not records. They are shown as yours. At most 10
+  entries, of which at most 8 records. Highlight one with `anchor` (`m-1`, `m-2`, … in entry
+  order, as `stage_get` lists them).
 - Highlight items by what they show: a table row (`record`) or cell (`record` + `field`),
-  a timeline record (`record`), a person (`record` = contact or position ID), a component
+  a timeline record (`record`) or your timeline entry (`anchor`), a person (`record` = contact or position ID), a component
   anchor (`anchor`), or a quote from a diff's later revision (`quote`).
 - Components: `stage_find` with `kinds: ["component"]`, then `stage_read` with
   `{kind: "component", id}` for its inputs (record kinds to bind) and anchors.
