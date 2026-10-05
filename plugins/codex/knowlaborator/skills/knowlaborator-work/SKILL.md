@@ -45,7 +45,8 @@ project entities.
 ## Work from a Daily Brief item
 
 A selected recommendation is context, not authorization to execute source or domain
-actions. Resolve the exact item with `get_active_context`, retain its item ID and
+actions. Items reach the basket from the OrgApp browser or the Today desk alike.
+Resolve the exact item with `get_active_context`, retain its item ID and
 saved RevisionId, and read its MembershipId and current Processing state/Version. Obtain the
 user's actual work request and use the owning functional skill. Recheck source
 access and current source facts before acting; advisory links never grant access.

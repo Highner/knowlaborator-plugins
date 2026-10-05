@@ -6,7 +6,8 @@ description: Read or maintain notices, ToDo assignments, deadlines and completio
 # Knowlaborator Notices and ToDos
 
 Use list_notices and get_notice for authorized notices, and list_todos for
-bounded ToDo reads. Preserve Workspace, complete assignee set, deadline type,
+bounded ToDo reads. Before working on a ToDo, call list_todo_context and read
+its available linked sources at the returned exact revisions. Preserve Workspace, complete assignee set, deadline type,
 status, Case ownership and cursors. For a daily snapshot use get_today and
 respect each section's moreAvailable and failures.
 

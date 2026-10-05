@@ -33,7 +33,8 @@ exact needed types in that Workspace.
 
 When the user refers to “this”, “here”, or “my basket” in an already-open
 organization conversation, call `get_active_context` without identifiers. Treat
-`selected`, `focus`, and ordered `basket` as relevance pointers. When
+`selected`, `focus`, and ordered `basket` as relevance pointers. The basket
+combines items collected in the person's open OrgApp browser and Today desk. When
 `explorerSceneState` is `available`, use `explorerScene` directly to describe
 the visible graph's titles, excerpts, relationships, expanded cluster and
 clicked marker. Do not call `explore_knowledge` again for the same view. Use

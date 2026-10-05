@@ -102,3 +102,23 @@ mutations. Linked core actions remain governed by their own operations. On
 what remains possible. Full administrators manage lifecycle in
 **Organization Settings -> Modules**; never bypass the state or add a second
 plugin, ownership model, Invoicing, time billing or Gantt/dependency engine.
+
+## Calendar events on the timeline
+
+Use `link_project_calendar_event` to associate an exact authorized calendar event
+with an open project. An event can be linked to several projects. Use the event ID
+and opaque external event reference returned by Calendar; never invent either.
+Local recurring events link the series; provider events link the selected event
+or occurrence. Project revision, expected organization and a stable idempotency
+key remain required. Linking does not copy event content, grant calendar access,
+create invitations or reschedule a meeting.
+
+`list_project_calendar_events` reads these links with an end-exclusive date range
+(up to ten years), actor-bound cursors and at most 25 links per page. Local series
+expand through Calendar's recurrence rules with at most 100 occurrences per link;
+`moreAvailable` honestly reports truncation. Single events retain their actual
+dates even outside the recurrence window. External events resolve live through
+the owning member's connected provider. Unauthorized events reveal no identity,
+title, time or provider reference. Retryable source failures remain independent
+of milestones and other calendar links. `unlink_project_calendar_event` removes
+only the association and never deletes or edits the calendar event.
