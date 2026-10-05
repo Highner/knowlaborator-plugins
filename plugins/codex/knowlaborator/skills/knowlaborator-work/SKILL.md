@@ -73,6 +73,8 @@ substitute a refreshed item, or overwrite a newer outcome. Items the person clos
 closed: only the person reopens them in the browser. Report failed closing honestly even
 when the underlying work succeeded. Merely mentioning ExistingTodoId on an item does not
 accept a handoff, and an unavailable task never authorizes a silent replacement.
+When the user asks you to attach an item's suggested `TodoAttachment` sources, link each with
+`link_todo_context`, then close the item with Reason `done` and the TodoId.
 
 Agenda preparation remains proposal-only: adding or updating items does not execute
 them. Use My Day for that preparation; use the owning domain skill for authorized

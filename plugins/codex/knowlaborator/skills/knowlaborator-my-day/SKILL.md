@@ -102,6 +102,16 @@ text is rejected with `AGENDA_TEXT_TOO_LONG`; rewrite it shorter instead of spli
      commitments. Use exact Workspace, assignee, Case and CRM IDs only when grounded in
      reads; omit WorkspaceId and AssigneeIds for the personal Workspace and self. For
      an existing task set `ExistingTodoId` instead.
+   - When a new email, document or knowledge revision belongs to an existing ToDo
+     (`search_content` and `list_todos` find it), suggest attaching it: an `action` with
+     `TodoAttachment` holding the ToDo's exact TodoId, the `SourceIndexes` of the new
+     sources and an optional one-line `Note` (at most 100 characters). Cite the ToDo itself as a
+     source with Resource `todo`; this claims it, so a new mail about a ToDo that an open item
+     already covers updates that item. Only sources with a Resource of kind `document`,
+     `knowledge`, `dataset`, `canvas` or `mail_message` can be attached. Read
+     `list_todo_context` first and leave out sources the ToDo already has. It combines with
+     `ExistingTodoId` for the same ToDo, never with `TodoDraft`. The person's Attach to ToDo click
+     saves the links and closes the item; do not link context yourself during the run.
    - For an action that should become an appointment (accepting a proposed time,
      scheduling a call), add `EventDraft` with a short Title, Date, StartTime/EndTime
      and optional Location and CalendarKey from `list_calendar_sources`.
