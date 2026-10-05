@@ -85,3 +85,18 @@ When the user asks to add or change agenda items, read `get_agenda_context` and 
 already covers an issue with its current Version, add only genuinely new issues, and keep
 every text very short. Adding an item is proposal-only and never authorizes or executes
 its work.
+
+## Shared action execution
+
+Read get_shared_work for every agenda WorkReferences entry before acting. Use the exact
+SharedWorkId on create_todo, create_calendar_event or create_payment, including actions
+performed outside Today. Conflicts require reviewing the existing target; do not retry
+with a fresh work identity or omit it. Unavailable targets never permit silent replacement.
+Shared calendar creation uses the owning Workspace calendar; personal provider calendars
+remain independent. Personal item processing is separate from domain completion.
+
+Before a shared payment handoff, obtain user authorization and claim_payment responsibility
+using the current version and one retry OperationId. Another member's claim blocks the
+attempt. Record awaiting_confirmation after an external attempt; claims never expire.
+Release only on explicit confirmation that no transfer occurred. Reconcile an uncertain
+attempt before another payment. A QR or saved PaymentId never proves a completed transfer.

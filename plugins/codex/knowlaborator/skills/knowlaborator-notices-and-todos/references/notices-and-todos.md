@@ -80,3 +80,23 @@
   as `organizationTimeZone`; do not reinterpret their deadline in a changed zone.
 - Confirm the saved header, description, complete assignee set, deadline,
   status, and derived overdue state from the mutation result.
+
+## Payment tasks
+
+- Read `list_payments` and any existing ToDo PaymentId before preparing a payment.
+  Follow payment pagination and reuse the same object for the same obligation.
+- `create_payment` saves source-grounded recipient, IBAN, amount, reference,
+  optional BIC, supported Currency and optional ScheduledDate in an authorized
+  Workspace. Reuse the same UUID and fields on retries. It never transfers money.
+- An explicitly authorized `create_todo` can use PaymentId in the same Workspace.
+  For an existing task use `set_todo_payment` with ExpectedPaymentId from the read;
+  occurrence is the default, future also needs ExpectedSeriesVersion and changes
+  the recurring template. Future tasks receive separate unpaid payments.
+- For an agenda item, `add_agenda_items` and `update_agenda_item` accept PaymentId or
+  partial PaymentDraft metadata, never both. Unknown details stay absent; the user
+  completes Add payment in the browser. Agenda maintenance cannot link or write ToDos.
+- Read `get_payment` for current paid status. Payment confirmation, task completion
+  and agenda processing are separate. EUR supports the SEPA QR handoff and explicit
+  Kontoflux matches; other supported currencies expose details and manual paid status.
+
+Shared obligations: resolve_shared_work in the owning Collaborative Workspace before publishing suggestions. Reuse returned IDs in Agenda WorkReferences across members. Read current shared states and reuse targets for ToDos, calendar and payment actions. Personal read/close state does not finish shared work. Claim payment responsibility before QR handoff; uncertain transfer outcomes remain claimed until reconciled, with explicit no-transfer attestation required for release.

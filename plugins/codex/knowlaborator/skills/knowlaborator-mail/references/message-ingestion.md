@@ -34,3 +34,14 @@ The resulting `EmailMessage` is an immutable source snapshot, not a summary or
 authorization. Imported attachments are linked as ordinary Document references.
 Author derived concepts separately through `$knowlaborator-knowledge` and link relevant
 resources in Markdown.
+
+## Shared snapshot reuse
+
+Matching preserved headers and bodies with a valid Message-ID reuse one snapshot in the
+same authorized Workspace. Mailbox locators and provider access remain membership-owned.
+Exact reads expose SourceIdentity, authorized SharedSnapshots and RelatedWork; use the
+existing KnowledgeId in subsequent source references. Attachment Documents retain their
+own byte identities and imports preserve each copy's attachment lineage. Missing IDs,
+truncated bodies or differing preserved content do not merge across mailboxes. Historical
+snapshots are indexed from their stored content without provider reads; existing duplicates
+are retained. Removing one mailbox copy must not archive a snapshot used by other copies.

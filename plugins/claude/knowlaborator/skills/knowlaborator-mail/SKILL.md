@@ -7,8 +7,10 @@ description: Read connected mail and attachments, preserve an exact message, cre
 
 Connected accounts and provider references are owner-private. Keep every opaque
 message, thread and attachment reference paired with the account that returned
-it. Use only tools exposed by the current binding; Realm mail requires its
-owner-scoped opt-in. Reads do not change provider read state.
+it. Start with search_mail across all connected accounts; it automatically hides
+messages dismissed for the caller's active organization and returns account
+metadata even when no messages match. Use only tools exposed by the current
+binding. Reads do not change provider read state.
 
 - [reading.md](references/reading.md): account resolution, search and exact reads.
 - [attachments.md](references/attachments.md): inspect one selected attachment.
