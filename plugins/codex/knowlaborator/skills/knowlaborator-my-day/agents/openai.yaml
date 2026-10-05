@@ -1,4 +1,4 @@
 interface:
   display_name: "Knowlaborator My Day"
-  short_description: "Compose the labeled cross-organization morning brief"
-  default_prompt: "Use $knowlaborator-my-day to enumerate my authorized organizations, read Today in each one, restore my prior active organization, and compose one labeled read-only brief without acting."
+  short_description: "Keep my agenda current in each organization"
+  default_prompt: "Use $knowlaborator-my-day to update my agenda in each authorized organization, restore my prior active organization, and keep every item very short without acting on it."

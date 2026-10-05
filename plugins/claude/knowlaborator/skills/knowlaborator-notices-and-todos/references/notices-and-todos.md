@@ -35,19 +35,17 @@
 ## ToDos
 
 - Use `list_todos`, `create_todo`, and `update_todo` for Workspace-owned ToDos.
-- For a user-authorized handoff from a saved Daily Brief suggested action, supply
-  optional top-level `dailyBriefItem` on `create_todo` or `update_todo`. Read the
-  exact item first through `get_active_context` or the saved brief, and supply
-  `itemId`, `revisionId`, `expectedMembershipId`, `expectedProcessingVersion`
-  (0 when no processing state exists), and a fresh `operationId` UUID. Creation
-  accepts the handoff and reuses an available advisory `ExistingTodoId`; update
-  links its explicit `todoId`, preserving current task fields for a link-only
-  handoff. The task, link, and processed outcome commit together, so do not call
-  `mark_daily_brief_item_processed` again. Reuse the entire tool input and operation
-  ID on a lost-response retry. Changed inputs, stale references, and already accepted
-  handoffs conflict; read fresh context rather than guessing or relinking. Omit the
-  reference for subsequent ordinary edits. Brief generation and basket selection
-  do not authorize a handoff.
+- For a user-authorized handoff from an open agenda action, supply optional
+  top-level `agendaItem` on `create_todo` or `update_todo`. Read the exact item first
+  through `get_active_context` or `get_agenda_context`, and supply `itemId`,
+  `expectedMembershipId`, `expectedVersion` (the item's current Version), and a fresh
+  `operationId` UUID. Creation reuses an available advisory `ExistingTodoId`; update
+  links its explicit `todoId`, preserving current task fields for a link-only handoff.
+  The task, link and the item's done state commit together, so do not call
+  `close_agenda_item` again. Reuse the entire tool input and operation ID on a
+  lost-response retry. Changed inputs, stale versions and closed items conflict; read
+  fresh context rather than guessing or relinking. Omit the reference for subsequent
+  ordinary edits. Agenda preparation and basket selection do not authorize a handoff.
 - Every ToDo has a required short `header` and a required `description`. Use the
   header as the concise action label and put the supporting detail in the
   description; do not combine them into a legacy body field.

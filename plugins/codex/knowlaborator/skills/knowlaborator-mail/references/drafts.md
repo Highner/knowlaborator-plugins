@@ -12,3 +12,12 @@
    an unknown outcome, direct the user to inspect Drafts before using a new key.
 5. Report the returned account, draft reference, state, and Case link when one
    was requested. State that the message was saved as a draft and was not sent.
+
+When the user requests a signed Document attachment, discover its exact copy with
+`list_document_signed_copies`. Pass `storedSignedCopies` containing the selected
+`documentId` and `signedCopyId` to `create_mail_draft`. This uses the immutable
+stored artifact, including all remarks, checkmarks, signature images and evidence;
+do not attach the unsigned source version or reconstruct a PDF. Normal attachment
+count/size limits and Document permissions apply. The operation may retain a known
+draft while an attachment or Case link needs retrying; reuse the same idempotency
+key for identical retries. Never send the draft through another tool implicitly.
