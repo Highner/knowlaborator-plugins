@@ -5,16 +5,27 @@ description: Explain how records relate by directing the person's open Knowlabor
 
 # Knowlaborator Stage
 
-The Stage is a presentation surface the person opens in Knowlaborator. You direct it with
-four tools; the browser animates every change. Use it whenever an explanation is clearer as
+The Stage is a presentation surface the person opens in Knowlaborator, or that you open
+inside the conversation. You direct it with four tools; the Stage animates every change. Use it whenever an explanation is clearer as
 records side by side: a dispute and the clause it cites, a policy and the record that breaks
 it, a person, their account and the email that matters.
 
 ## Before you start
 
 - Call `stage_get` (or `stage_find`, which also reports the Stage status). If the state is
-  `not_open`, ask the person to open **Stage** in Knowlaborator and wait. This connection
-  follows the organization of the open Stage.
+  `not_open`, call `open_stage` when the person wants to watch here in the conversation;
+  otherwise ask them to open **Stage** in Knowlaborator and wait. This connection follows
+  the organization of the open Stage.
+- `open_stage` shows the Stage as an interactive view in hosts with MCP Apps: ChatGPT can
+  float it beside the conversation (picture-in-picture, the default `presentation`),
+  Claude shows it inline or full screen. Once the view appears it becomes the person's
+  open Stage and continues any Stage they had open in the browser. If `stage_get` still
+  reports `not_open` right after opening, the view has not connected yet; check once
+  more before your first beat. Clients without MCP Apps show no view: give the person
+  the browser Stage link from the result instead. Open it once per conversation, not per
+  beat.
+- `sync_stage_view` and `apply_stage_view_operations` belong to the rendered view, so do
+  not call them yourself; use `stage_get` and `stage_apply`.
 - `stage_get` returns the revision to pass as `expectedRevision`, the active layer, an
   occupancy grid (`.` marks a free cell) and the card the person selected, if any. Treat a
   selected card as the subject of "this" or "that one".
@@ -31,7 +42,7 @@ beat changes 3–8 things and answers one question.
 2. Read what you will highlight: `stage_read` returns Knowledge text as displayed, document
    evidence blocks (with `page`), or record and CRM fields. Quote only what you read here.
 3. Apply the beat with `expectedRevision` from your last result. Keep the returned
-   revision for the next beat. `rendered: false` means the browser did not confirm in time;
+   revision for the next beat. `rendered: false` means the Stage did not confirm in time;
    continue, but check `stage_get` if the person says nothing changed.
 
 ```json
@@ -160,7 +171,8 @@ Compose these with their own operations; each takes a new `card` ID and a cell l
   `columns`; metric `field`; diff `fromRevisionId`; component `inputs`; and `repin: true` on
   a Knowledge, Document, Dataset record or decision card to pin its current revision
   (highlights whose quotes no longer appear are dropped and reported).
-- The person can advance the agenda and edit proposals. Before each beat, read `stage_get`:
+- The person can advance the agenda and edit proposals. Proposals are edited, accepted
+  and reviews answered on the browser Stage; the view in the conversation links there. Before each beat, read `stage_get`:
   a proposal with `editedBy: "person"` holds their text — build on it rather than
   overwriting it. Advance the agenda as you go.
 
