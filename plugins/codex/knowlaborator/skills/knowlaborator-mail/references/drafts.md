@@ -1,11 +1,12 @@
 # Create an unsent provider draft
 
-1. Require an explicit draft request and resolve one active account from retained
+1. Require an explicit draft request. For a new draft, resolve one active account from retained
    search_mail context or its accounts metadata, which is returned even when no
    messages match. Resolve by label and address; if several accounts match the
    intended sender, ask which is intended. Check the create_draft capability. Preserve
    the intended `to`, `cc`, `bcc`, subject, and plain-text body.
-2. For reply or reply-all, use a source message reference from the same account.
+2. For reply or reply-all, omit `accountId` and supply the protected source
+   message reference as `replyToMessageReference`. It selects the exact account.
 3. When the draft is an output of the Playbook being executed for a persisted
    Case, pass that exact `caseId` to `create_mail_draft`; the operation links the
    resulting provider draft to the Case. Omit `caseId` for a draft that is not

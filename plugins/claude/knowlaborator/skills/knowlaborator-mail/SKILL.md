@@ -5,9 +5,11 @@ description: Read connected mail and attachments, preserve an exact message, cre
 
 # Knowlaborator Mail
 
-Connected accounts and provider references are owner-private. Keep every opaque
-message, thread and attachment reference paired with the account that returned
-it. Start with search_mail across all connected accounts; it automatically hides
+Connected accounts and provider references are owner-private. Preserve every
+protected message, thread and attachment reference exactly as returned. Message
+and thread references already identify their account; attachment references also
+bind their exact parent message. Exact mail tools do not accept account IDs.
+Start with search_mail across all connected accounts; it automatically hides
 messages dismissed for the caller's active organization and returns account
 metadata even when no messages match. Use only tools exposed by the current
 binding. Reads do not change provider read state.

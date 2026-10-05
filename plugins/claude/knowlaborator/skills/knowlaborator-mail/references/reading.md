@@ -18,8 +18,11 @@ name. Read one exact message with
 get_mail_message or a requested conversation/reply context with get_mail_thread.
 Do not read both speculatively or broaden a failed message read into a thread.
 Preserve source-account associations, cursors and per-account partial failures.
-Keep exact message, thread and attachment reads paired with their source account
-ID from the result; do not perform another account-discovery call.
+Pass the protected message or thread reference directly for an exact read; no
+account ID or another account-discovery call is needed. References from Today,
+daily brief context, active context, CRM and mail-arrival events use the same
+flow. Never decode, construct or substitute a reference, or use SourceIdentity
+as a live message locator. A MAIL_REFERENCE_INVALID error requires fresh discovery.
 
 For ordinary mail work, load [Playbooks discovery](knowlaborator-skill://knowlaborator-playbooks/references/playbook-discovery.md)
 on the first mail read and reuse its catalog.

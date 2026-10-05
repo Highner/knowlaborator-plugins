@@ -4,7 +4,7 @@ Use `ingest_mail_message` only for explicit intent to preserve one exact message
 Never persist a mailbox, folder, thread, search result set, or unrelated personal
 content.
 
-1. Resolve the exact active account and message reference. An exact search result
+1. Use the exact protected message reference, without an account ID. An exact search result
    is sufficient; call `get_mail_message` first only when the user must choose
    exact references for `attachmentMode: selected`.
 2. Omit `workspaceId` to use the caller's Personal Workspace. Supply one exact
@@ -20,7 +20,7 @@ content.
    asks to preserve the message without attachments. `all_supported` remains
    accepted for backwards compatibility. Use ordered, distinct references for
    `selected`.
-4. Generate one idempotency key for the complete account, message, Workspace, mode,
+4. Generate one idempotency key for the complete message, Workspace, mode,
    and selected-reference request. Reuse it only for an identical retry.
 5. Let Knowlaborator stream attachment bytes directly from the provider. Never call
    `get_mail_attachment`, create a temporary file, or chain document-upload

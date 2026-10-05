@@ -27,8 +27,8 @@ the complete saved `bankDetails` in full record updates to retain it; null remov
 it. Never store a payment amount or payment reference in the CRM record.
 
 Record only the intended shared interaction summary and occurrence time. A
-mail locator is the caller-owned connected-mail account ID plus an opaque
-message reference; never copy mail content into it or expose it to another
+mail locator is selected with the protected message reference from an authorized
+mail read, without a connected-account input; never copy mail content into it or expose it to another
 member.
 
 Before recording an interaction, identify every named organization resource
