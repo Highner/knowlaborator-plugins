@@ -1,8 +1,8 @@
 # Ingested email snapshots
 
-Create connected-mail `EmailMessage` snapshots only through Knowlaborator
-Mail guidance (`knowlaborator-mail/references/reading.md`) and
-`ingest_mail_message`. Never reconstruct ingestion with attachment retrieval,
+Create connected-mail `EmailMessage` snapshots only through Communication's
+[mail ingestion](../../knowlaborator-communication/references/mail-ingestion.md)
+and `ingest_mail_message`. Never reconstruct ingestion with attachment retrieval,
 temporary files, or document-upload tools.
 
 An `EmailMessage` is an immutable, system-authored source snapshot. Its Markdown

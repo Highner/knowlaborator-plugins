@@ -10,11 +10,11 @@ Typed number and date literals retain exact matching. Metadata retains hybrid se
 changedFrom/changedUntil apply to their update times. Document-scoped searches
 exclude records. A `dataset_record` hit carries its Dataset name in HeadingPath
 and `dataset://datasets/{datasetId}/records/{recordId}/revisions/{revisionId}`
-in ResourceUri. Read full values with get_dataset_record or the exact
-get_dataset_record_revision; a discovery hit is not the full record.
-includeHistorical does not include superseded or archived record revisions.
-It has no resource-kind filter. Use list_cases or get_case for
-Cases. Read exact results through their owning operation. Use list_knowledge for
+in ResourceUri. Read full values with get_dataset_record, or the exact revision
+with list_dataset_record_revisions and its revisionId; a discovery hit is not the
+full record. includeHistorical does not include superseded or archived record
+revisions. It has no resource-kind filter. Read exact results through their owning
+operation. Use list_knowledge for
 catalog pages, get_knowledge for one record, and list_knowledge_revisions for history.
 
 Search also returns independently authorized live calendar title matches, including
@@ -37,7 +37,7 @@ organization conversation, call `get_active_context` without identifiers. Treat
 combines items collected in the person's open OrgApp browser and Today desk. When
 `explorerSceneState` is `available`, use `explorerScene` directly to describe
 the visible graph's titles, excerpts, relationships, expanded cluster and
-clicked marker. Do not call `explore_knowledge` again for the same view. Use
+clicked marker; do not rerun a graph query for the same view. Use
 the owning canonical read tool when full content, provenance, evidence or an
 edit is needed. If there is no active view or the result is stale or ambiguous,
 ask the user to re-share or choose the intended OrgApp view; never

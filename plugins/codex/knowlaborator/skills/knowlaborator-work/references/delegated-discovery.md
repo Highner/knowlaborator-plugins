@@ -6,7 +6,7 @@ exact items directly. Never delegate writes, drafts, ingestion, selection
 changes or operations requiring confirmation.
 
 Pass the exact organization, relevant Workspace or optional Realm focus,
-question, retained Playbook catalog when useful, and coverage limits. Ordinary
+question and coverage limits. Ordinary
 interactive delegation uses the same immutable organization connection and the
 user's currently authorized Workspaces. When a run requires a narrower boundary,
 use only its exact enforced grant and server; never substitute the ordinary

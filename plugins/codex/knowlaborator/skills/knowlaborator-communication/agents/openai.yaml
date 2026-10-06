@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Communication"
+  short_description: "Read mail and messages, draft replies"
+  default_prompt: "Use $knowlaborator-communication to review this message and draft a reply."

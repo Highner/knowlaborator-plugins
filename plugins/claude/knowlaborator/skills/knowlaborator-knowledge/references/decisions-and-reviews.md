@@ -25,8 +25,8 @@ Example:
 > One directory avoids duplicate customer maintenance. Each team keeps its own
 > access permissions.
 >
-> References: [Customer data policy](verified-record-link),
-> [Access requirements](verified-record-link).
+> References: Customer data policy, Access requirements (each a link to the
+> verified record).
 
 ## Edit wording or change the decision
 

@@ -28,9 +28,10 @@ Before creation or revision:
 
 1. Read the current Dataset and schema when they exist.
 2. Preserve stable field and option IDs.
-3. Call `validate_dataset_schema` and resolve every field error.
-4. Create with `create_dataset`, or revise with `revise_dataset_schema` using
-   the Dataset's expected revision.
+3. For a new Dataset, call `create_dataset` with `dryRun: true` and resolve every
+   field error; nothing is stored. Then create it without `dryRun`.
+4. Revise with `revise_dataset_schema` using the Dataset's expected revision; it
+   validates the complete schema and stores nothing when a field error remains.
 
 Labels, descriptions, keys, ordering, and optionality relaxation may change.
 Field type, relationship target, and multiplicity are immutable. Retire fields

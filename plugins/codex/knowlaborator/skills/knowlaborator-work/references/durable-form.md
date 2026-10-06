@@ -9,8 +9,8 @@ Otherwise choose by the information's role:
 | Reusable concepts, claims, decisions, policies, hypotheses or open questions | OKF Knowledge |
 | Original bytes, layout, or a complete formatted artifact | An ordinary Document |
 | An example for producing later Documents | A Document Template, never the output itself |
-| Accounts, contacts and interactions | CRM |
-| Operational progress, assignments and deadlines | Cases and ToDos |
+| Accounts, contacts and interactions | Contacts & accounts (CRM module) |
+| Assignments, deadlines and operational progress | ToDos, grouped under a Project when the module is installed |
 | Material still being gathered, questioned and decided together | A canvas: a collaborative thinking surface, not a durable Knowledge store; distill it, then a person publishes to Knowledge |
 
 For record-shaped work, use the Datasets skill to discover plausible authorized

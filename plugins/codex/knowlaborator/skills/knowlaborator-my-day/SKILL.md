@@ -11,7 +11,7 @@ the open items instead of starting over. Items are proposals: suggestions are ne
 executed. The plugin also has ordinary domain write tools, so this workflow's
 proposal-only boundary is procedural. Agenda writes, the narrow payment
 preparation and completing queued documents below are its only permitted content
-writes. No message read state, ToDo, event, notice, draft, knowledge, or Case is
+writes. No message read state, ToDo, event, notice, draft or knowledge is
 changed.
 
 ## Keep it very short
@@ -84,7 +84,7 @@ text is rejected with `AGENDA_TEXT_TOO_LONG`; rewrite it shorter instead of spli
      connected calendar), `todo` (ToDo ID), `message` (ConversationId and MessageId),
      `document` (DocumentId and version ID), `knowledge` (revision ID). An unreadable
      resource fails with `AGENDA_SOURCE_UNAVAILABLE`; omit it rather than guess. Add Href only for a known OrgApp path (/mail, /knowledge,
-     /documents, /datasets, /calendar, /todos, /notices, /messages, /workflows/cases)
+     /documents, /datasets, /calendar, /todos, /notices, /messages)
      or an HTTPS source URL; for mail use /mail/{accountId}?message={URL-encoded
      messageReference}. Never invent links. Do not copy mail bodies or secrets.
    - Open items claim their source keys. Adding an item for a claimed thread or event
@@ -99,7 +99,7 @@ text is rejected with `AGENDA_TEXT_TOO_LONG`; rewrite it shorter instead of spli
 7. Prepare handoffs; preparing creates nothing:
    - For an action that could become a ToDo, add `TodoDraft` with a concise Header and
      useful Description. Set DeadlineDate/DeadlineTime only from explicit source
-     commitments. Use exact Workspace, assignee, Case and CRM IDs only when grounded in
+     commitments. Use exact Workspace, assignee and CRM IDs only when grounded in
      reads; omit WorkspaceId and AssigneeIds for the personal Workspace and self. For
      an existing task set `ExistingTodoId` instead.
    - When a new email, document or knowledge revision belongs to an existing ToDo
@@ -116,7 +116,8 @@ text is rejected with `AGENDA_TEXT_TOO_LONG`; rewrite it shorter instead of spli
      scheduling a call), add `EventDraft` with a short Title, Date, StartTime/EndTime
      and optional Location and CalendarKey from `list_calendar_sources`.
    - The person's explicit browser save creates the ToDo or event and closes the item.
-   - Payment information is the one preparation exception: for a source-grounded
+   - Payment information is the one preparation exception (when the Banking tools
+     are listed): for a source-grounded
      payment request in a supported currency, read `list_payments` (follow NextOffset) and existing ToDo
      PaymentId first and reuse the same payment for the same obligation; read
      `get_payment` for its paid state. Only when none exists and the exact recipient,
@@ -223,5 +224,3 @@ or marks paid. Personal reading, dismissal and processing never complete shared 
 For `resolve_shared_work` with Kind payment, supply the structured Obligation fields.
 The server derives the canonical invoice identity; arbitrary SubjectReference or ActionReference
 strings cannot distinguish two payments of the same invoice and occurrence.
-
-Shared obligations: resolve_shared_work in the owning Collaborative Workspace before publishing suggestions. Reuse returned IDs in Agenda WorkReferences across members. Read current shared states and reuse targets for ToDos, calendar and payment actions. Personal read/close state does not finish shared work. Claim payment responsibility before QR handoff; uncertain transfer outcomes remain claimed until reconciled, with explicit no-transfer attestation required for release.

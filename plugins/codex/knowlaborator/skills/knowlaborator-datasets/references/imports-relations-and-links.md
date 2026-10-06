@@ -4,8 +4,8 @@
 
 Accept normalized JSON rows only, never a local file path. Pin every request to
 the exact current schema revision, keep it within 100 rows and 2 MiB, and use
-caller row keys when supplied. Call `validate_dataset_import` first. Call
-`import_dataset_records` only after validation succeeds and the user intends an
+caller row keys when supplied. Call `import_dataset_records` with `dryRun: true`
+first, and without it only after validation succeeds and the user intends an
 atomic create-only import. Do not infer a schema, upsert, or partially apply an
 invalid batch.
 
@@ -24,13 +24,13 @@ visibility before writing. Current record-level backlinks derive from the
 record revision and are independently authorized; historical revisions remain
 unchanged. References grant no access and an unavailable target reveals no
 label or ID in expanded reads.
-Use `list_dataset_record_backlinks` for current inbound record references to an
-exact Knowledge object or Document.
+Use `list_dataset_backlinks` with `source: "record"` for current inbound record
+references to an exact Knowledge object or Document.
 
 ## Dataset-level links
 
-Use `list_dataset_links`, `list_dataset_backlinks`, and
-`search_dataset_link_targets` for reads. Links belong to the Dataset, never an
+Use `list_dataset_links`, `list_dataset_backlinks` (default `source: "dataset"`),
+and `search_dataset_link_targets` for reads. Links belong to the Dataset, never an
 individual record, and the owning Workspace is not duplicated as a link.
 
 For `link_dataset_resource`, require Manager access to the source Dataset and

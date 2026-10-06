@@ -45,7 +45,8 @@
    unless it has actually been inspected in the supported host.
    For `okf_query`, use the bounded declarative query in
    [component-queries.md](component-queries.md). For `dataset_query`, call `get_dataset`,
-   `get_dataset_schema`, and `validate_dataset_query` for every source; bind exact
+   `get_dataset_schema`, and `query_dataset_records` with `validateOnly: true` for every
+   source; bind exact
    Dataset and schema revisions, stable projected field IDs, bounded
    filters/sorts/page size, and record-reference joins as described in
    [component-queries.md](component-queries.md). All Dataset sources use
@@ -117,5 +118,5 @@ with `COMPONENT_IMAGE_UNAVAILABLE`.
 governance history. `remove_component` permanently deletes an authorized
 Component and all revisions. Resolve the exact target, explain the effect, and
 obtain explicit confirmation immediately before either call. Never use a
-Playbook, review, bundle, or prior confirmation as approval and never retry an
+review, bundle, or prior confirmation as approval and never retry an
 unknown destructive outcome automatically.

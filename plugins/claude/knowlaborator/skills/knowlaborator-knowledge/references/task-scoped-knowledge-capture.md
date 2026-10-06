@@ -6,7 +6,7 @@ development, decision support, direct save, or import. That request authorizes
 curation of relevant durable results, not capture of the raw conversation.
 
 Do not inspect unrelated turns for reusable facts. Do not run this flow for a
-calendar change, mail draft, message, ToDo update, CRM mutation, Case,
+calendar change, mail draft, message, ToDo update, CRM mutation,
 Component invocation, or other ordinary operation merely because Work is
 available in the shared plugin. Skip capture when the user opts out.
 

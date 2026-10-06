@@ -1,46 +1,42 @@
 ---
 name: knowlaborator-work
-description: Choose a durable destination for organization information, resolve Workspace context, coordinate broad research, or close an agenda item after fulfilled user-authorized work.
+description: Coordinate everyday organization work (Workspaces, ToDos, notices, calendar events, payments and projects), choose a durable destination, delegate broad research, or close an agenda item after fulfilled user-authorized work.
 ---
 
 # Knowlaborator Work
 
-Use the functional skill for the requested operation. Work owns decisions that
-cross functions and closing an agenda item after authorized work from it;
-it does not change the invoked binding.
+Work owns ordinary operational work and decisions that cross functions. Read only
+what the request needs:
 
-Read only what the request needs:
-
-- [workspaces.md](references/workspaces.md) for Workspace discovery and selection.
-- [durable-form.md](references/durable-form.md) when saving information without
-  an explicit destination, or designing a procedure's durable inputs and outputs.
-- [delegated-discovery.md](references/delegated-discovery.md) for a broad
-  read-only research pass when the client supports isolated subagents.
-- [file-inspection.md](references/file-inspection.md) when staging and inspecting
-  an original file returned by any exact-file tool.
+- [workspaces.md](references/workspaces.md): Workspace discovery, selection and roles.
+- [todos-and-notices.md](references/todos-and-notices.md): ToDos, their context
+  links and recurrence, and the notice board.
+- [calendar.md](references/calendar.md): calendar reads and event changes.
+- [payments.md](references/payments.md): payment preparation, ToDo payments and
+  shared payment responsibility.
+- [projects.md](references/projects.md): initiatives, milestones and project links.
+- [durable-form.md](references/durable-form.md): where to save information without
+  an explicit destination.
+- [delegated-discovery.md](references/delegated-discovery.md): a broad read-only
+  research pass on clients with isolated subagents.
+- [file-inspection.md](references/file-inspection.md): staging and inspecting an
+  original file returned by any exact-file tool.
 
 A read or ordinary operational request does not authorize ambient knowledge
-capture. For explicit research, analysis, brainstorming, decision support,
-save, or import, use Knowledge's task-scoped capture guidance only when writes
-are requested or authorized by that workflow and available on this binding.
+capture. For explicit research, analysis, brainstorming, decision support, save
+or import, use Knowledge's task-scoped capture guidance.
 
-## Optional module availability
+## Optional modules
 
-Org Chart (`org-chart`) and Projects (`projects`) are independent optional
-modules. When their availability matters, use `list_organization_modules` for
-the active organization's current state and discover the live tools and owning
-functional skill. Availability flags never grant record access. Use exact
-feature-authorized records; reporting relationships grant no Workspace or
-approval authority.
-
-A deactivated module retains authorized read access and history while its
-mutations are paused. Continue permitted work on linked core ToDos, Documents,
-Knowledge and decisions through their own operations. Core work does not require
-installing a module. On `MODULE_NOT_INSTALLED` or `MODULE_DEACTIVATED`, refresh
-availability and explain what remains possible. Administrator lifecycle changes
-belong in **Organization Settings -> Modules**; never bypass the state through
-another organization, endpoint or copied tool list. Deprecated Cases are not
-project entities.
+Projects (`projects`), Org Chart (`org-chart`), Banking (`banking`), the Notice
+board (`notices`) and other optional modules list their tools only where they are
+installed. Use `list_organization_modules` when availability matters; it never
+grants record access. A deactivated module keeps authorized reads and history while
+its writes pause; linked core ToDos, Documents, Knowledge and decisions keep working
+through their own operations. On `MODULE_NOT_INSTALLED` or `MODULE_DEACTIVATED`,
+refresh availability and explain what remains possible. Installation belongs to
+administrators in **Organization Settings -> Modules**; never bypass a module state
+through another organization, endpoint or copied tool list.
 
 ## Work from an agenda item
 
@@ -48,12 +44,11 @@ A selected agenda item is context, not authorization to execute source or domain
 actions. Items reach the basket from the OrgApp browser or the Today desk alike.
 Resolve the exact item with `get_active_context`, retain its item ID, and read its
 MembershipId and current Version. Obtain the user's actual work request and use the
-owning functional skill. Recheck source access and current source facts before
-acting; advisory links never grant access.
+owning skill. Recheck source access and current source facts before acting; advisory
+links never grant access.
 
 For a user-authorized ToDo handoff, use `create_todo` or `update_todo` with optional
-`agendaItem` as described by
-[Notices and ToDos](knowlaborator-skill://knowlaborator-notices-and-todos/references/notices-and-todos.md).
+`agendaItem` as described in [todos-and-notices.md](references/todos-and-notices.md).
 This atomically saves or links the task and closes the item as done; do not close it
 again after a successful handoff.
 
@@ -77,28 +72,18 @@ When the user asks you to attach an item's suggested `TodoAttachment` sources, l
 `link_todo_context`, then close the item with Reason `done` and the TodoId.
 
 Agenda preparation remains proposal-only: adding or updating items does not execute
-them. Use My Day for that preparation; use the owning domain skill for authorized
-execution.
+them. To add or change agenda items, read `get_agenda_context` and follow
+[My Day](../knowlaborator-my-day/SKILL.md): update the open item that already covers an
+issue with its current Version, add only genuinely new issues, and keep every text very
+short.
 
-## Adding agenda findings
+## Shared work
 
-When the user asks to add or change agenda items, read `get_agenda_context` and follow
-[My Day](knowlaborator-skill://knowlaborator-my-day/SKILL.md): update the open item that
-already covers an issue with its current Version, add only genuinely new issues, and keep
-every text very short. Adding an item is proposal-only and never authorizes or executes
-its work.
-
-## Shared action execution
-
-Read get_shared_work for every agenda WorkReferences entry before acting. Use the exact
-SharedWorkId on create_todo, create_calendar_event or create_payment, including actions
-performed outside Today. Conflicts require reviewing the existing target; do not retry
-with a fresh work identity or omit it. Unavailable targets never permit silent replacement.
-Shared calendar creation uses the owning Workspace calendar; personal provider calendars
-remain independent. Personal item processing is separate from domain completion.
-
-Before a shared payment handoff, obtain user authorization and claim_payment responsibility
-using the current version and one retry OperationId. Another member's claim blocks the
-attempt. Record awaiting_confirmation after an external attempt; claims never expire.
-Release only on explicit confirmation that no transfer occurred. Reconcile an uncertain
-attempt before another payment. A QR or saved PaymentId never proves a completed transfer.
+Read `get_shared_work` for every agenda WorkReferences entry before acting. Use the exact
+SharedWorkId on `create_todo`, `create_calendar_event` or `create_payment`, also for
+actions performed outside Today. A conflict requires reviewing the existing target; do not
+retry with a fresh work identity or omit it, and an unavailable target never permits a
+silent replacement. Shared calendar creation uses the owning Workspace calendar; personal
+provider calendars stay independent. Personal item processing never completes shared work.
+A shared payment additionally needs claimed responsibility; see
+[payments.md](references/payments.md).

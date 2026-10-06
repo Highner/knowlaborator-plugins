@@ -36,7 +36,7 @@ For each entry:
 ## Protect the durable-form boundary
 
 This profile describes reusable OKF types, not real organization facts or a
-schema for all data. Apply [Work's durable-form rules](knowlaborator-skill://knowlaborator-work/references/durable-form.md).
+schema for all data. Apply [Work's durable-form rules](../../knowlaborator-work/references/durable-form.md).
 Keep current people, products, projects, records, IDs and source bodies out of
 the profile. Inspect Dataset structure only when needed and exposed; otherwise
 request selection through the appropriate same-organization binding. Do not
@@ -127,11 +127,9 @@ Before create, present the complete proposal. Before update, present a complete
 diff including reordered and omitted entries. A current instruction to save
 that reviewed proposal authorizes the mutation; otherwise ask after the review.
 
-Call `create_workspace_knowledge_guidance` without concept IDs, or
-`update_workspace_knowledge_guidance` with the exact Workspace ID, complete ordered profile, and
-exact loaded revision. Use one fresh idempotency key and reuse it only for an
-identical uncertain retry.
+Call `save_workspace_knowledge_guidance` with the exact Workspace ID and the complete
+ordered profile: without `expectedRevision` and concept IDs to create the first
+profile, or with the exact loaded revision to replace it.
 
 On configuration-state or revision conflicts, reload the complete baseline and
-reconcile explicitly. Never switch mutation paths blindly, overwrite a newer
-revision, or drop an entry implicitly.
+reconcile explicitly. Never overwrite a newer revision or drop an entry implicitly.

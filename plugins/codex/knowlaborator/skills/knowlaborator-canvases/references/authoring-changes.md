@@ -75,7 +75,7 @@ affected `items` with their new `itemRevision`; carry those forward.
 | `image` | `assetRevisionId`, optional `altText` (≤ 1,000), `caption` (≤ 4,000) |
 | `file` | `assetRevisionId`, optional `caption` (≤ 4,000) |
 | `url` | `url` (absolute HTTPS, no credentials, ≤ 2,048), optional `title` (≤ 600), `description` (≤ 4,000) |
-| `resource` | `targetKind` `document`, `knowledge`, `dataset`, `case` or `todo`, `targetId`, optional `targetRevision` (≤ 64), `label` (≤ 200) |
+| `resource` | `targetKind` `document`, `knowledge`, `dataset` or `todo`, `targetId`, optional `targetRevision` (≤ 64), `label` (≤ 200) |
 | `chart` | See [charts-and-sources.md](charts-and-sources.md) |
 | `frame` | `title` (≤ 200, required) |
 | `group` | optional `label` (≤ 200) |
@@ -89,7 +89,7 @@ revision of a decision is `proposed`; a person confirms it in the browser, and
 editing the confirmed text or rationale returns it to `proposed`. Never state
 that a decision is confirmed because you wrote it. Use `image` and `file`
 items for canvas assets and `resource` items for Documents, Knowledge,
-Datasets, Cases and ToDos; the target is authorized independently and a
+Datasets and ToDos; the target is authorized independently and a
 reference grants no access. Do not copy content from a more restrictive
 Workspace into any item.
 

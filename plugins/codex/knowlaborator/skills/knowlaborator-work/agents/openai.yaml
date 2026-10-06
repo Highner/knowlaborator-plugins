@@ -1,4 +1,4 @@
 interface:
   display_name: "Knowlaborator Work"
-  short_description: "Coordinate work and close agenda items"
+  short_description: "Coordinate ToDos, events, payments and projects"
   default_prompt: "Use $knowlaborator-work to coordinate this work and close the agenda item it fulfils."

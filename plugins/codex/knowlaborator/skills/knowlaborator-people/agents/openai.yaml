@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator People"
+  short_description: "Manage contacts, accounts and the org chart"
+  default_prompt: "Use $knowlaborator-people to find or update this contact or org chart entry."

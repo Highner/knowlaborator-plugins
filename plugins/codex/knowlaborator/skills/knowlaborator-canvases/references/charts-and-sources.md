@@ -57,8 +57,9 @@ revision, so the history shows before and after.
 ## Building from a Dataset
 
 Use `$knowlaborator-datasets` for the data: inspect the Dataset with
-`get_dataset` and `get_dataset_schema`, call `validate_dataset_query` and then
-`query_dataset_records` with bounded fields, filters, sorts and page size.
+`get_dataset` and `get_dataset_schema`, then call `query_dataset_records` with
+`validateOnly: true` and again without it, using bounded fields, filters, sorts and
+page size.
 Cite the Dataset as `{ "kind": "dataset", "id": "<datasetId>", "revision": "<schemaRevisionId>" }`
 so the values are pinned to the schema revision they were read under. Map
 record values into points yourself; the server does not infer charts from

@@ -88,7 +88,7 @@ response returns the ingestion `id`, `assetRevisionId`, `documentId` and
 An archived canvas rejects ingestion with `CANVAS_ARCHIVED`.
 
 From that point the Document behaves like any other: use
-`$knowlaborator-documents` to check processing with `get_document_version`,
+`$knowlaborator-knowledge` to check processing with `get_document_version`,
 read the exact file with `get_document_file`, and run the separate OKF
 assessment when the user asks for it. The canvas asset remains exactly as it
 was; the Document and the asset are distinct identities even when bytes are

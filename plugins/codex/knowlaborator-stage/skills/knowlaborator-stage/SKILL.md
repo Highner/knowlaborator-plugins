@@ -188,7 +188,7 @@ Compose these with their own operations; each takes a new `card` ID and a cell l
 
 `stage_find` includes `dataset`, `project`, `todo`, `org_chart_person`, `org_chart_unit`,
 `org_chart_position`, and `calendar_event`, alongside Knowledge, Documents, Dataset
-records and CRM accounts/contacts. Cases are excluded. These additional resources
+records and CRM accounts/contacts. These additional resources
 are current-state field cards: omit `revisionId`, read their fields with `stage_read`,
 and use returned field keys for highlights. Copy a calendar result's opaque
 `externalEventReference` unchanged into the resource for both read and place.

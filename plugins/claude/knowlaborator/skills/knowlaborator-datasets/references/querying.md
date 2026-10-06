@@ -9,16 +9,17 @@
    Read the full record to verify a partial match before relying on it.
    A `dataset_record` hit provides its title, Dataset name in HeadingPath, and
    exact Dataset/record/revision coordinates in ResourceUri. Use
-   `get_dataset_record` or `get_dataset_record_revision` for its full values.
+   `get_dataset_record`, or `list_dataset_record_revisions` with the exact
+   `revisionId`, for its full values.
 2. Before choosing one Dataset, apply this skill's `description` and `useWhen`
    inspection rule, then call `get_dataset` for the exact selected candidate.
-3. Read `get_dataset_schema` before constructing a query or write. Use schema
-   revision tools only when exact historical context is needed.
-4. Call `validate_dataset_query` before a new or materially changed query, then
-   call `query_dataset_records`. Preserve the signed cursor unchanged; every
-   page is reauthorized and a cursor grants nothing.
-5. Use exact record and record-revision tools for detail or history. Missing
-   fields in older revisions are null under the current schema.
+3. Read `get_dataset_schema` before constructing a query or write. Use
+   `list_dataset_schema_revisions` only when exact historical context is needed.
+4. For a new or materially changed query, call `query_dataset_records` with
+   `validateOnly: true` first, then without it. Preserve the signed cursor
+   unchanged; every page is reauthorized and a cursor grants nothing.
+5. Use `get_dataset_record` and `list_dataset_record_revisions` for detail or
+   history. Missing fields in older revisions are null under the current schema.
 
 Project only the needed stable field IDs. Use at most the supported bounded filters,
 scalar sorts, and page size. Sorts are deterministic with record ID last. Do not
