@@ -173,7 +173,7 @@ Assessments and plans never become agenda items; Today shows them itself.
 
 The browser shows the agenda as cards on Today, grouped Today / This week / Later,
 with Waiting, FYI and Done folded. An opened card previews each typed source. Queued
-documents wait in the Vorgemerkt tab of Today's mail card until a run completes them. The person marks items done, snoozes, dismisses,
+documents wait in the Vorgemerkt tab of Today's Incoming stage until a run completes them. The person marks items done, snoozes, dismisses,
 reopens, or creates the prepared ToDo or event. These are the person's decisions;
 agent runs never record them. Later work the person explicitly authorizes follows
 [Work](knowlaborator-skill://knowlaborator-work/SKILL.md), which closes the item.
