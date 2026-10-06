@@ -96,3 +96,11 @@ invalidate the stored file.
 
 To find existing work, page through `list_documents` with `purpose=document`
 and `okfIngestionPending=true`; do not assume one page is complete.
+
+## Independent open questions
+
+During authorized ingestion, check relevant question records in the target Workspace
+using [questions.md](questions.md). Existing and new evidence may answer a question;
+propose the answer with exact citations, without automatically accepting it. Extract
+new actionable questions into their own records and link them from the concepts.
+Question review is separate from decision catch-up.

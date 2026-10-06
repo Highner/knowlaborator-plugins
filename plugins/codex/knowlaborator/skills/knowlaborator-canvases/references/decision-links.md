@@ -13,7 +13,8 @@ Knowledge approval. A changed, moved, deleted or redacted reference must not fal
 back to a newer or different Knowledge revision.
 
 Linked browser confirmation records the canonical Knowledge decision with trusted
-recorder/date/source; it cannot bypass pending required review and creates no extra
+recorder/source and the decision date when the person enters one (an empty date means
+unknown); it cannot bypass pending required review and creates no extra
 Canvas item revision or local confirmer signature. Agents cannot confirm Canvas
 items or submit human reviewer responses. To record a decision already made at the
 user's explicit direction, use the Knowledge decision operation and read its

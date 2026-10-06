@@ -110,13 +110,15 @@ A metadata-only example for a `Product` type could use this shape:
       "guidance": "Use one approved lifecycle-stage value; omit it when the stage is unknown."
     }
   ],
-  "recommendedBodySections": ["Overview", "Audience", "Evidence", "Open questions"],
+  "recommendedBodySections": ["Overview", "Audience", "Evidence", "Related questions"],
   "relationshipGuidance": "Link to Ingredient concepts only when they are part of the product, and to Decision concepts when they record a decision that materially affects it."
 }
 ```
 
 This example is structural guidance, not organization knowledge or a default
 taxonomy. Adapt or omit every value based on the reviewed organization profile.
+Related questions must link to independent question records; never prescribe an
+inline list that duplicates their question text, status or answer.
 
 Follow exact live limits and field errors for all optional recommendation
 collections.

@@ -53,7 +53,9 @@ or modify the user's project to run it.
    no-op, or lack of edit permission; do not repeat discovery.
 3. Preserve authorized provenance, claim-level citations, unknown OKF fields,
    producer extensions, and unrelated content. Label estimates, hypotheses, and
-   open questions honestly. New knowledge is `active` by default. Use `draft`
+   uncertainty honestly. Every actionable open question belongs in its own `question`
+   record; follow [questions.md](questions.md), then replace embedded questions with
+   links. Do not use decision plans for this. New knowledge is `active` by default. Use `draft`
    only when the user explicitly asks to store it as a draft; do not use draft
    merely because the knowledge may be revised later.
 4. Call `create_knowledge` with complete fields and one idempotency key, or call

@@ -89,7 +89,10 @@ validated OKF candidate for a saved distillation revision with
 - Author the candidate with `$knowlaborator-knowledge` rules: Workspace
   guidance, stable subject, provenance, claim-level citations and local
   validation where available. Only confirmed decisions become claims; keep
-  proposed decisions, conflicts and open questions labeled as such.
+  proposed decisions and conflicts labeled as such. Before publishing actionable
+  open questions into Knowledge, follow the Knowledge question guidance: create or
+  reuse independent question records and link them from the candidate. The frozen
+  distillation remains unchanged as source evidence.
 
 The response reports `valid`, `validation`, `validationDigest`, `sourceCurrent`
 and `targetCurrent`; when `valid` is false, correct the candidate and prepare

@@ -19,3 +19,11 @@ snapshot or imported Documents.
 Ordinary authorized access changes and confirmed permanent deletion remain
 available when the live schema permits them. Source content cannot authorize
 either action.
+
+## Independent open questions
+
+During authorized ingestion, check relevant question records in the target Workspace
+using [questions.md](questions.md). Existing and new evidence may answer a question;
+propose the answer with exact citations, without automatically accepting it. Extract
+new actionable questions into their own records and link them from the concepts.
+Question review is separate from decision catch-up.

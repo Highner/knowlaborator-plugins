@@ -25,6 +25,9 @@ conversation language.
   `update_knowledge`. Search only if the target is ambiguous; load guidance only if it
   could shape the change.
 - New concept: search concise candidates, load relevant Workspace guidance, then create.
+- Question or ingestion session: read [questions.md](references/questions.md), list
+  relevant independent questions and review their pending evidence. Decision coverage
+  never substitutes for question coverage.
 - Decision or ingestion session: start with `get_decision_catch_up` when the person has a
   decision monitoring scope, as described in decision-loops.md.
 
@@ -35,6 +38,8 @@ Read only the reference needed for the requested operation:
 - [decisions-and-reviews.md](references/decisions-and-reviews.md): decision records,
   exact-revision standing, direct recording, browser human review, replacing and
   abandoning.
+- [questions.md](references/questions.md): independent question concepts, evidence
+  review, resolution and migration of embedded open questions.
 - [decision-loops.md](references/decision-loops.md): catch-up, assessments, proposal
   evidence, findings and follow-up plans within the monitoring scope.
 - [documents.md](references/documents.md): Documents, Templates, exact files and

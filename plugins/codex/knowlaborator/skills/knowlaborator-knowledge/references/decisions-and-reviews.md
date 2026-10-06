@@ -16,7 +16,8 @@ OKF records; link to them instead of maintaining a second copy.
   records. Do not add a mini-summary to every link.
 - **Provenance:** Use the existing structured decision fields for maker, date,
   recorder, source and standing. Do not repeat those fields in the body or invent
-  missing provenance. Authoring text alone never establishes approval.
+  missing provenance; an unknown decision date stays empty. Authoring text alone never
+  establishes approval.
 
 Example:
 
@@ -80,8 +81,11 @@ cursors; never claim that a partial page is complete.
 
 Only when the user explicitly directs you, `record_knowledge_decision` records a
 final decision already made in a conversation, meeting or elsewhere. Preserve the
-actual decision-maker, stated decision date and optional source. The server records
-the authenticated recorder. A recorded decision is not independently approved.
+actual decision-maker, the decision date the user stated and optional source. When
+the actual date is not known (for example, an older decision without a secured date),
+leave `decisionDate` empty: never invent it, and never use today's or the capture date.
+Readers then show "date unknown". The server records the authenticated recorder. A
+recorded decision is not independently approved.
 `propose_knowledge_decision`, `request_knowledge_review`, `cancel_knowledge_review`,
 `withdraw_knowledge_decision` and `replace_knowledge_decisions` are explicit actions
 under current Workspace authority. Reuse an operation UUID for the same retry and
