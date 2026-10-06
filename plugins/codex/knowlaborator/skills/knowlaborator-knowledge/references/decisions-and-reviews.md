@@ -28,6 +28,23 @@ Example:
 > References: Customer data policy, Access requirements (each a link to the
 > verified record).
 
+### Optional basis
+
+When the discussion states them, add up to three short sections, each a heading followed
+directly by a bulleted list (at most 200 characters per bullet). They become the clauses
+that later assessments judge:
+
+- **Expected result** (German: Erwartetes Ergebnis): at most 5 criteria that judge
+  success in the decision's scope.
+- **Based on** (Grundlage): at most 5 assumptions or relied-on evidence, each with a
+  verified link.
+- **Set aside** (Verworfen): at most 3 alternatives actually considered and why not.
+
+State the choice actually reached; never turn it into a poll. Keep agreed facts apart
+from your suggestions, ask only for information that would change the choice or its
+follow-up, and never invent what a team originally believed. A follow-up plan is drafted
+with the decision when useful; see [decision-loops.md](decision-loops.md).
+
 ## Edit wording or change the decision
 
 Read the current content and `get_knowledge_decision` first. Use current revision,
@@ -42,7 +59,8 @@ for an identical retry.
   original revision. Pending reviews cannot be bypassed.
 - `revise_knowledge_decision` changes the choice, scope or conditions. It saves a
   new proposed revision, without inherited approval. Recording, human review and
-  superseding the earlier decision remain separate explicit actions.
+  replacing the earlier decision remain separate explicit actions. Adding or changing
+  a criterion or assumption is such a change, not a wording correction.
 
 Both commands accept a short title and Markdown body containing the rationale and
 record links. Other Knowledge metadata remains unchanged. If these commands are
@@ -65,9 +83,22 @@ final decision already made in a conversation, meeting or elsewhere. Preserve th
 actual decision-maker, stated decision date and optional source. The server records
 the authenticated recorder. A recorded decision is not independently approved.
 `propose_knowledge_decision`, `request_knowledge_review`, `cancel_knowledge_review`,
-`withdraw_knowledge_decision` and `supersede_knowledge_decision` are explicit actions
+`withdraw_knowledge_decision` and `replace_knowledge_decisions` are explicit actions
 under current Workspace authority. Reuse an operation UUID for the same retry and
-read current Knowledge/standing/review versions before new actions.
+read current Knowledge/standing/review versions before new actions. When drafting a
+review request, propose an optional `respondBy` date; reviewers get reminders after it.
+
+## Replace or abandon
+
+- `replace_knowledge_decisions` fully replaces final decisions by currently decided
+  successors along explicit edges (predecessor revision -> successor revision): splits,
+  merges or reorganizations, with each predecessor's current decision version and a
+  plain reason. For a partial change, prepare decisions covering both the changed and
+  the kept part, then replace the broader one. There is no "partly superseded".
+- Abandoning a decision in force is `withdraw_knowledge_decision` with a reason; it
+  needs no successor and cancels the open follow-up plan.
+- Both only when the user explicitly directs it. A low support level never replaces or
+  abandons anything by itself.
 
 Required review names 1-20 currently eligible organization Contributor/Manager
 memberships in the owning Workspace. Every required reviewer must approve in the

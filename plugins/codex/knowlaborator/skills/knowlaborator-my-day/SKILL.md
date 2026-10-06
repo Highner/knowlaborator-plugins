@@ -166,6 +166,11 @@ new mail, messages and notices change; it must still read every included email b
 An agent subscribed to `mail.received` uses Trigger `mail_event`, reads context with
 its cursor, and adds or updates only the items that mail affects.
 
+When the person's decision monitoring scope allows catch-up, a run that is not a
+`mail_event` may continue with decision catch-up after the agenda is written, following
+[Knowledge's decision-loops.md](../knowlaborator-knowledge/references/decision-loops.md).
+Assessments and plans never become agenda items; Today shows them itself.
+
 The browser shows the agenda as cards on Today, grouped Today / This week / Later,
 with Waiting, FYI and Done folded. An opened card previews each typed source. Queued
 documents wait in the Vorgemerkt tab of Today's mail card until a run completes them. The person marks items done, snoozes, dismisses,

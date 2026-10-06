@@ -24,7 +24,9 @@ what the request needs:
 
 A read or ordinary operational request does not authorize ambient knowledge
 capture. For explicit research, analysis, brainstorming, decision support, save
-or import, use Knowledge's task-scoped capture guidance.
+or import, use Knowledge's task-scoped capture guidance. A decision's follow-up
+to-dos and milestones keep their own state; link them from its follow-up plan
+([decision-loops.md](../knowlaborator-knowledge/references/decision-loops.md)).
 
 ## Optional modules
 
