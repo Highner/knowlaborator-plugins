@@ -1,9 +1,28 @@
 # Payments
 
-Payments belong to the optional Banking module (`banking`). OrgApp prepares and tracks
-payments; it never transfers money.
+OrgApp prepares payments; it never transfers money. There are two levels:
 
-## Prepare a payment
+- **Payment suggestions** are core and work in every organization (ADR 0125). A
+  suggestion holds only known, source-grounded details: recipient, IBAN, optional BIC,
+  amount, Currency, reference and ScheduledDate (the due date). Complete EUR details show
+  the person a SEPA QR code to scan in their banking app; other currencies show the
+  details only. Nothing records whether a suggestion was paid.
+- **Saved payments** belong to the optional Banking module (`banking`). They add paid
+  status, Kontoflux matching and shared responsibility, and their tools are listed only
+  where Banking is installed.
+
+## Suggest a payment
+
+- For an agenda item, `add_agenda_items` and `update_agenda_item` accept `PaymentDraft`.
+  A ToDo created from the item keeps the suggestion.
+- An explicitly authorized `create_todo` accepts `PaymentDraft`. For an existing ToDo,
+  `set_todo_payment_draft` adds or replaces the suggestion; PaymentDraft=null removes it.
+  A ToDo with a saved PaymentId refuses a suggestion.
+- Never invent missing details; leave them absent. The person completes them in the app.
+- In a Collaborative Workspace, everyone with access sees the same suggestion. Name who
+  pays in the ToDo, or use Banking's shared payments below.
+
+## Save a payment (Banking)
 
 - Read `list_payments` (follow its pagination) and any existing ToDo PaymentId before
   preparing a payment, and reuse the same payment for the same obligation.
@@ -14,9 +33,9 @@ payments; it never transfers money.
   an existing task use `set_todo_payment` with ExpectedPaymentId from the read;
   occurrence is the default, future also needs ExpectedSeriesVersion and changes the
   recurring template. Future tasks receive separate unpaid payments.
-- For an agenda item, `add_agenda_items` and `update_agenda_item` accept PaymentId or
-  partial PaymentDraft metadata, never both. Unknown details stay absent; the person
-  completes Add payment in the browser. Agenda maintenance cannot link or write ToDos.
+- For an agenda item, `add_agenda_items` and `update_agenda_item` accept PaymentId
+  instead of PaymentDraft, never both. With Banking, the person saves a suggestion through
+  Add payment in the browser. Agenda maintenance cannot link or write ToDos.
 - Read `get_payment` for the current paid status. Payment confirmation, task completion
   and agenda processing are separate. EUR supports the SEPA QR handoff and explicit
   Kontoflux matches; other supported currencies expose details and manual paid status.

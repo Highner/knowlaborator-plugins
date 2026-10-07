@@ -12,8 +12,8 @@ what the request needs:
 - [todos-and-notices.md](references/todos-and-notices.md): ToDos, their context
   links and recurrence, and the notice board.
 - [calendar.md](references/calendar.md): calendar reads and event changes.
-- [payments.md](references/payments.md): payment preparation, ToDo payments and
-  shared payment responsibility.
+- [payments.md](references/payments.md): payment suggestions with a QR code (core),
+  saved Banking payments, ToDo payments and shared payment responsibility.
 - [projects.md](references/projects.md): initiatives, milestones and project links.
 - [durable-form.md](references/durable-form.md): where to save information without
   an explicit destination.

@@ -9,18 +9,22 @@ coverage only; completing decision catch-up does not review questions.
 
 Before creating a question, search for existing questions with the same meaning and
 scope. Use `create_knowledge_question` with a stable operation UUID, the organization's
-primary OKF language, a responsible member and originating `relatedKnowledgeIds`.
+primary OKF language, a responsible member (who is asked) and originating
+`relatedKnowledgeIds`. Set `askedBy` only when the person or the source names who
+asked: `{ "kind": "member", "id": membershipId }` or `{ "kind": "contact", "id":
+contactId }` for a Contacts contact. Never infer an asker from who created a record.
 Then replace the embedded question in each originating concept with an ordinary
 `knowledge://objects/UUID` link using its current version. Create first, replace
 second, verify last. Preserve unrelated facts and source quotations. Several
 concepts can link to one question; do not keep a second copy of its answer/state.
-Use `revise_knowledge_question` for wording, scope, expected evidence, owner or date.
+Use `revise_knowledge_question` for wording, scope, expected evidence, owner, asker or
+date; send the existing `askedBy` and links again, because omitting them clears them.
 
 ## Review evidence
 
 During an authorized ingestion or question-review session, page through
 `list_knowledge_questions` in the relevant Workspace, including resolved questions
-when checking for contradictions. For each, call `get_question_catch_up`. It includes
+when checking for contradictions (`status` narrows the page to one status). For each, call `get_question_catch_up`. It includes
 existing source revisions and new material, with up to 50 sources per page.
 
 - Read exact source versions through their owning tools. Search can help prioritize,
