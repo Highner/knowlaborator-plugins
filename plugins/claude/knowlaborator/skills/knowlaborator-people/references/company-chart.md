@@ -3,8 +3,10 @@
 Use Org Chart for company structure. People exist independently of accounts; an optional
 organization-membership link identifies an account without granting any permission. A
 person can occupy several positions, and a position without an occupant is vacant. Units
-nest; primary reporting runs between positions and can cross unit boundaries. Reporting
-never grants Workspace, content, management or decision approval authority.
+nest; primary reporting runs between positions and can cross unit boundaries. A position
+may also name one dotted-line manager position with a short reason, a second manager beside
+the primary one. Reporting never grants Workspace, content, management or decision approval
+authority.
 
 Full active members read; Full organization administrators write. Guests and realm-bound
 connectors cannot read the company directory, and a reader-scoped connector cannot
@@ -32,9 +34,13 @@ email or personnel secret into a person record.
 
 Use explicit fields to assign or vacate a position, change its unit or reporting parent,
 or move a unit; do not infer those links from titles or chart geometry. Self-links and
-unit or reporting cycles are rejected. Archiving keeps stable IDs and requires explicit
-reassignment of active dependents; do not recursively archive, reparent or vacate
-records as an unrequested side effect.
+unit or reporting cycles are rejected. Set `secondaryReportsToPositionId` and the optional
+`secondaryReportsReason` (at most 80 characters) only for a stated dotted line; an update
+must resend the current dotted line, or it is cleared. The dotted-line manager cannot be
+the primary manager or a position below the one it serves. A position with active
+dotted-line reports cannot be archived until those lines change. Archiving keeps stable
+IDs and requires explicit reassignment of active dependents; do not recursively archive,
+reparent or vacate records as an unrequested side effect.
 
 ## Project references
 
