@@ -50,3 +50,10 @@ attempt. Record awaiting_confirmation after an external attempt; claims never ex
 Release only on explicit confirmation that no transfer occurred, and reconcile an
 uncertain attempt before another payment. A QR or a saved PaymentId never proves a
 completed transfer.
+
+The browser can select privately saved bank accounts from profile settings to fill the
+payer's holder name, or accept payer text. These personal account details are not exposed
+to MCP. Use the same holder identity across accounts and colleagues. For create_payment,
+an empty Obligation.SupplierReference defaults to the recipient; use a distinct supplier
+when they differ. resolve_shared_work still requires explicit supplier identity. Choosing
+a payer account does not select or authorize a debit account in an external banking app.

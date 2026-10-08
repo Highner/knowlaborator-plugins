@@ -9,7 +9,7 @@ subscriptions are browser-only.
 Resolve sources with `list_calendar_sources`, then use `list_calendar_events` with an
 end-exclusive range of at most 62 days. Preserve each source's failure and
 moreAvailable. Use `get_calendar_event` for an exact detail, keeping opaque external
-references with their source. `get_today` includes sources whose IncludeInToday
+references with their source. `open_today_desk` includes sources whose IncludeInToday
 preference is enabled.
 
 ## Change events

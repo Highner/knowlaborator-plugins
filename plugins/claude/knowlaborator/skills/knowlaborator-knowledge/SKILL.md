@@ -33,6 +33,8 @@ conversation language.
 
 Read only the reference needed for the requested operation:
 
+- [navigation-learning.md](references/navigation-learning.md): conditional source-choice learning
+  for substantive discovery; skip exact known-record reads.
 - [reading.md](references/reading.md): search, exact reads and exports.
 - [knowledge-authoring.md](references/knowledge-authoring.md): writes and validation.
 - [decisions-and-reviews.md](references/decisions-and-reviews.md): decision records,
@@ -56,5 +58,6 @@ Use Communication for provider-message preservation and Administration for Works
 taxonomy or retrieval configuration. Resolve an unspecified durable destination
 through Work before writing. Preserve provenance and unknown OKF fields; avoid
 duplicates and no-op revisions. `archive_knowledge` requires fresh confirmation of
-the exact target and lifecycle effect. Read-only work never starts a capture or
-export operation.
+the exact target and lifecycle effect. Read-only work never starts a content capture or export operation. The bounded
+internal navigation-learning operation is the sole task-scoped exception and grants
+no domain write authority.

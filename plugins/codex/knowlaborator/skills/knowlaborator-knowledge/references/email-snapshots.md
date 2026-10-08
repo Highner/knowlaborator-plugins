@@ -2,7 +2,7 @@
 
 Create connected-mail `EmailMessage` snapshots only through Communication's
 [mail ingestion](../../knowlaborator-communication/references/mail-ingestion.md)
-and `ingest_mail_message`. Never reconstruct ingestion with attachment retrieval,
+and `process_input`. Never reconstruct ingestion with attachment retrieval,
 temporary files, or document-upload tools.
 
 An `EmailMessage` is an immutable, system-authored source snapshot. Its Markdown
@@ -22,7 +22,7 @@ either action.
 
 ## Independent open questions
 
-During authorized ingestion, check relevant question records in the target Workspace
+When the person approves question-related enrichment, check relevant question records in the target Workspace
 using [questions.md](questions.md). Existing and new evidence may answer a question;
 propose the answer with exact citations, without automatically accepting it. Extract
 new actionable questions into their own records and link them from the concepts.

@@ -57,3 +57,7 @@ operation ID, then stage and verify the exact original using the shared
 [file inspection](../../knowlaborator-work/references/file-inspection.md) flow.
 Do not use a browser
 downloadPath or substitute indexed content for that file.
+
+For substantive knowledge source choice, conditionally read the shared
+[navigation-learning procedure](navigation-learning.md). Skip it for exact known-record
+reads; learning grants no domain mutation or broader task authority.

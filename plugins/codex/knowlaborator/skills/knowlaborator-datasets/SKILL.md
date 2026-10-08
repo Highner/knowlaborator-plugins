@@ -25,3 +25,7 @@ Viewer reads; Contributor changes records and imports; Manager governs schemas,
 Dataset lifecycle and links. Use only operations exposed by the invoked binding.
 Preserve exact schema, field, option, record, revision and cursor values.
 Never infer fields, schema or upsert intent from imported rows.
+
+For substantive knowledge source choice, conditionally read the shared
+[navigation-learning procedure](../knowlaborator-knowledge/references/navigation-learning.md). Skip it for exact known-record
+reads; learning grants no domain mutation or broader task authority.

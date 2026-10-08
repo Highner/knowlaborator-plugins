@@ -5,7 +5,7 @@
 Use `list_todos` for bounded ToDo reads across authorized Workspaces or one exact
 Workspace. Before working on a ToDo, call `list_todo_context` and read its available
 linked sources at the returned exact revisions. Preserve Workspace, the complete
-assignee set, deadline type and status. For a daily snapshot use `get_today` and
+assignee set, deadline type and status. For a daily snapshot use `open_today_desk` and
 respect each section's moreAvailable and failures. Report the saved header,
 description, assignees, deadline and state after every write.
 
@@ -40,7 +40,7 @@ description, assignees, deadline and state after every write.
   complete distinct assignee set on updates; never forge cross-Workspace assignments.
 - For a user-authorized handoff from an open agenda action, supply optional top-level
   `agendaItem` on `create_todo` or `update_todo`. Read the exact item first through
-  `get_active_context` or `get_agenda_context`, and supply `itemId`,
+  `get_active_context` or `get_input_context`, and supply `itemId`,
   `expectedMembershipId`, `expectedVersion` (the item's current Version), and a fresh
   `operationId` UUID. Creation reuses an available advisory `ExistingTodoId`; update
   links its explicit `todoId`, preserving current task fields for a link-only handoff.

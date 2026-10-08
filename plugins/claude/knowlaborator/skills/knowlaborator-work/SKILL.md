@@ -74,7 +74,7 @@ When the user asks you to attach an item's suggested `TodoAttachment` sources, l
 `link_todo_context`, then close the item with Reason `done` and the TodoId.
 
 Agenda preparation remains proposal-only: adding or updating items does not execute
-them. To add or change agenda items, read `get_agenda_context` and follow
+them. To add or change agenda items, read `get_input_context` and follow
 [My Day](../knowlaborator-my-day/SKILL.md): update the open item that already covers an
 issue with its current Version, add only genuinely new issues, and keep every text very
 short.
@@ -89,3 +89,7 @@ silent replacement. Shared calendar creation uses the owning Workspace calendar;
 provider calendars stay independent. Personal item processing never completes shared work.
 A shared payment additionally needs claimed responsibility; see
 [payments.md](references/payments.md).
+
+For substantive knowledge source choice, conditionally read the shared
+[navigation-learning procedure](../knowlaborator-knowledge/references/navigation-learning.md). Skip it for exact known-record
+reads; learning grants no domain mutation or broader task authority.
