@@ -43,8 +43,11 @@ through another organization, endpoint or copied tool list.
 ## Work from an agenda item
 
 A selected agenda item is context, not authorization to execute source or domain
-actions. Items reach the basket from the OrgApp browser or the Today desk alike.
-Resolve the exact item with `get_active_context`, retain its item ID, and read its
+actions. The Today desk shares a selection only with its own chat. Pass the latest
+`localSelection` from that chat's model context to `get_active_context`, even when
+it is empty; never replace it with the shared browser basket or an older selection.
+For an explicitly shared browser selection, call `get_active_context` without
+`localSelection`. Retain the resolved item's ID, and read its
 MembershipId and current Version. Obtain the user's actual work request and use the
 owning skill. Recheck source access and current source facts before acting; advisory
 links never grant access.

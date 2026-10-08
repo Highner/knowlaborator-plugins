@@ -42,6 +42,12 @@ OrgApp prepares payments; it never transfers money. There are two levels:
 
 ## Shared payments
 
+Invoice number is optional. With an invoice, creation reuses the payment for the same
+resolved obligation. Without one, separate new payment UUIDs create separate saved
+payments; reuse the same UUID on retries and reuse an existing PaymentId or explicitly
+resolved SharedWorkId when colleagues are coordinating the same commitment. Do not
+invent an invoice number to satisfy validation. Validation failures name their fields.
+
 Resolve shared obligations with `resolve_shared_work` in the owning Collaborative
 Workspace and reuse the returned IDs and targets across members. Before a shared payment
 handoff, obtain the user's authorization and take responsibility with `claim_payment`,

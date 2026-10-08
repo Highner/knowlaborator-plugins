@@ -162,8 +162,14 @@ send("ready");
 For live prices or other provider data, the server can perform bounded HTTPS
 GET requests or remote MCP read-tool calls and deliver JSON through `initialize.externalSources`. The
 bundle interprets that JSON and renders it. There is no bundle-side network
-access or background polling. Data is resolved when the host loads the view;
-show its source date and distinguish a daily close from a real-time quote.
+access or background polling. The browser host offers an optional Auto-refresh
+selector in the full view and expanded Today view: Off, 30 seconds, 1/5/15/30
+minutes, or 1 hour. This browser preference is saved per viewer and Component;
+it also refreshes the Today preview and pauses in hidden tabs. The host resolves
+sources again through the existing authorized invocation and sends another
+`initialize` to the running bundle. Preserve local controls when handling it.
+Inline MCP Apps still resolve data on invocation or explicit host refresh.
+Show the source date and distinguish a daily close from a real-time quote.
 
 A revision can declare up to four connections and four external sources.
 Each source names one declared connection and uses its public HTTPS origin.
@@ -215,8 +221,8 @@ do not automate credential entry. Missing connections return
 `agent_input` takes a caller-supplied snapshot and is unavailable on Today.
 `external_only` is available on Today with at least one declared external
 source, `queryJson: null`, `dataScope: "workspace"`, and `{}` input and result
-schemas. The host resolves sources on load and explicit refresh without an
-agent invocation. The bundle should show empty, loading, stale, and provider
+schemas. The browser host resolves sources on load, explicit refresh, or a
+viewer-selected refresh interval without an agent invocation. The bundle should show empty, loading, stale, and provider
 error states and the provider's valuation or quote timestamp.
 
 For an MCP source, declare a connection with the provider HTTPS origin,

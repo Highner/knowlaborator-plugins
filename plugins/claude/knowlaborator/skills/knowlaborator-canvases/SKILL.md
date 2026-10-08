@@ -7,8 +7,11 @@ description: Read, author, and distill shared Workspace canvases with exact revi
 
 ## Fast path
 
-- For “this canvas” or its selection, call `get_active_context` once with no
-  identifiers. Require `ACTIVE` on surface `canvas`. Its canvas revision, lens
+- For a canvas selected in Today, pass this chat's latest `localSelection` to
+  `get_active_context` and use its available exact canvas coordinate. An empty
+  or unavailable local selection never falls back to the shared browser view.
+- For an explicitly shared canvas view or its item selection, call
+  `get_active_context` without `localSelection`. Require `ACTIVE` on surface `canvas`. Its canvas revision, lens
   and up to 25 selected item revisions are coordinates, not item payloads. If
   the context is missing, stale or ambiguous, ask the user to share or choose
   the view; never guess from recent canvases.
