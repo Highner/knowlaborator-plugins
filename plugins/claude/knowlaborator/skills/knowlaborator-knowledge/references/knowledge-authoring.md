@@ -19,18 +19,90 @@ to their UTC calendar date, warning when it discards time of day.
 The local validator checks structure and producer lints; a successful check
 does not certify optional timestamp semantics.
 
-## Apply guidance progressively
+## Choose the type from the list
+
+Each organization has one concept type list, maintained only by its
+administrators in the browser. Choose from it; never invent a type.
 
 1. Call `get_workspace_knowledge_guidance` with the exact target Workspace ID
-   when creating, reorganizing, or materially changing a concept whose type or
-   structure the guidance could shape. A narrow edit to an exact existing
-   record with unchanged type does not require a guidance lookup. A
-   not-configured result means to use generic open OKF.
-2. If guidance was loaded, choose candidate types from the task and compact
-   catalog. Load `get_workspace_concept_guidance` with the same Workspace ID
-   only for types or stable guidance IDs that could shape the concept.
-3. Treat guidance as advisory metadata, not organization facts, authorization,
-   or a concept instance. Never change the guidance profile as a side effect.
+   when creating, reorganizing, or changing the type of a concept. Its catalog
+   lists the types usable in that Workspace, with aliases and one-sentence
+   definitions, whether or not the Workspace has its own guidance. A narrow
+   edit to an exact existing record with unchanged type needs no lookup.
+2. Choose by definition, not by name. Load `get_workspace_concept_guidance`
+   with the same Workspace ID only for types that could shape the concept, and
+   apply their boundary, path prefix and structural recommendations.
+3. When no listed type fits, use the closest listed type or the built-in
+   `note` and write the type you wanted in the `candidate_type` metadata field.
+   Tell the user which type was missing. Only an organization administrator
+   adds types; a candidate on three or more records is shown to them.
+4. Read `typeWarnings` in the write result. `type_alias_resolved` means the
+   server stored the listed name for an alias; nothing to do.
+   `type_unknown` means the type is not usable in that Workspace: if one of the
+   suggestions fits, correct the type with `update_knowledge`; otherwise report
+   it. `type_deprecated` means the type is retired: choose another for new
+   records. `candidate_matches_existing_type` names a listed type to use
+   instead of the candidate.
+   Organizations that refuse instead of warning answer with the same reasons
+   as errors: `KNOWLEDGE_TYPE_UNKNOWN` (with suggestions),
+   `KNOWLEDGE_TYPE_DEPRECATED`, `KNOWLEDGE_BASE_KIND_RULE`,
+   `KNOWLEDGE_SUBJECT_EXISTS` and `KNOWLEDGE_DUPLICATE_SUBJECT`. Correct the
+   write and retry once with a new idempotency key; do not retry unchanged.
+5. Follow the type's base kind. For a `person`, `organization` or `project`
+   type, name the record the concept describes in the `about` metadata field:
+   `orgapp://crm/contacts/{id}` or `orgapp://org-chart/people/{id}` for a
+   person, `orgapp://crm/accounts/{id}` for an organization,
+   `orgapp://projects/{id}` for a project. Resolve the exact record first; a
+   value that names no record you can read is refused. People and
+   organizations outside the organization's records need no `about` unless the
+   type requires a link. Put a person's `email` and an organization's
+   `website` in the metadata when known: a matching record must then be named
+   in `about`. A `document` type links its source as
+   `orgapp://documents/{id}`; an `event` type gives `starts_on` as
+   `YYYY-MM-DD` or a date and time with an offset, and optionally `ends_on`.
+6. Base-kind warnings arrive in `typeWarnings` too. `subject_exists` names the
+   record to put in `about`; `duplicate_subject` names the existing concept to
+   revise instead of keeping two; `base_kind_rule` names the missing or invalid
+   field. Fix them with `update_knowledge` when you have the facts; otherwise
+   report them.
+7. Treat guidance and the list as advisory metadata, not organization facts,
+   authorization, or a concept instance. Never change guidance as a side effect.
+
+## Relate records
+
+A typed relation states how two records relate, such as Produkt `enthält`
+Rohstoff. Only administrators define relation types; agents never add one.
+
+1. Choose only from the `relations` that `get_workspace_knowledge_guidance`
+   returns for the target Workspace. Pick by definition and use-when, and
+   check the allowed source and target types. When none fits, keep a plain
+   Markdown link and tell the user which relation was missing.
+2. Store each relation once, from its source: the record the name reads from.
+   The other record shows it under the inverse name. Never write it again from
+   the other end and never keep a reference at both ends.
+   `KNOWLEDGE_RELATION_REVERSED` names the right direction.
+3. Send new relations with the record in `relations` of `create_knowledge` or
+   `update_knowledge` (`relationType`, `targetKnowledgeId`, optional `from` and
+   `until` dates). A new record of a type that requires a relation must bring
+   it. For existing records use `change_knowledge_relations` with `add` and
+   `remove` (relation IDs from `get_knowledge`); it creates no revision.
+4. Read relations with `list_knowledge_relations`, or find related records with
+   `list_knowledge` and `relatedKnowledgeId` plus `relationType` (the name for
+   outgoing, the inverse name for incoming). Check what exists before adding.
+5. Read `relation_type_mismatch` and `relation_required` in a write's
+   `typeWarnings` or `change_knowledge_relations`' `warnings`; in
+   organizations that refuse they arrive as `KNOWLEDGE_RELATION_TYPE_MISMATCH`
+   and `KNOWLEDGE_RELATION_REQUIRED`. `KNOWLEDGE_RELATION_DUPLICATE`,
+   `_CARDINALITY` (a `one` relation already has a current edge: remove it
+   first; edges cannot be edited) and `_CYCLE` are always refused. Correct the
+   request and retry once with a new idempotency key.
+6. `get_workspace_concept_guidance` lists in `supersededFields` the fields a
+   relation replaced on that type, such as `artist_profile_id` replaced by
+   `von`. Never set or change such a field; send its relation instead. A write
+   that does gets `field_superseded`, or `KNOWLEDGE_FIELD_SUPERSEDED` in
+   organizations that refuse. A value the record already has may stay.
+7. Keep plain Markdown links for mentions, evidence and anything no relation
+   type covers. A link creates no relation, and a relation needs no link.
 
 ## Validate and write
 

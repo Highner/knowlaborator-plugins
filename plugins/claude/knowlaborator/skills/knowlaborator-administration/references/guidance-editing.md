@@ -1,44 +1,75 @@
 # Create or replace knowledge guidance
 
-The guidance profile is a complete-replacement document. Use the live schema for
-field validation and preserve all valid loaded fields unless the administrator
-asks to change them.
+A Workspace's guidance profile holds only its description and general
+guidance. Concept types live on the organization's one type list, which only
+organization administrators change in the browser (Settings → Concept types).
+No tool can add, rename, map, assign or retire a type.
 
 ## Load the baseline
 
-1. Call `get_workspace_knowledge_guidance` with the exact target Workspace ID. Create only when `configured` is
-   false.
-2. Before an update, call `get_workspace_concept_guidance` with the same Workspace ID for every catalog
-   entry in order. If any detail is missing or has a different revision, reload
-   the compact profile and every detail.
-3. Ask only about gaps that change boundaries, applicability, ordering,
-   recommendations, or intentional removal.
+1. Call `get_workspace_knowledge_guidance` with the exact target Workspace ID.
+   Create only when `configured` is false. Its catalog lists the types usable
+   in that Workspace, read-only.
+2. Ask only about gaps that change the Workspace's purpose, concept
+   boundaries, relationships, lifecycle or reuse.
 
 ## Shape the profile
 
 - `workspaceDescription`: one required paragraph, 1–1,000 characters.
 - `generalGuidance`: 1–4,000 characters covering durable concept boundaries,
-  relationships, lifecycle, organization, and reuse.
-- `concepts`: zero to 50 complete ordered entries; submitted order replaces the
-  previous order.
+  relationships, lifecycle, organization, and reuse across the listed types.
+  Refer to types by their listed names; do not define new ones here.
 
-For each entry:
+## Propose a concept type
 
-- Omit `id` on create. On update, preserve each retained stable ID and omit it
-  only for a genuinely new entry.
-- Use a unique one-line `type`, a one-sentence `definition`, and concrete
-  `useWhen` and `doNotUseWhen` boundaries.
+When the administrator asks for a new type, or a definition for a listed type
+that has none, draft it for them to enter in Settings → Concept types. Say
+that it is a draft until they save it there. First check the catalog and its
+aliases: if a listed type already covers the meaning, propose an alias or a
+sharper definition instead of a second type.
+
+For each proposed type:
+
+- Use a short, unique name in the organization's language and a
+  one-sentence `definition` with concrete `useWhen` and `doNotUseWhen`
+  boundaries. Agents classify by the definition, so make it decide edge cases.
+- Name the base kind: `person` or `organization` for people and parties
+  (say whether every record must link to a Contacts or Org Chart record),
+  `project`, `document` for cards about one Document, `event` for things
+  with a date, otherwise `other`. The base kind cannot change later.
 - Decide every optional field deliberately. Populate it when one stable rule
-  applies to nearly every concept of this type; otherwise use `null` for an
-  optional scalar or `[]` for an optional collection. Do not add filler, repeat
-  the definition, or encode a current organization fact.
+  applies to nearly every concept of this type; otherwise leave it empty. Do
+  not add filler, repeat the definition, or encode a current organization
+  fact.
+
+## Relation types
+
+Relation types (how records of the listed types relate, such as Produkt
+`enthält` Rohstoff) are on the same list. Organization administrators maintain
+them in the browser only, in the Relation types section of Settings → Concept
+types; no tool creates, renames or retires one. `get_workspace_knowledge_guidance`
+returns the ones a Workspace can use.
+
+When asked, draft one for the administrator to enter there: a name read from
+source to target, an inverse name read back, a one-sentence definition with
+use-when text, the allowed source and target types (concept types, base kinds or
+any), cardinality `one` or `many`, symmetric or hierarchical if it applies, and
+which source types require it. Say that ends, cardinality and flags cannot change
+after creation. Guidance never asks agents to keep a reference at both ends.
+
+Promoting existing links or ID fields into a relation type, and marking a field
+superseded on a type, are done by organization administrators in the browser
+only ("Promote links" in the relation type's editor). Agents may propose which
+links or fields mean which relation, for the administrator to review there, but
+never promote. Once a field is superseded, propose dropping it from the type's
+recommended frontmatter.
 
 ## Protect the durable-form boundary
 
-This profile describes reusable OKF types, not real organization facts or a
-schema for all data. Apply [Work's durable-form rules](../../knowlaborator-work/references/durable-form.md).
+Guidance and type proposals describe reusable OKF types, not real
+organization facts or a schema for all data. Apply [Work's durable-form rules](../../knowlaborator-work/references/durable-form.md).
 Keep current people, products, projects, records, IDs and source bodies out of
-the profile. Inspect Dataset structure only when needed and exposed; otherwise
+the profile and the proposals. Inspect Dataset structure only when needed and exposed; otherwise
 request selection through the appropriate same-organization binding. Do not
 query records, create schemas or persist facts merely to design guidance.
 
@@ -78,7 +109,8 @@ suffix. For example, use `governance/decisions`, not
   500 characters. Do not repeat generic fields merely because OKF supports
   them. Never recommend Knowlaborator-managed identity, organization,
   Workspace, membership, permission, creator, timestamp, revision, audit, or
-  indexing fields.
+  indexing fields, nor the reserved fields `about`, `candidate_type`,
+  `starts_on` and `ends_on`.
 - `recommendedBodySections`: Recommend zero to 20 ordered, plain heading labels
   that give nearly every concept of the type a useful body structure. Use one
   unique heading per item, without Markdown heading markers, each at most 200
@@ -87,14 +119,15 @@ suffix. For example, use `governance/decisions`, not
   choices: which concept types may be linked, why, in which direction, and
   under what condition. Describe relationship semantics, not current targets;
   never invent IDs, assert inaccessible targets, or imply that links grant
-  access. Use `null` when no type-wide relationship rule is useful.
+  access. Use `null` when no type-wide relationship rule is useful. Point to a
+  listed relation type where one exists.
 
 Use the live field limits if they differ. Keep every collection unique
 case-insensitively.
 
 ### Check the complete shape
 
-A metadata-only example for a `Product` type could use this shape:
+A metadata-only proposal for a `Product` type could use this shape:
 
 ```json
 {
@@ -125,13 +158,13 @@ collections.
 
 ## Review and save
 
-Before create, present the complete proposal. Before update, present a complete
-diff including reordered and omitted entries. A current instruction to save
-that reviewed proposal authorizes the mutation; otherwise ask after the review.
+Before create, present the complete proposed profile. Before update, present a
+complete diff. A current instruction to save that reviewed proposal authorizes
+the mutation; otherwise ask after the review.
 
-Call `save_workspace_knowledge_guidance` with the exact Workspace ID and the complete
-ordered profile: without `expectedRevision` and concept IDs to create the first
-profile, or with the exact loaded revision to replace it.
+Call `save_workspace_knowledge_guidance` with the exact Workspace ID,
+`workspaceDescription` and `generalGuidance`: without `expectedRevision` to
+create the first profile, or with the exact loaded revision to replace it.
 
-On configuration-state or revision conflicts, reload the complete baseline and
-reconcile explicitly. Never overwrite a newer revision or drop an entry implicitly.
+On configuration-state or revision conflicts, reload the baseline and reconcile
+explicitly. Never overwrite a newer revision.

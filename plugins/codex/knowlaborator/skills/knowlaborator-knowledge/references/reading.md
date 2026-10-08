@@ -16,6 +16,9 @@ full record. includeHistorical does not include superseded or archived record
 revisions. It has no resource-kind filter. Read exact results through their owning
 operation. Use list_knowledge for
 catalog pages, get_knowledge for one record, and list_knowledge_revisions for history.
+Use list_knowledge_relations for one record's typed relations, and list_knowledge with
+relatedKnowledgeId and relationType for questions such as which products contain a raw
+material. An unavailable related record is one you cannot read; do not guess it.
 
 Search also returns independently authorized live calendar title matches, including
 hidden calendars, from seven days back through thirty days ahead by default.
@@ -28,8 +31,8 @@ list_calendar_events read before suggesting a calendar change.
 Preserve revision, lifecycle, Workspace, provenance, evidence, uncertainty,
 unknown fields and redacted references. Taxonomy guidance is advisory metadata,
 not organization facts. Read the compact get_workspace_knowledge_guidance
-catalog only when relevant; load get_workspace_concept_guidance only for the
-exact needed types in that Workspace.
+catalog of the Workspace's concept types only when relevant; load
+get_workspace_concept_guidance only for the exact needed types in that Workspace.
 
 When the user refers to “this”, “here”, or “my basket” in an already-open
 organization conversation, call `get_active_context` without identifiers. Treat
