@@ -5,7 +5,9 @@ Skip the learning preflight for an exact known-record read or a trivial lookup. 
 procedure stores bounded internal operational experience; it does not authorize any
 Knowledge, Question, decision, Agenda, ToDo, mail or other domain mutation.
 
-1. Create a task-local episode UUID and call `get_navigation_guidance` once. Describe
+1. Bound an episode to one concrete purpose, not to a chat or a time window. Split unrelated
+   questions into separate episodes; follow-ups pursuing the same purpose can continue it.
+   Create a task-local episode UUID and call `get_navigation_guidance` once. Describe
    the purpose in at most 400 characters and select explicit purpose/data-need/input
    facets. Use exact anchors already known to the task, with current revisions. Do not
    send conversation history, source values, credentials, query literals or file paths.
@@ -53,3 +55,24 @@ report persistence and appear in ordinary activity (who/tool/when, no payload). 
 permission controls still apply. Learning failure must not block research or create
 follow-up work for the user. Exact source reads, normal search and current schemas
 remain authoritative. Knowledge authoring still requires a knowledge-producing request.
+
+## Relationship observations during this task
+
+When already recording a useful experience, optionally include `usedTogether`: at most
+three groups of two to four `get_knowledge` step IDs whose current records you actually
+combined for one finding. Use exact observed reads and their receipts. A record appearing
+in a search result, an irrelevant detour, or merely being read in the same conversation
+is not a used-together finding. Broad tasks should report separate small groups.
+
+For an explicit relationship you already noticed, a two-step group may also include
+`relationTypeId` from the existing relation list and `sourceQuote` / `targetQuote`, each
+at most 500 characters copied verbatim from those records. The first step is the source;
+the second is the target. These bounded evidence quotations are the only source-text
+exception to the experience-report rule. Omit the type when uncertain; never invent one.
+Do no extra searches, rereads, scheduled work or separate agent run just to fill groups.
+
+The server can derive reviewable relationship proposals. It never accepts them for you.
+Private tasks and lessons remain private; shared structural evidence keeps the existing
+Workspace eligibility gate. Do not create a canonical relationship through another tool
+unless the user's task authorizes it. Use successor episode IDs for continuations of the
+same investigation; they count as one task, not additional independent confirmation.

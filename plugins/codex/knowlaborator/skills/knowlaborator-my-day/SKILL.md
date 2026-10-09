@@ -6,6 +6,14 @@ description: Maintain the person's personal agenda in the active organization, o
 # Knowlaborator My Day
 
 Maintain the person's unified inputs and their agenda in the active organization.
+The agenda is an optional module (`agenda`): `add_agenda_items`, `update_agenda_item`
+and `close_agenda_item` are listed only where it is installed, and the person can
+turn their own agenda off. When `get_input_context` returns `AgendaEnabled: false`,
+or the agenda tools are not listed, propose no agenda items: still preserve inputs
+with `process_input`, run approved processing and open the Today desk. A write that
+fails with `AGENDA_TURNED_OFF`, `MODULE_NOT_INSTALLED` or `MODULE_DEACTIVATED` is not
+retried; say that the agenda is off and that an administrator installs it in
+**Organization Settings -> Modules** or the person switches it on in Settings -> Agenda.
 Read input content before choosing an outcome. Agenda suggestions are never executed
 merely because the agent adds them: adding a suggestion does not ingest, index or
 approve processing. `process_input` with disposition `processed` preserves a source
@@ -26,7 +34,7 @@ text is rejected with `AGENDA_TEXT_TOO_LONG`; rewrite it shorter instead of spli
    call `list_organizations` and ask the user to choose from its returned memberships.
    Do not infer organization IDs or silently broaden a request to all organizations.
 2. Call `get_input_context`. It returns `Items`, `OpenAgendaItems`,
-   `RecentlyClosedAgendaItems`, `MembershipId`, personal and standard instructions,
+   `RecentlyClosedAgendaItems`, `AgendaEnabled`, `MembershipId`, personal and standard instructions,
    account metadata and `NextCursor`. Each item has an exact `InputReference`,
    `Source`, type, state and text, email `Mail`, or queued-source `Intake` metadata.
    Follow `NextCursor` with identical filters until null, even after an empty filtered

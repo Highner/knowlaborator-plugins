@@ -32,18 +32,31 @@ it, a person, their account and the email that matters.
 
 ## One beat at a time
 
-Each `stage_apply` call is one beat. The browser plays a beat in a fixed order: cards
-arrive, then highlights sweep in, then connections draw, then narration appears. A good
-beat changes 3–8 things and answers one question.
+Each `stage_apply` call is one atomic beat. The view shows quick, overlapping animations
+by default, with narration immediately readable. The person can enable walkthrough
+animations for the slower cards → highlights → connections → narration sequence.
+
+Build progressively: place relevant records as soon as you have identified them, then
+add exact highlights, connections and explanations as your investigation develops.
+Use `update` to enrich existing cards instead of removing and replacing them. Group
+related changes into useful beats; do not make a tool call for each tiny visual change.
+Do not wait for the complete investigation before showing the first useful records.
+This changes presentation timing, not research depth: gather all the context and data
+needed, using as many searches and reads as the task warrants. Never present a tentative
+interpretation as a verified conclusion.
 
 1. Find the records: `stage_find` with the person's words. It returns up to `limit`
    results of each kind (default 3); pass `kinds` when you know what you need. Results
    carry `kind`, `id`, `revisionId`, a snippet and, for document passages, the evidence `block`.
 2. Read what you will highlight: `stage_read` returns Knowledge text as displayed, document
    evidence blocks (with `page`), or record and CRM fields. Quote only what you read here.
-3. Apply the beat with `expectedRevision` from your last result. Keep the returned
-   revision for the next beat. `rendered: false` means the Stage did not confirm in time;
-   continue, but check `stage_get` if the person says nothing changed.
+3. Apply the beat with `expectedRevision` from your last result. It returns as soon as
+   the server commits the change. Keep the returned revision for the next beat.
+   `rendered: false` means display is unconfirmed, not that the batch failed; do not
+   repeat an accepted batch. `stage_get` reports `renderedRevision` for later confirmation.
+   Set `waitForRender: true` only when your next action depends on the person seeing
+   this beat; it waits at most six seconds. Do not poll for acknowledgement between
+   ordinary beats. Still read the Stage before a beat to preserve the person's edits.
 
 ```json
 {"expectedRevision": 0, "operations": [

@@ -8,7 +8,7 @@ coverage only; completing decision catch-up does not review questions.
 ## Author and link
 
 Before creating a question, search for existing questions with the same meaning and
-scope. Use `create_knowledge_question` with a stable operation UUID, the organization's
+scope, including `status: "dismissed"` before recreating a previously closed question. Use `create_knowledge_question` with a stable operation UUID, the organization's
 primary OKF language, a responsible member (who is asked) and originating
 `relatedKnowledgeIds`. Set `askedBy` only when the person or the source names who
 asked: `{ "kind": "member", "id": membershipId }` or `{ "kind": "contact", "id":
@@ -31,11 +31,21 @@ existing source revisions and new material, with up to 50 sources per page.
   but never acknowledge an unread source as reviewed or irrelevant.
 - Compare what the question asks, its scope and expected evidence with what the
   source actually establishes. Partial answers, plans and guesses remain uncertain.
-- Save findings with `propose_question_answer`, including precise conditions and
-  exact evidence. This leaves the question `answer_proposed`.
+- Save an answer discovered in context with `propose_question_answer`, including precise conditions.
+  Evidence is optional; cite exact sources when available. This leaves the question `answer_proposed`
+  under To confirm, attributed to the authenticated member's agent. Never invent sources.
+- When the person explicitly supplies or accepts an answer (for example, “the answer is X”), use
+  `answer_knowledge_question` with that text, current `expectedVersion`, and `confirmed: true` to
+  answer and resolve atomically. No documents or second confirmation are required. Your own discovery
+  remains a proposal; never set confirmed based only on finding evidence.
 - `resolve_knowledge_question` requires the person's explicit instruction to accept
   the answer. Update dependent concept facts when authorized and appropriate. Never
   manufacture human approval from the presence of an answer candidate.
+- Use `dismiss_knowledge_question` only on the person's instruction, with the current version and a
+  short reason (no longer relevant, duplicate, or no longer being pursued). It closes the shared question
+  for everyone, preserves its history, and stops routine review. Never dismiss merely due to age or lack
+  of an answer. Dismissed questions are absent from default lists, even with `includeResolved`; request
+  `status: "dismissed"` explicitly to inspect them. Reopen with a reason before answering/reviewing again.
 - New contradictory material can justify `reopen_knowledge_question`, with a reason.
   Preserve the previous answer and its history. Reopening starts a new review generation.
 - Acknowledge only checked sources with `complete_question_review`: `reviewed`,

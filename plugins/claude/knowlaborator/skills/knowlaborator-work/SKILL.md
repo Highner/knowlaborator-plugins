@@ -31,7 +31,7 @@ to-dos and milestones keep their own state; link them from its follow-up plan
 ## Optional modules
 
 Projects (`projects`), Org Chart (`org-chart`), Banking (`banking`), the Notice
-board (`notices`) and other optional modules list their tools only where they are
+board (`notices`), the Agenda (`agenda`) and other optional modules list their tools only where they are
 installed. Use `list_organization_modules` when availability matters; it never
 grants record access. A deactivated module keeps authorized reads and history while
 its writes pause; linked core ToDos, Documents, Knowledge and decisions keep working
