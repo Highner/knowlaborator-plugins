@@ -17,6 +17,11 @@ conversation language.
 
 ## Fast path
 
+- Source choice or several discovery steps: read the
+  [navigation-learning procedure](references/navigation-learning.md) before the first
+  read. Generate one task-local episode UUID and reuse it as `navigationEpisodeId`
+  on supported reads. Keep returned observation IDs for one useful assessment at
+  meaningful completion. Skip this for exact known-record reads.
 - Shared Explorer: call `get_active_context` once. When `explorerSceneState` is
   `available`, answer visible-graph questions from its bounded `explorerScene` titles,
   excerpts and relationships. Do not rerun the graph query. Read exact records for

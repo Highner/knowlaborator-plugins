@@ -20,6 +20,12 @@ exact active account already exists; never create an account as a side effect of
 contact extraction. Link each created or reused contact to the exact source Document
 through an eligible target returned by `search_crm_link_targets`.
 
+## Short descriptions
+
+Accounts and contacts have an optional `description` of up to 500 characters. Include
+the saved description in full record updates to retain it; null or blank clears it.
+Descriptions are shared with authorized readers and searchable in CRM.
+
 ## Bank details
 
 Accounts and individual contacts may each own optional `bankDetails` with `recipient`,

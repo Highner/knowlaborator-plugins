@@ -12,7 +12,8 @@ it, a person, their account and the email that matters.
 
 ## Before you start
 
-- Call `stage_get` (or `stage_find`, which also reports the Stage status). If the state is
+- Read `stage_get` once when you need a scene you have not yet inspected. `stage_find`
+  also reports availability while finding records; do not call both just to check status. If the state is
   `not_open`, call `open_stage` when the person wants to watch here in the conversation;
   otherwise ask them to open **Stage** in Knowlaborator and wait. This connection follows
   the organization of the open Stage.
@@ -50,13 +51,22 @@ interpretation as a verified conclusion.
    carry `kind`, `id`, `revisionId`, a snippet and, for document passages, the evidence `block`.
 2. Read what you will highlight: `stage_read` returns Knowledge text as displayed, document
    evidence blocks (with `page`), or record and CRM fields. Quote only what you read here.
-3. Apply the beat with `expectedRevision` from your last result. It returns as soon as
-   the server commits the change. Keep the returned revision for the next beat.
+3. Apply the beat with `expectedRevision` from the scene you last inspected or
+   successfully changed. It returns as soon as the server commits the change. Keep
+   the returned revision and IDs, and track your layout changes for the next beat.
    `rendered: false` means display is unconfirmed, not that the batch failed; do not
    repeat an accepted batch. `stage_get` reports `renderedRevision` for later confirmation.
    Set `waitForRender: true` only when your next action depends on the person seeing
    this beat; it waits at most six seconds. Do not poll for acknowledgement between
-   ordinary beats. Still read the Stage before a beat to preserve the person's edits.
+   ordinary beats. No routine `stage_get` is needed before or after a successful beat.
+
+Refresh with `stage_get` when the current scene is unknown, a revision conflict or
+newer observed revision shows it changed, or the person's request depends on their
+current selection, proposal edits, agenda progress or review responses. A newer
+revision in `stage_find` is a change signal, not a replacement for inspecting the
+changed scene before writing. After refreshing, continue from that scene and the
+results of your own successful batches. These rules apply to scene synchronization;
+continue all research searches and source reads the task needs.
 
 ```json
 {"expectedRevision": 0, "operations": [
@@ -185,9 +195,10 @@ Compose these with their own operations; each takes a new `card` ID and a cell l
   a Knowledge, Document, Dataset record or decision card to pin its current revision
   (highlights whose quotes no longer appear are dropped and reported).
 - The person can advance the agenda and edit proposals. Proposals are edited, accepted
-  and reviews answered on the browser Stage; the view in the conversation links there. Before each beat, read `stage_get`:
-  a proposal with `editedBy: "person"` holds their text — build on it rather than
-  overwriting it. Advance the agenda as you go.
+  and reviews answered on the browser Stage; the view in the conversation links there.
+  When continuing from the person's interaction, refresh once with `stage_get` and
+  build on their current work. A proposal with `editedBy: "person"` holds their text;
+  preserve it when composing your update. Advance the agenda as you go.
 
 ## Boundaries
 
