@@ -65,6 +65,11 @@ existing source revisions and new material, with up to 50 sources per page.
 - `resolve_knowledge_question` requires the person's explicit instruction to accept
   the answer. Update dependent concept facts when authorized and appropriate. Never
   manufacture human approval from the presence of an answer candidate.
+- When the person says a proposed answer is wrong or not wanted, use `dismiss_question_answer` with the
+  current version and, if they gave one, a short reason. It deletes only the proposal: the question is
+  unanswered again for everyone, keeps its review generation, and the proposal stays only in revision
+  history. Never delete a proposal on your own judgment, and do not re-propose the same answer from
+  sources you already reviewed.
 - Use `dismiss_knowledge_question` only on the person's instruction, with the current version and a
   short reason (no longer relevant, duplicate, or no longer being pursued). It closes the shared question
   for everyone, preserves its history, and stops routine review. Never dismiss merely due to age or lack
