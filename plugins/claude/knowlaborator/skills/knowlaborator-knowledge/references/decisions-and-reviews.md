@@ -86,28 +86,49 @@ the actual date is not known (for example, an older decision without a secured d
 leave `decisionDate` empty: never invent it, and never use today's or the capture date.
 Readers then show "date unknown". The server records the authenticated recorder. A
 recorded decision is not independently approved.
-`propose_knowledge_decision`, `request_knowledge_review`, `cancel_knowledge_review`,
+`propose_knowledge_decision`, `request_knowledge_review`, `respond_knowledge_review`, `cancel_knowledge_review`,
 `withdraw_knowledge_decision` and `replace_knowledge_decisions` are explicit actions
 under current Workspace authority. Reuse an operation UUID for the same retry and
 read current Knowledge/standing/review versions before new actions. When drafting a
 review request, propose an optional `respondBy` date; reviewers get reminders after it.
 
-## Replace or abandon
+## Reject, dismiss or abandon
+
+The agent has the same decision actions as the browser. Only act when the user explicitly
+directs it; never infer a review response from your assessment of the evidence.
+
+- **Ablehnen / Reject:** call `respond_knowledge_review` with `response: reject` for
+  an exact pending review assigned to the authenticated user. Read
+  `get_knowledge_decision` for `reviewId` and current Knowledge/decision/review versions,
+  then generate an operation UUID for the response. An optional comment explains the substantive rejection.
+  The response is recorded under the caller's membership; never impersonate another reviewer.
+- **Verwerfen / Dismiss proposal:** call `withdraw_knowledge_decision` for the proposed
+  revision, with an optional reason. It closes the proposal without adopting it, cancels
+  a pending review and retains its history. A pending review can be withdrawn only by
+  its requester or the owning Workspace Manager.
+- **Aufheben / Abandon decision:** call `withdraw_knowledge_decision` for a decision
+  in force, with a required reason. It needs no successor and cancels the open follow-up
+  plan; linked to-dos and milestones remain unchanged.
+
+`respond_knowledge_review` also supports response values "approve" and "request_changes",
+under the same assignment, access, exact-revision and concurrency rules as the browser.
+Reuse an operation UUID only for an identical retry. After a conflict, read fresh state
+and recheck the intended action; an adopted proposal needs abandonment and a reason.
+
+## Replace
 
 - `replace_knowledge_decisions` fully replaces final decisions by currently decided
   successors along explicit edges (predecessor revision -> successor revision): splits,
   merges or reorganizations, with each predecessor's current decision version and a
   plain reason. For a partial change, prepare decisions covering both the changed and
   the kept part, then replace the broader one. There is no "partly superseded".
-- Abandoning a decision in force is `withdraw_knowledge_decision` with a reason; it
-  needs no successor and cancels the open follow-up plan.
-- Both only when the user explicitly directs it. A low support level never replaces or
+- Only when the user explicitly directs it. A low support level never replaces or
   abandons anything by itself.
 
 Required review names 1-20 currently eligible organization Contributor/Manager
-memberships in the owning Workspace. Every required reviewer must approve in the
-authenticated browser. Agents cannot approve, request changes, reject or impersonate
-a reviewer. Assignment gives no access. `list_outstanding_knowledge_reviews` reads
+memberships in the owning Workspace. Every required reviewer must approve through the
+browser or their authenticated MCP connection on explicit user direction. Assignment
+gives no access. `list_outstanding_knowledge_reviews` reads
 the user's current assignments. Direct recording cannot bypass a pending review.
 
 Edits, reviewer replacement, access loss, Workspace movement or redaction may

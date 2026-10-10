@@ -43,7 +43,7 @@ Read only the reference needed for the requested operation:
 - [reading.md](references/reading.md): search, exact reads and exports.
 - [knowledge-authoring.md](references/knowledge-authoring.md): writes and validation.
 - [decisions-and-reviews.md](references/decisions-and-reviews.md): decision records,
-  exact-revision standing, direct recording, browser human review, replacing and
+  exact-revision standing, direct recording, user-directed browser/MCP review, replacing and
   abandoning.
 - [questions.md](references/questions.md): independent question concepts, evidence
   review, resolution and migration of embedded open questions.
