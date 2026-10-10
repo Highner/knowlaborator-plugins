@@ -5,11 +5,35 @@ owner, scope, expected evidence, optional next check date and lifecycle. It is n
 a decision, decision plan, assessment or score. Use question tools and question
 coverage only; completing decision catch-up does not review questions.
 
+## Decide whether to track a question
+
+Apply these criteria within the person's authorized task, including ingestion,
+curation and migration:
+
+1. Track a question only when a person actually asked it and wants it pursued
+   (directly or evidenced by the source), or its answer would materially affect a
+   concrete pending decision or action. State that need in the context. A missing
+   field, speculative risk, generic checklist or interesting unknown alone is not
+   a reason to create a question; preserve uncertainty as labeled context.
+2. First search existing knowledge and questions, including resolved answers and
+   `status: "dismissed"`, and read relevant available evidence. If the evidence
+   already answers it, use that answer in the authorized work instead of creating
+   a question just to answer it. For an existing question, follow the answer
+   proposal/acceptance rules below. Reuse matching questions. Never recreate a
+   dismissed question. Reopen its existing record only for a concrete new reason
+   or the person's explicit request, keeping its history, including why it was dismissed.
+3. Bundle related aspects of the same clarification into one question's context
+   and expected evidence. Keep separate records only for independently actionable
+   needs. For example, delivery date, quantity and capacity belong together when
+   they jointly determine whether one delivery commitment can be met.
+4. Zero new questions is a successful outcome. A selected `questions` action
+   authorizes evaluating the need; it does not require producing records. If none
+   qualify, report a brief reason and complete the action with empty results.
+
 ## Author and link
 
-Before creating a question, search for existing questions with the same meaning and
-scope, including `status: "dismissed"` before recreating a previously closed question. Use `create_knowledge_question` with a stable operation UUID, the organization's
-primary OKF language, a responsible member (who is asked) and originating
+For a qualifying unresolved need, use `create_knowledge_question` with a stable
+operation UUID, the organization's primary OKF language, a responsible member (who is asked) and originating
 `relatedKnowledgeIds`. Set `askedBy` only when the person or the source names who
 asked: `{ "kind": "member", "id": membershipId }` or `{ "kind": "contact", "id":
 contactId }` for a Contacts contact. Never infer an asker from who created a record.
@@ -63,11 +87,13 @@ existing source revisions and new material, with up to 50 sources per page.
 ## Migrate existing embedded questions
 
 Use `list_question_migration`, not a keyword or heading search, to inventory every
-current accessible record. Read complete bodies, extract/reuse every actionable
-question, replace text with links, and call `record_question_migration_review` for
-the resulting exact revision. `extracted` requires all linked question IDs;
-`no_open_questions` requires a full semantic review; uneditable or ambiguous items
-stay `blocked` with a reason. Include archived records and non-English prose.
+current accessible record. Read complete bodies and apply the tracking criteria
+above. Extract/reuse qualifying questions, replace their text with links, and call
+`record_question_migration_review` for the resulting exact revision. Keep other
+uncertainty as labeled context; do not invent questions to fill gaps.
+`extracted` requires all linked question IDs; `no_open_questions` requires a full
+semantic review that found no qualifying questions to extract; uneditable or
+ambiguous items stay `blocked` with a reason. Include archived records and non-English prose.
 Preserve immutable source snapshots and historical revisions. Restart the inventory
 after every pass: changed revisions become pending again. Use `includeReviewed: true` for a second complete audit. Never claim all deployed
 data is migrated while access is incomplete, records remain, or blockers exist.

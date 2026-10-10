@@ -101,6 +101,8 @@ and `okfIngestionPending=true`; do not assume one page is complete.
 
 During authorized ingestion, check relevant question records in the target Workspace
 using [questions.md](questions.md). Existing and new evidence may answer a question;
-propose the answer with exact citations, without automatically accepting it. Extract
-new actionable questions into their own records and link them from the concepts.
+propose the answer with exact citations, without automatically accepting it. Apply
+the tracking criteria there before creating new questions: research first, require
+a concrete need and bundle aspects of one clarification. Link qualifying questions
+from the concepts; zero new questions is a successful ingestion outcome.
 Question review is separate from decision catch-up.

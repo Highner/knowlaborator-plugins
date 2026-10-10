@@ -41,3 +41,5 @@ decisions continue under their usual rules. Never propose permanent purge as a
 deactivation step. For a request returning `MODULE_NOT_INSTALLED` or
 `MODULE_DEACTIVATED`, reload availability, explain the state and route an explicit
 lifecycle request to the browser.
+
+Organization settings include purpose/scope and the input destination suggestion switch. Use `get_organization` for current values and revision, and `update_organization` to update requested fields with the organization/revision guards. Omitting purpose/scope preserves it; an empty string clears it. Destination suggestions use this scope and existing Workspace descriptions, remain advisory, and require review before processing.

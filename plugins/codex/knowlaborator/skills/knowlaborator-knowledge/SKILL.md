@@ -31,8 +31,9 @@ conversation language.
   could shape the change.
 - New concept: search concise candidates, load relevant Workspace guidance, then create.
 - Question or ingestion session: read [questions.md](references/questions.md), list
-  relevant independent questions and review their pending evidence. Decision coverage
-  never substitutes for question coverage.
+  relevant independent questions and review their pending evidence. Apply its
+  tracking criteria before creating questions; zero new questions is a successful
+  outcome. Decision coverage never substitutes for question coverage.
 - Decision or ingestion session: start with `get_decision_catch_up` when the person has a
   decision monitoring scope, as described in decision-loops.md.
 
