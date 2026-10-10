@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "author": {
+    "email": "info@appligator.de",
+    "name": "Appligator"
+  },
+  "description": "Stage Lab prototype: Claude generates self-contained interactive UI for MCP Apps hosts.",
+  "displayName": "Knowlaborator Stage Lab",
+  "homepage": "https://orgapp-production-1b56.up.railway.app/plugin/support",
+  "keywords": [
+    "prototype",
+    "generative-ui",
+    "stage",
+    "mcp"
+  ],
+  "name": "knowlaborator-stage-lab",
+  "version": "0.1.0"
+}

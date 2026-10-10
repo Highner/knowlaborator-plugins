@@ -27,6 +27,18 @@
         "path": "./plugins/codex/knowlaborator-stage",
         "source": "local"
       }
+    },
+    {
+      "category": "Productivity",
+      "name": "knowlaborator-stage-lab",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/codex/knowlaborator-stage-lab",
+        "source": "local"
+      }
     }
   ]
 }

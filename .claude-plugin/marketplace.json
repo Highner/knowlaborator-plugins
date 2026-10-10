@@ -43,6 +43,24 @@
       "name": "knowlaborator-stage",
       "source": "./plugins/claude/knowlaborator-stage",
       "version": "1.3.1"
+    },
+    {
+      "author": {
+        "email": "info@appligator.de",
+        "name": "Appligator"
+      },
+      "category": "productivity",
+      "description": "Experimental assistant-generated interactive presentations inside the conversation.",
+      "displayName": "Knowlaborator Stage Lab",
+      "keywords": [
+        "prototype",
+        "generative-ui",
+        "stage",
+        "mcp"
+      ],
+      "name": "knowlaborator-stage-lab",
+      "source": "./plugins/claude/knowlaborator-stage-lab",
+      "version": "0.1.0"
     }
   ]
 }

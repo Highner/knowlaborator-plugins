@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Stage Lab"
+  short_description: "Prototype assistant-generated interactive presentations."
+  default_prompt: "Use $knowlaborator-stage-lab to make an interactive explanation of this idea."
