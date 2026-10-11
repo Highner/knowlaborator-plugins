@@ -17,6 +17,10 @@ conversation language.
 
 ## Fast path
 
+- Topical or status question: start with `search_content`, then read selected sources
+  with their owning exact-read tools. Use `list_knowledge` only when the task needs
+  an inventory, systematic review or relationship browsing without search text;
+  do not routinely add a catalog scan to a topical search.
 - Source choice or several discovery steps: read the
   [navigation-learning procedure](references/navigation-learning.md) before the first
   read. Generate one task-local episode UUID and reuse it as `navigationEpisodeId`

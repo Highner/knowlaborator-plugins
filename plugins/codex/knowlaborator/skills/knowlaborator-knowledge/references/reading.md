@@ -1,5 +1,9 @@
 # Read knowledge and existing exports
 
+For topical and status questions, start with `search_content`, then read selected
+sources through their owning exact-read tools. Do not routinely follow a topical
+search with `list_knowledge` or scan a whole Workspace to answer one topic.
+
 Use search_content for bounded discovery across knowledge, Documents, and active
 Dataset metadata and current active Dataset records. Record hits use keyword matching
 across current scalar values, visible reference labels, and Dataset names. Up to
@@ -14,11 +18,25 @@ in ResourceUri. Read full values with get_dataset_record, or the exact revision
 with list_dataset_record_revisions and its revisionId; a discovery hit is not the
 full record. includeHistorical does not include superseded or archived record
 revisions. It has no resource-kind filter. Read exact results through their owning
-operation. Use list_knowledge for
-catalog pages, get_knowledge for one record, and list_knowledge_revisions for history.
-Use list_knowledge_relations for one record's typed relations, and list_knowledge with
-relatedKnowledgeId and relationType for questions such as which products contain a raw
-material. An unavailable related record is one you cannot read; do not guess it.
+operation. Use get_knowledge for one record and list_knowledge_revisions for history.
+Reserve `list_knowledge` for inventories, systematic reviews or browsing relationships
+without search text. Its cursor pages enumerate non-archived records in update order;
+search returns bounded ranked matches and cannot enumerate the whole catalog.
+Use list_knowledge_relations for one record's typed relations. To enumerate related
+records, use list_knowledge with relatedKnowledgeId and relationType, for example all
+products containing a raw material. To find related records matching a topic, use
+search_content with those same filters. An unavailable related record is one you
+cannot read; do not guess it.
+
+`list_knowledge` returns a compact catalog: each item has top-level `id`, Workspace
+fields, `title`, `type`, lifecycle `status`, `origin`, `currentRevisionId`,
+`currentRevisionNumber`, `version`, timestamps and optional `decisionStanding`.
+It omits bodies, metadata, revision snapshots and decision details. A catalog entry
+is not the full record: use `get_knowledge` for selected records before answering
+from their contents or editing. Start with a small page and follow `nextCursor`
+when needed; do not repeat the same listing with a larger page size. Keep lifecycle
+`status` separate from `decisionStanding` (for example, a proposal is not a final
+decision). An omitted body or metadata is not an empty value.
 
 `get_knowledge` returns one top-level `bodyMarkdown` with record fields, `version`,
 and `currentRevision` identifiers and provenance. Decision details and authorized
