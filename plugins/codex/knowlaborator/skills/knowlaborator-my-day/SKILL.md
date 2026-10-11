@@ -1,6 +1,6 @@
 ---
 name: knowlaborator-my-day
-description: Maintain the person's personal agenda in the active organization, or in each explicitly requested organization, from mail, messages, calendar, ToDos, notices and what the person queued (photos, flagged documents and text notes). Agenda items are very short proposals and are never executed. Use for manual, scheduled and mail.received runs. Also opens the interactive Today desk when the person wants to see their day.
+description: Catch up on incoming items, ingest outstanding sources and complete approved processing with saved user instructions. Maintain the person's personal agenda in the active organization, or in each explicitly requested organization, from mail, messages, calendar, ToDos, notices and what the person queued (photos, flagged documents and text notes). Agenda items are very short proposals and are never executed. Use for manual, scheduled and mail.received runs. Also opens the interactive Today desk when the person wants to see their day.
 ---
 
 # Knowlaborator My Day
@@ -19,6 +19,12 @@ merely because the agent adds them: adding a suggestion does not ingest, index o
 approve processing. `process_input` with disposition `processed` preserves a source
 that needs no further work; `irrelevant` excludes incoming mail/messages without
 preservation. Reads and these decisions never change provider read state.
+
+For “catch up on my incoming items”, ingesting all outstanding inputs, or a periodic
+input-processing run, use [incoming catch-up](references/incoming-catch-up.md).
+It resumes server-owned discovery progress and reads the existing approved queue,
+including saved user processing instructions. Ordinary agenda planning still uses
+the read/propose workflow below.
 
 ## Keep it very short
 

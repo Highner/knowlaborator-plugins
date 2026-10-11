@@ -17,6 +17,12 @@ conversation language.
 
 ## Fast path
 
+- Knowledge maintenance: use [maintenance.md](references/maintenance.md) for the complete
+  one-session Incoming → source → ontology → existing-knowledge reconciliation workflow.
+  This is independent of Navigation, Questions and decision catch-up. During this
+  procedure the ingestion/source-choice branches below do not start those other
+  workflows; use only the maintenance protocol and the owning source/read tools.
+
 - Topical or status question: start with `search_content`, then read selected sources
   with their owning exact-read tools. Use `list_knowledge` only when the task needs
   an inventory, systematic review or relationship browsing without search text;
@@ -43,6 +49,7 @@ conversation language.
 
 Read only the reference needed for the requested operation:
 
+- [maintenance.md](references/maintenance.md): independent maintenance, evidence and chat/browser review.
 - [navigation-learning.md](references/navigation-learning.md): conditional source-choice learning
   for substantive discovery; skip exact known-record reads.
 - [reading.md](references/reading.md): search, exact reads and exports.
