@@ -18,7 +18,8 @@ conversation language.
 ## Fast path
 
 - Knowledge maintenance: use [maintenance.md](references/maintenance.md) for the complete
-  one-session Incoming → source → ontology → existing-knowledge reconciliation workflow.
+  incremental Incoming → changed passages → ontology → affected-knowledge workflow.
+  Routine maintenance excludes historical backfill unless expressly requested.
   This is independent of Navigation, Questions and decision catch-up. During this
   procedure the ingestion/source-choice branches below do not start those other
   workflows; use only the maintenance protocol and the owning source/read tools.

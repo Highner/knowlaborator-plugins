@@ -1,13 +1,13 @@
 # Save a Document or Document Template file
 
-Use this flow for a PDF, non-macro DOC/DOCX/PPTX, PNG, JPEG, GIF, or WebP file the user wants stored in OrgApp.
+Use this flow for a PDF, non-macro DOC/DOCX/PPTX/XLSX, PNG, JPEG, GIF, WebP, EML, or MSG file the user wants stored in OrgApp.
 Connected-mail attachments belong to [mail ingestion](../../knowlaborator-communication/references/mail-ingestion.md)
 and always use the ordinary Document purpose.
 
-Document bytes never pass through MCP arguments. Use the same direct two-step
-workflow for a Document's first file and every later revision. Inspect the
-local file with the client's ordinary local-file tools, but do not put its path,
-bytes, upload URL, credentials, or tokens in an MCP argument or summary.
+Document bytes never pass through MCP arguments. Use the file-transfer tool
+already exposed by the client; do not probe hidden tools or try an alternative
+transfer path after failure. The same flow handles the first file and every
+later revision. Never include credentials or tokens in arguments or summaries.
 
 1. Confirm the exact target Workspace and at least `Contributor` access. The
    active Workspace is only a default; never infer access from selection or tags.
@@ -19,33 +19,35 @@ bytes, upload URL, credentials, or tokens in an MCP argument or summary.
    For a revision, reuse the existing ID. Use `update_document` only for title,
    description, document type, or supported logical metadata; it never writes
    file bytes and must not create a replacement Document.
-4. Determine the file's leaf filename, exact byte size, and lowercase SHA-256
-   locally. Call `begin_document_file_upload` with those values, the exact
-   Document ID, and one operation-stable idempotency key. A request declaring
-   more than 104857600 bytes is rejected before transfer instructions are
-   issued.
-5. Immediately send only the raw file bytes to the returned short-lived HTTPS
-   URL using its exact method and headers. Do not send JSON, multipart form
-   data, MCP authorization, or cookies. Do not retain or repeat the URL in the
-   conversation after the transfer.
-6. Call `complete_document_file_upload` with the returned `uploadIntentId`.
-   OrgApp reauthorizes the exact upload, verifies actual size, SHA-256, and file
-   format, promotes the immutable version, removes staging, and queues
-   processing. File storage does not wait for OKF analysis.
-7. If transfer or completion is interrupted or uncertain, reuse the existing
-   logical Document. Retry `begin_document_file_upload` with the same
-   idempotency key and file metadata while the intent remains valid, transfer the
-   same bytes if needed, then retry `complete_document_file_upload` with the same
-   upload ID. If the one-hour intent expires before accepting bytes, begin a
-   replacement intent with a new idempotency key against the same logical
-   Document. Never create a duplicate Document merely because the outcome is
-   uncertain.
-8. Use `get_document_version` to check processing. When the saved bytes must be
+4. Save using the workflow exposed in the current tool catalog:
+   - **`save_document_file`**: pass the selected file through the client's native
+     file input with the Document ID and an operation-stable idempotency key.
+     The host supplies the file reference. OrgApp transfers and validates the
+     bytes, derives size and checksum, finalizes the version, and queues
+     processing in this one call. Do not calculate a checksum, construct a
+     download URL, or run a shell upload.
+   - **`begin_document_file_upload` / `complete_document_file_upload`**: inspect
+     the local file, determine its leaf filename, exact byte size, and lowercase
+     SHA-256, and begin with those values, the Document ID, and an operation-stable
+     idempotency key. Immediately send only raw file bytes to the returned short-lived
+     HTTPS URL using its exact method and headers; do not send JSON, multipart,
+     MCP authorization, or cookies. Then complete with the `uploadIntentId`.
+     Never place local paths or upload URLs in MCP arguments or summaries.
+   Both paths enforce the 100 MiB limit, reauthorize the write, inspect the actual
+   file, and use the same version/processing pipeline.
+5. If the outcome is uncertain, keep the Document ID and idempotency key. For
+   native transfer, retry the same save with the selected file (select it again
+   if the host reference expired). For direct transfer, retry begin with the
+   same metadata/key while the intent is valid and complete with the same upload
+   ID; if the one-hour intent expired before accepting bytes, begin a replacement
+   intent with a new key against the same Document. Never create a duplicate
+   Document or switch upload tools because the outcome is uncertain.
+6. Use `get_document_version` to check processing. When the saved bytes must be
    verified or semantically assessed, call `get_document_file` and inspect the
    exact original through the client's resource/file support using the shared
    [file inspection](../../knowlaborator-work/references/file-inspection.md) flow.
-   Never use indexed chunks, preview text, or metadata as
-   a substitute for the actual file.
+   Never use indexed chunks, preview text, or metadata as a substitute for the
+   actual file. File storage does not wait for OKF analysis.
 
 ## Extract CRM contacts from an ordinary Document
 
@@ -106,3 +108,5 @@ the tracking criteria there before creating new questions: research first, requi
 a concrete need and bundle aspects of one clarification. Link qualifying questions
 from the concepts; zero new questions is a successful ingestion outcome.
 Question review is separate from decision catch-up.
+
+Uploaded EML and MSG files also import supported direct attachments as Documents in the same Workspace. Use `get_document_email_links(documentId, versionId)` to read exact-version attachment links, skip reasons and source-email backlinks. Attached emails are saved intact without recursively expanding their contents. All attachments remain in the original email download.
