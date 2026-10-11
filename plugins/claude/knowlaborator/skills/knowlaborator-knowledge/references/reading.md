@@ -20,6 +20,16 @@ Use list_knowledge_relations for one record's typed relations, and list_knowledg
 relatedKnowledgeId and relationType for questions such as which products contain a raw
 material. An unavailable related record is one you cannot read; do not guess it.
 
+`get_knowledge` returns one top-level `bodyMarkdown` with record fields, `version`,
+and `currentRevision` identifiers and provenance. Decision details and authorized
+relations appear once; rendered HTML, the repeated revision snapshot and the parsed
+email copy are omitted. Metadata is omitted by default, not necessarily empty: set
+`includeMetadata=true` when those fields are needed, and before editing a record.
+For system `EmailMessage` snapshots, `emailHtmlOmitted=true` means the reading body
+excludes the stored HTML section; plain text, quoted history, headers and source links
+remain. Use `list_knowledge_revisions` for canonical snapshots and history. Preserve
+the returned exact revision ID; a reading projection never changes the stored source.
+
 Search also returns independently authorized live calendar title matches, including
 hidden calendars, from seven days back through thirty days ahead by default.
 Knowledge Workspace filters do not hide related personal calendar events. Supply

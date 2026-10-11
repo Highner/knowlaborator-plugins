@@ -121,8 +121,12 @@ or modify the user's project to run it.
    new concept to private; an update retains its existing access settings.
 2. Before creating a concept or resolving an ambiguous target, search concise
    projections and retrieve complete candidates only as needed. For an exact
-   existing record, read its current version once to decide material revision,
-   no-op, or lack of edit permission; do not repeat discovery.
+   existing record, call `get_knowledge` with `includeMetadata=true` to read its
+   current version and preserve all authorized metadata before deciding material
+   revision, no-op, or lack of edit permission; do not repeat discovery. The body
+   and editable record fields are top-level; `currentRevision` carries revision
+   identifiers and provenance without a repeated snapshot. Omitted metadata in a
+   compact read does not mean the record has none.
 3. Preserve authorized provenance, claim-level citations, unknown OKF fields,
    producer extensions, and unrelated content. Label estimates, hypotheses, and
    uncertainty honestly. Apply the tracking criteria in [questions.md](questions.md)

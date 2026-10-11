@@ -277,9 +277,13 @@ Workspace before writing results.
 ## Queued documents and notes
 
 A queued Document or photo is already stored; reuse its exact Resource. Do not move
-or duplicate it merely to review it. If `TextAvailable` is false, faithful complete
-recognized text can accompany `process_input` as `Transcription` when processing is
-chosen. Do not persist transcription when merely suggesting agenda work.
+or duplicate it merely to review it. Read it with `read_document_text` first, then look
+only at the pages that need it with `get_document_file` (`pages` for PDFs).
+`PagesWithoutText` lists the pages whose text the original lacks. For those pages,
+faithful recognized text can accompany `process_input` as `TranscriptionPages`
+(`[{page, text}]`) when processing is chosen; other pages are refused. While
+`PageProfilePending` is true, retry later or process without it. Do not persist
+transcription when merely suggesting agenda work.
 
 Origin `note` is a private text entry. Use the returned
 `orgapp://agenda/intake/{IntakeId}` Source and InputReference. It becomes a durable

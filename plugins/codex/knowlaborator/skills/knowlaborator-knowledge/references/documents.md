@@ -7,9 +7,19 @@ relevant. Use get_document for logical metadata and the current version ID, and
 get_document_version for exact current or historical version metadata and processing
 state. Preserve purpose and description separately from documentType.
 
-Use search_content for discovery, then get_document_file with the exact version ID when
-the original must be read or verified. Indexed chunks are never a
-substitute for the actual file. Follow the shared
+Use search_content for discovery. Read a version's processed text with
+read_document_text: from the start, from a 1-based PDF page or PPTX slide (`page`), or
+from a block (`block`: the previous `nextBlock`, or `FirstBlockOrdinal` from a document
+hit's Location). `[page N]` lines mark pages and `[recognized text, page N]` marks
+agent-recognized text. `pageMap` lists reading signals for the whole version:
+`no_text`, `scan_like`, `image_content`, `ruled_table` and `unmapped_glyphs` mean the
+text may miss what is on that page; `pending` means the pages are not profiled yet.
+
+Use get_document_file with the exact version ID when the original must be read or
+verified: for signalled pages, layout, signatures, handwriting or exact visual evidence.
+For a PDF, `pages` (at most 10, for example `"7-9,12"`) links a PDF of just those pages
+copied from the original; its `SourceSha256` names the original. Processed text is never
+a substitute for the actual file when exact evidence matters. Follow the shared
 [file inspection](../../knowlaborator-work/references/file-inspection.md) flow: use
 native staging for the exact resource link on the same MCP connection, verify the saved
 original, then inspect it. The tool result contains metadata and a resource link;
