@@ -95,6 +95,10 @@ invalidate the stored file.
    A complete assessment removes that version from the pending list. A partial
    failure remains pending; correct it and retry the same non-file operation
    without saving the file again.
+   A successful assessment also records the `okf` result and source review on your
+   matching approved Today task for that exact version and Workspace. Refresh
+   `get_input_context` afterward: report only other remaining actions, using the
+   current queue version. Open-ended plans still need your explicit completion.
 
 To find existing work, page through `list_documents` with `purpose=document`
 and `okfIngestionPending=true`; do not assume one page is complete.

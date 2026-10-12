@@ -264,6 +264,10 @@ source and existing relevant records before writing.
    Record each successful action with `complete_agenda_processing` and its actual
    saved revision references. Empty results require a reason. Never report a write
    before it succeeds. Skip outcomes already recorded; failed runs retain progress.
+   A successful `ingest_document_okf` automatically records `okf` and source review
+   for a matching exact-version, same-Workspace fixed plan. Refresh context
+   afterward and use its current Version and remaining actions; reclaim when the
+   previous claim ended.
 4. Stop on lease expiry, read and claim again. On a lost response inspect the saved
    results and retry with the same feature key. Report Failure to release the claim.
    Completion closes the accepted agenda workflow only after all selected actions
