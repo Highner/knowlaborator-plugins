@@ -62,6 +62,8 @@ are not prerequisites and must not start merely because this procedure runs.
    metadata, manual corrections, unrelated prose and existing source history. A created
    concept carries a one-sentence `description` of at most 200 characters in its metadata;
    a revision keeps the existing one unless the change alters what the record is about.
+   Organizations that refuse answer a change without one with `KNOWLEDGE_DESCRIPTION_REQUIRED`
+   when it is submitted, never later when it is applied.
    A revision supersedes the preceding revision's assertion bindings. Carry forward
    still-applicable claims and their independent citations into the new revision.
    Existing typed relation commands accept End entries with expected versions;

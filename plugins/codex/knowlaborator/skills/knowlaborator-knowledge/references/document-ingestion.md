@@ -98,7 +98,9 @@ invalidate the stored file.
    A complete assessment removes that version from the pending list. A partial
    failure remains pending; correct it and retry the same non-file operation
    without saving the file again. Read `warnings` on each saved outcome, such as
-   `description_missing`, and fix them with `update_knowledge`.
+   `description_missing`, and fix them with `update_knowledge`. In organizations
+   that refuse, a candidate without a description fails with
+   `KNOWLEDGE_DESCRIPTION_REQUIRED`; add one and retry.
    A successful assessment also records the `okf` result and source review on your
    matching approved Today task for that exact version and Workspace. Refresh
    `get_input_context` afterward: report only other remaining actions, using the

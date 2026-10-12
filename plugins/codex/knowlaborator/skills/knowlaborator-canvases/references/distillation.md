@@ -86,6 +86,9 @@ validated OKF candidate for a saved distillation revision with
   selected. Never choose a revise target yourself.
 - `okf.bodyMarkdown` must contain the exact provenance URI
   `orgapp://canvases/{canvasId}`; the candidate is rejected without it.
+- Put a one-sentence `description` of at most 200 characters in `okf.metadata`
+  and keep the target's existing one when revising. Organizations that refuse
+  mark a candidate without one invalid under `okf.metadata.description`.
 - Author the candidate with `$knowlaborator-knowledge` rules: Workspace
   guidance, stable subject, provenance, claim-level citations and local
   validation where available. Only confirmed decisions become claims; keep

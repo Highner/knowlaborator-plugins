@@ -140,7 +140,10 @@ or modify the user's project to run it.
    folder or search hit without opening it. Keep an existing description unless the
    revision changes what the record is about. A write without one returns
    `description_missing` in `typeWarnings`, a longer one `description_too_long`;
-   fix either with `update_knowledge`.
+   fix either with `update_knowledge`. Organizations that refuse answer a new
+   record without one, or a revision that drops one, with
+   `KNOWLEDGE_DESCRIPTION_REQUIRED`; add it and retry once with a new idempotency
+   key.
 5. Call `create_knowledge` with complete fields and one idempotency key, or call
    `update_knowledge` with complete fields and the current version precondition.
    On ambiguity, validation failure, missing permission, or conflict, do not
