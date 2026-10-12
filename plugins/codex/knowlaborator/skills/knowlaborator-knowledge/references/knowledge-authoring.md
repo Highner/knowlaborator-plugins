@@ -138,7 +138,9 @@ or modify the user's project to run it.
 4. Give every concept a `description` in its metadata: one sentence of at most
    200 characters that says what the record is, so an agent can choose it from a
    folder or search hit without opening it. Keep an existing description unless the
-   revision changes what the record is about.
+   revision changes what the record is about. A write without one returns
+   `description_missing` in `typeWarnings`, a longer one `description_too_long`;
+   fix either with `update_knowledge`.
 5. Call `create_knowledge` with complete fields and one idempotency key, or call
    `update_knowledge` with complete fields and the current version precondition.
    On ambiguity, validation failure, missing permission, or conflict, do not

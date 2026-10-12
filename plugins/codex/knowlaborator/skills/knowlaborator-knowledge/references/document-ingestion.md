@@ -90,11 +90,15 @@ invalidate the stored file.
 2. Identify durable atomic concepts and search each stable subject. Prepare a
    bounded assessment with `candidates`, or `no_durable_knowledge` with empty
    arrays. Every create or update body must include the exact provenance URI
-   `orgapp://documents/{document_id}`.
+   `orgapp://documents/{document_id}`. Choose types and fields as in
+   [knowledge-authoring.md](knowledge-authoring.md), and give every create and
+   update a `description` in its metadata: one sentence of at most 200
+   characters that says what the record is.
 3. Call `ingest_document_okf` with the exact Document and current-version IDs.
    A complete assessment removes that version from the pending list. A partial
    failure remains pending; correct it and retry the same non-file operation
-   without saving the file again.
+   without saving the file again. Read `warnings` on each saved outcome, such as
+   `description_missing`, and fix them with `update_knowledge`.
    A successful assessment also records the `okf` result and source review on your
    matching approved Today task for that exact version and Workspace. Refresh
    `get_input_context` afterward: report only other remaining actions, using the

@@ -59,7 +59,9 @@ are not prerequisites and must not start merely because this procedure runs.
 5. submit_maintenance_change for each atomic canonical change with exact citations
    and a stable operation ID. Search before creation. Reuse existing records; use
    the `add_support` change kind for additional evidence without gratuitous rewriting. Preserve
-   metadata, manual corrections, unrelated prose and existing source history.
+   metadata, manual corrections, unrelated prose and existing source history. A created
+   concept carries a one-sentence `description` of at most 200 characters in its metadata;
+   a revision keeps the existing one unless the change alters what the record is about.
    A revision supersedes the preceding revision's assertion bindings. Carry forward
    still-applicable claims and their independent citations into the new revision.
    Existing typed relation commands accept End entries with expected versions;

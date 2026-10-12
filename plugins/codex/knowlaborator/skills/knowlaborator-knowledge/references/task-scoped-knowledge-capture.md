@@ -27,7 +27,9 @@ Require explicit authoring intent for highly sensitive personal information.
 3. Create only when no equivalent visible concept exists. Update only an
    editable stable-subject match with a material change. Preserve its Workspace,
    access, creator, unknown fields, producer extensions, unrelated content, and
-   authorized citations.
+   authorized citations. Follow [knowledge-authoring.md](knowledge-authoring.md)
+   for type and fields, including a one-sentence `description` of at most 200
+   characters.
 4. Validate candidates independently. Use one stable idempotency key for each
    create and the freshest current-version precondition for each update. Never
    duplicate after ambiguity, missing permission, validation failure, conflict,
