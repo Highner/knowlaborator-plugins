@@ -3,8 +3,8 @@
 Canvas assets are durable, authorization-scoped files owned by one canvas.
 They are not Documents, global-search results, Knowledge sources or Document
 processing inputs until a person explicitly asks for ingestion. Supported
-originals are PNG, JPEG, GIF, WebP, PDF and non-macro DOC, DOCX and PPTX up
-to 104,857,600 bytes (100 MiB). Images render as `image` items; every other
+originals are PNG, JPEG, GIF, WebP, PDF, non-macro DOC, DOCX, PPTX and XLSX,
+EML, MSG and ZIP up to 104,857,600 bytes (100 MiB). Images render as `image` items; every other
 format is a `file` item.
 
 This upload flow is for a new canvas-owned file. If the requested image or

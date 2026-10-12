@@ -1,6 +1,6 @@
 # Save a Document or Document Template file
 
-Use this flow for a PDF, non-macro DOC/DOCX/PPTX/XLSX, PNG, JPEG, GIF, WebP, EML, or MSG file the user wants stored in OrgApp.
+Use this flow for a PDF, non-macro DOC/DOCX/PPTX/XLSX, PNG, JPEG, GIF, WebP, EML, MSG, or ZIP file the user wants stored in OrgApp.
 Connected-mail attachments belong to [mail ingestion](../../knowlaborator-communication/references/mail-ingestion.md)
 and always use the ordinary Document purpose.
 
@@ -113,4 +113,4 @@ a concrete need and bundle aspects of one clarification. Link qualifying questio
 from the concepts; zero new questions is a successful ingestion outcome.
 Question review is separate from decision catch-up.
 
-Uploaded EML and MSG files also import supported direct attachments as Documents in the same Workspace. Use `get_document_email_links(documentId, versionId)` to read exact-version attachment links, skip reasons and source-email backlinks. Attached emails are saved intact without recursively expanding their contents. All attachments remain in the original email download.
+Uploaded EML and MSG files also import supported direct attachments as Documents in the same Workspace, and ZIP archives import their supported files the same way. Use `get_document_email_links(documentId, versionId)` to read exact-version attachment or archive-file links, skip reasons and source backlinks. Attached emails and archives inside an archive are saved intact without recursively expanding their contents. All files remain in the original email or ZIP download.
