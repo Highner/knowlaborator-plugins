@@ -25,9 +25,10 @@ conversation language.
   workflows; use only the maintenance protocol and the owning source/read tools.
 
 - Topical or status question: start with `search_content`, then read selected sources
-  with their owning exact-read tools. Use `list_knowledge` only when the task needs
-  an inventory, systematic review or relationship browsing without search text;
-  do not routinely add a catalog scan to a topical search.
+  with their owning exact-read tools. Browse the knowledge folders with
+  `list_knowledge` only when the task needs an inventory or a systematic review, and
+  read relations with `list_knowledge_relations`; do not routinely add a folder scan
+  to a topical search.
 - Source choice or several discovery steps: read the
   [navigation-learning procedure](references/navigation-learning.md) before the first
   read. Generate one task-local episode UUID and reuse it as `navigationEpisodeId`

@@ -18,25 +18,33 @@ in ResourceUri. Read full values with get_dataset_record, or the exact revision
 with list_dataset_record_revisions and its revisionId; a discovery hit is not the
 full record. includeHistorical does not include superseded or archived record
 revisions. It has no resource-kind filter. Read exact results through their owning
-operation. Use get_knowledge for one record and list_knowledge_revisions for history.
-Reserve `list_knowledge` for inventories, systematic reviews or browsing relationships
-without search text. Its cursor pages enumerate non-archived records in update order;
-search returns bounded ranked matches and cannot enumerate the whole catalog.
-Use list_knowledge_relations for one record's typed relations. To enumerate related
-records, use list_knowledge with relatedKnowledgeId and relationType, for example all
-products containing a raw material. To find related records matching a topic, use
-search_content with those same filters. An unavailable related record is one you
-cannot read; do not guess it.
+operation. A knowledge hit carries the record's one-sentence `description` when it
+has one; use it with the snippet to choose what to open. Use get_knowledge for one
+record and list_knowledge_revisions for history.
 
-`list_knowledge` returns a compact catalog: each item has top-level `id`, Workspace
-fields, `title`, `type`, lifecycle `status`, `origin`, `currentRevisionId`,
-`currentRevisionNumber`, `version`, timestamps and optional `decisionStanding`.
-It omits bodies, metadata, revision snapshots and decision details. A catalog entry
-is not the full record: use `get_knowledge` for selected records before answering
-from their contents or editing. Start with a small page and follow `nextCursor`
-when needed; do not repeat the same listing with a larger page size. Keep lifecycle
-`status` separate from `decisionStanding` (for example, a proposal is not a final
-decision). An omitted body or metadata is not an empty value.
+Browse knowledge like the folders of an OKF bundle with `list_knowledge`, and only
+for inventories and systematic reviews; search returns bounded ranked matches and
+cannot enumerate the catalog.
+
+1. Without `type` it returns the folders: one per concept type with readable records,
+   with its `pathPrefix`, a short `definition`, `count`, `workspaceCounts` and
+   `lastUpdatedAt`. `unlisted: true` marks a stored type that is on no list.
+2. With `type` (a folder's type, a type name or an alias) it returns that folder,
+   whose `count` is the total, and its records by title: `id`, `workspaceId`,
+   `title`, `description`, lifecycle `status`, `updatedAt` and `decisionStanding`
+   when set. Follow `nextCursor` while present; do not repeat a page with a larger
+   size.
+3. `workspaceId` narrows both levels to one Workspace. `changedFrom` keeps records
+   updated since then, so counts show what changed per folder.
+
+A folder entry is not the full record: use `get_knowledge` before answering from its
+contents or editing. A missing description means none was written. Keep lifecycle
+`status` separate from `decisionStanding` (a proposal is not a final decision).
+
+Use list_knowledge_relations for one record's typed relations, filtered by
+relationType to enumerate, for example, all products containing a raw material. To
+find related records matching a topic, use search_content with relatedKnowledgeId and
+relationType. An unavailable related record is one you cannot read; do not guess it.
 
 `get_knowledge` returns one top-level `bodyMarkdown` with record fields, `version`,
 and `currentRevision` identifiers and provenance. Decision details and authorized

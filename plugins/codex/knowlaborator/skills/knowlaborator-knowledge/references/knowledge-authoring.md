@@ -86,9 +86,9 @@ Rohstoff. Only administrators define relation types; agents never add one.
    `until` dates). A new record of a type that requires a relation must bring
    it. For existing records use `change_knowledge_relations` with `add` and
    `remove` (relation IDs from `get_knowledge`); it creates no revision.
-4. Read relations with `list_knowledge_relations`, or find related records with
-   `list_knowledge` and `relatedKnowledgeId` plus `relationType` (the name for
-   outgoing, the inverse name for incoming). Check what exists before adding.
+4. Read relations with `list_knowledge_relations`; filter by `relationType` (the
+   name for outgoing, the inverse name for incoming) to find the related records.
+   Check what exists before adding.
 5. Read `relation_type_mismatch` and `relation_required` in a write's
    `typeWarnings` or `change_knowledge_relations`' `warnings`; in
    organizations that refuse they arrive as `KNOWLEDGE_RELATION_TYPE_MISMATCH`
@@ -135,9 +135,13 @@ or modify the user's project to run it.
    for this. New knowledge is `active` by default. Use `draft`
    only when the user explicitly asks to store it as a draft; do not use draft
    merely because the knowledge may be revised later.
-4. Call `create_knowledge` with complete fields and one idempotency key, or call
+4. Give every concept a `description` in its metadata: one sentence of at most
+   200 characters that says what the record is, so an agent can choose it from a
+   folder or search hit without opening it. Keep an existing description unless the
+   revision changes what the record is about.
+5. Call `create_knowledge` with complete fields and one idempotency key, or call
    `update_knowledge` with complete fields and the current version precondition.
    On ambiguity, validation failure, missing permission, or conflict, do not
    overwrite, duplicate, change access, or edit guidance.
-5. Report the stable ID and revision, an unchanged subject, or the exact safe
+6. Report the stable ID and revision, an unchanged subject, or the exact safe
    reason no synchronization occurred.
