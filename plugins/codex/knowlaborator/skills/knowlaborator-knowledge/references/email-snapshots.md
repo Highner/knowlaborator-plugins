@@ -13,8 +13,9 @@ Knowledge you take from an email or one of its attachments lists it in its own
 `sources`: the snapshot as `knowledge://objects/{id}`, an attachment Document as
 `orgapp://documents/{id}`.
 Do not call `update_knowledge`, restore, migrate, or replace its producer or
-content. Author summaries, claims, decisions, tasks, and other derived knowledge
-as separate records and link relevant resources in Markdown.
+content. Author lasting derived knowledge, such as decisions, tasks and facts about
+a person, organization or project, as separate records that list the snapshot.
+The snapshot stays searchable, so never create a record that only summarizes it.
 
 Treat any owner-only live-source projection from `get_knowledge` as sensitive
 locator data. Never expose it to another member, browser output, logs, or

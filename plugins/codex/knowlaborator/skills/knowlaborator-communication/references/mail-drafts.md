@@ -29,3 +29,19 @@ do not attach the unsigned source version or reconstruct a PDF. Normal attachmen
 count/size limits and Document permissions apply. The operation may retain a known
 draft while an attachment needs retrying; reuse the same idempotency key for
 identical retries. Never send the draft through another tool implicitly.
+
+## Edit an existing unsent draft
+
+Use `update_mail_draft` for a requested edit. Read the exact draft with
+`get_mail_message` first, check `isDraft`, and preserve fields the user did not
+ask to change. Supply the complete recipients, subject and body, including
+`htmlBody` when preserving formatting. The protected `draftReference` selects
+its owner account; do not supply an account ID.
+
+Supply `keepAttachmentReferences` explicitly using protected attachment references
+from that draft. All unlisted existing attachments are removed; `[]` removes all.
+New attachments, stored Document versions and exact signed copies use the existing
+attachment limits and permissions. For identical retries, retain the original
+reference and idempotency key. For subsequent edits, use the returned draft reference
+and read fresh attachment references because providers may replace the draft.
+Report that the edited draft remains unsent. Sending remains a browser action.

@@ -81,7 +81,7 @@ when no qualifying contacts were found.
 ## Knowledge from a saved Document
 
 A saved ordinary Document version is an ordinary maintenance source: the next
-maintenance run of its Workspace turns it into concepts, relations, proposed answers
+maintenance run of its Workspace considers it for concepts, relations, proposed answers
 and decision evidence with [maintenance.md](maintenance.md). There is no separate
 per-Document assessment. When the person wants it processed now, they mark it with
 “Process with the agent”, and their Incoming run completes that marked work in the

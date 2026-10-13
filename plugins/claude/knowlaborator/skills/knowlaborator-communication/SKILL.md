@@ -1,6 +1,6 @@
 ---
 name: knowlaborator-communication
-description: Read connected mail, conversations, Workspace channels and subscribed Microsoft Teams channels; create an unsent mail draft, preserve or trash an exact message, or send an organization message.
+description: Read connected mail, conversations, Workspace channels and subscribed Microsoft Teams channels; create or edit an unsent mail draft, preserve or trash an exact message, or send an organization message.
 ---
 
 # Knowlaborator Communication
@@ -17,7 +17,7 @@ change provider read state.
 
 - [mail-reading.md](references/mail-reading.md): search and exact reads.
 - [mail-attachments.md](references/mail-attachments.md): inspect one selected attachment.
-- [mail-drafts.md](references/mail-drafts.md): an explicit draft or reply request.
+- [mail-drafts.md](references/mail-drafts.md): an explicit draft, edit, or reply request.
 - [mail-deletion.md](references/mail-deletion.md): user-requested deletion of an exact
   message by moving it to Trash or Deleted Items.
 - [mail-ingestion.md](references/mail-ingestion.md): explicit preservation of one

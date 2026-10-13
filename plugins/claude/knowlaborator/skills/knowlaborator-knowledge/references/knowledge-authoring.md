@@ -36,6 +36,8 @@ administrators in the browser. Choose from it; never invent a type.
    `note` and write the type you wanted in the `candidate_type` metadata field.
    Tell the user which type was missing. Only an organization administrator
    adds types; a candidate on three or more records is shown to them.
+   Maintenance never falls back to `note`; it creates nothing and names the
+   missing type ([maintenance.md](maintenance.md)).
 4. Read `typeWarnings` in the write result. `type_alias_resolved` means the
    server stored the listed name for an alias; nothing to do.
    `type_unknown` means the type is not usable in that Workspace: if one of the
