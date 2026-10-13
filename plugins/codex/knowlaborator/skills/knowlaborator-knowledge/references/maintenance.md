@@ -76,9 +76,9 @@ procedure runs.
    record does not exist, report the missing record or type. Restatement: a preserved
    email, Document or note stays readable and searchable, so a concept links it
    instead of repeating it. A claim that is not lasting, belongs elsewhere or only
-   restates its source changes no prose on this record: add one link to the source in
-   the record's evidence list, carrying the claims, or use `add_support` when that
-   source is already linked. No change is equally valid. Prose states only lasting
+   restates its source changes no prose on this record: revise it with its text
+   unchanged, which lists the source and carries the claims, or use `add_support` when
+   the record already lists that source. No change is equally valid. Prose states only lasting
    facts about the record's own subject, briefly and in the matching section, without
    reading notes, internal identifiers or verification narration.
    Then submit_maintenance_change for each atomic canonical change with exact citations
@@ -89,8 +89,9 @@ procedure runs.
    a revision keeps the existing one unless the change alters what the record is about.
    Organizations that refuse answer a change without one with `KNOWLEDGE_DESCRIPTION_REQUIRED`
    when it is submitted, never later when it is applied. A body never starts with a `---`
-   frontmatter block, and provenance goes in OKF `sources` as in
-   [knowledge-authoring.md](knowledge-authoring.md).
+   frontmatter block. OrgApp lists the source being maintained in the OKF `sources` of
+   each record a change creates or revises; keep the entries a record has, and add other
+   sources and footnotes as in [knowledge-authoring.md](knowledge-authoring.md).
    A revision supersedes the preceding revision's assertion bindings. Carry forward
    still-applicable claims and their independent citations into the new revision.
    Existing typed relation commands accept End entries with expected versions;

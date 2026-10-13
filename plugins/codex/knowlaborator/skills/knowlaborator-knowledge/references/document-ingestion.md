@@ -85,8 +85,7 @@ maintenance run of its Workspace turns it into concepts, relations, proposed ans
 and decision evidence with [maintenance.md](maintenance.md). There is no separate
 per-Document assessment. When the person wants it processed now, they mark it with
 “Process with the agent”, and their Incoming run completes that marked work in the
-same session. Knowledge taken from it lists the Document (`orgapp://documents/{document_id}`)
-in its OKF `sources`, as in [knowledge-authoring.md](knowledge-authoring.md). Templates are
-not maintenance sources.
+same session. OrgApp lists the Document (`orgapp://documents/{document_id}`) in the OKF
+`sources` of the knowledge maintenance takes from it. Templates are not maintenance sources.
 
 Uploaded EML and MSG files also import supported direct attachments as Documents in the same Workspace, and ZIP archives import their supported files the same way. Use `get_document_email_links(documentId, versionId)` to read exact-version attachment or archive-file links, skip reasons and source backlinks. Attached emails and archives inside an archive are saved intact without recursively expanding their contents. All files remain in the original email or ZIP download.
