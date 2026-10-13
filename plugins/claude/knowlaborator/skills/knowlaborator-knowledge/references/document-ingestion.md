@@ -93,7 +93,8 @@ invalidate the stored file.
    `orgapp://documents/{document_id}`. Choose types and fields as in
    [knowledge-authoring.md](knowledge-authoring.md), and give every create and
    update a `description` in its metadata: one sentence of at most 200
-   characters that says what the record is.
+   characters that says what the record is. Bodies start after the frontmatter,
+   and the Document belongs in the OKF `sources` list as well as in the body.
 3. Call `ingest_document_okf` with the exact Document and current-version IDs.
    A complete assessment removes that version from the pending list. A partial
    failure remains pending; correct it and retry the same non-file operation

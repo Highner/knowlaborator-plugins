@@ -135,7 +135,21 @@ or modify the user's project to run it.
    for this. New knowledge is `active` by default. Use `draft`
    only when the user explicitly asks to store it as a draft; do not use draft
    merely because the knowledge may be revised later.
-4. Give every concept a `description` in its metadata: one sentence of at most
+4. Write OKF in OrgApp's fields, never as a file. `bodyMarkdown` is only the
+   Markdown after the frontmatter; never start it with a `---` block, or the write
+   is refused with `KNOWLEDGE_BODY_FRONTMATTER`. Put the type and title in their
+   own fields and the other frontmatter in `metadata`: `tags` as a JSON array of
+   strings, `resource` only for the asset the concept describes (a person,
+   organization or project uses `about`), and provenance in `sources` as OKF's
+   JSON list of objects, each with a `resource` (a URL or an `orgapp://` link)
+   and optionally `id`, `title`, `author` or `last_modified`. Never invent keys such
+   as `source_document`; anything else in `sources` is refused with
+   `KNOWLEDGE_SOURCES_INVALID`. When you revise a record that keeps links under
+   such a key, move them into `sources` and drop the key. Also cite sources as
+   links in the body. Set
+   `schemaVersion` to the OKF version, `0.2` for a new concept; keep the record's
+   value when revising.
+5. Give every concept a `description` in its metadata: one sentence of at most
    200 characters that says what the record is, so an agent can choose it from a
    folder or search hit without opening it. Keep an existing description unless the
    revision changes what the record is about. A write without one returns
@@ -144,9 +158,9 @@ or modify the user's project to run it.
    record without one, or a revision that drops one, with
    `KNOWLEDGE_DESCRIPTION_REQUIRED`; add it and retry once with a new idempotency
    key.
-5. Call `create_knowledge` with complete fields and one idempotency key, or call
+6. Call `create_knowledge` with complete fields and one idempotency key, or call
    `update_knowledge` with complete fields and the current version precondition.
    On ambiguity, validation failure, missing permission, or conflict, do not
    overwrite, duplicate, change access, or edit guidance.
-6. Report the stable ID and revision, an unchanged subject, or the exact safe
+7. Report the stable ID and revision, an unchanged subject, or the exact safe
    reason no synchronization occurred.

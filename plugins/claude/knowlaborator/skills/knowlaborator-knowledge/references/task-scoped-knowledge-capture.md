@@ -29,7 +29,7 @@ Require explicit authoring intent for highly sensitive personal information.
    access, creator, unknown fields, producer extensions, unrelated content, and
    authorized citations. Follow [knowledge-authoring.md](knowledge-authoring.md)
    for type and fields, including a one-sentence `description` of at most 200
-   characters.
+   characters, OKF `sources` and a body without frontmatter.
 4. Validate candidates independently. Use one stable idempotency key for each
    create and the freshest current-version precondition for each update. Never
    duplicate after ambiguity, missing permission, validation failure, conflict,

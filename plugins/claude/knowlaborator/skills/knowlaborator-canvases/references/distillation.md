@@ -89,6 +89,9 @@ validated OKF candidate for a saved distillation revision with
 - Put a one-sentence `description` of at most 200 characters in `okf.metadata`
   and keep the target's existing one when revising. Organizations that refuse
   mark a candidate without one invalid under `okf.metadata.description`.
+- `okf.bodyMarkdown` never starts with a `---` frontmatter block, and provenance
+  goes in `okf.metadata.sources` as OKF's JSON list of objects with a `resource`;
+  either mistake marks the candidate invalid.
 - Author the candidate with `$knowlaborator-knowledge` rules: Workspace
   guidance, stable subject, provenance, claim-level citations and local
   validation where available. Only confirmed decisions become claims; keep

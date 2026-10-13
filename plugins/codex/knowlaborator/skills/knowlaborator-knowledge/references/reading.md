@@ -46,7 +46,9 @@ relationType to enumerate, for example, all products containing a raw material. 
 find related records matching a topic, use search_content with relatedKnowledgeId and
 relationType. An unavailable related record is one you cannot read; do not guess it.
 
-`get_knowledge` returns one top-level `bodyMarkdown` with record fields, `version`,
+`get_knowledge` returns the record's OKF frontmatter in `okf` (`type`, `title`,
+`description`, `tags`, `resource`, OKF `status`, `stale_after` and `sources`) and
+one top-level `bodyMarkdown` with record fields, `version`,
 and `currentRevision` identifiers and provenance. Decision details and authorized
 relations appear once; rendered HTML, the repeated revision snapshot and the parsed
 email copy are omitted. Metadata is omitted by default, not necessarily empty: set
