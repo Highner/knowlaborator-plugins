@@ -90,7 +90,7 @@ content.
 `get_canvas_asset_file` with `canvasId` and `assetRevisionId` returns a link to
 the exact original bytes of one asset revision with authoritative `fileName`,
 `mediaType`, `byteSize`, `sha256` and, for raster images, `width` and `height`.
-Use the same native staging and verification flow before inspecting the
+Use the same download and verification flow before inspecting the
 original; no OCR, caption, alt text or thumbnail substitutes for it.
 `CANVAS_ASSET_TOO_LARGE` means the original exceeds the MCP resource limit;
 report that rather than guessing its content.
