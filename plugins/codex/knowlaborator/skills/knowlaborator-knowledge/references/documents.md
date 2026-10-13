@@ -21,7 +21,7 @@ For a PDF, `pages` (at most 10, for example `"7-9,12"`) links a PDF of just thos
 copied from the original; its `SourceSha256` names the original. Processed text is never
 a substitute for the actual file when exact evidence matters. Follow the shared
 [file inspection](../../knowlaborator-work/references/file-inspection.md) flow: use
-native staging for the exact resource link on the same MCP connection, verify the saved
+the exact HTTPS file link, verify the saved
 original, then inspect it. The tool result contains metadata and a resource link;
 neither is the original file.
 
@@ -32,7 +32,7 @@ general description explains what it is and grants no access or consent.
 
 For a signed copy, use `list_document_signed_copies` with the exact Document ID. Select
 the intended copy and retain its ID, source revision, filename, size and SHA-256. Use
-`get_document_signed_copy_file(documentId, signedCopyId)` and native resource staging to
+`get_document_signed_copy_file(documentId, signedCopyId)` and the shared download flow to
 retrieve that exact artifact. Remarks, checkmarks, placed signatures and evidence are
 already in the stored PDF; the source version is a separate file without them. Human
 consent and private reusable signature images remain browser-only.
