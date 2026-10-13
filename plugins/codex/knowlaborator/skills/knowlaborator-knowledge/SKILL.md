@@ -17,12 +17,13 @@ conversation language.
 
 ## Fast path
 
-- Knowledge maintenance: use [maintenance.md](references/maintenance.md) for the complete
-  incremental Incoming → changed passages → ontology → affected-knowledge workflow.
-  Routine maintenance excludes historical backfill unless expressly requested.
-  This is independent of Navigation, Questions and decision catch-up. During this
-  procedure the ingestion/source-choice branches below do not start those other
-  workflows; use only the maintenance protocol and the owning source/read tools.
+- Knowledge maintenance (“do the maintenance”): use [maintenance.md](references/maintenance.md)
+  for the complete incremental filed source → changed passages → ontology → affected
+  knowledge, questions and decisions workflow. Routine maintenance excludes historical
+  backfill unless expressly requested. During this procedure the source-choice branches
+  below do not start other workflows; use only the maintenance protocol and the owning
+  source/read tools. Incoming items are the Incoming run of
+  [My Day](../knowlaborator-my-day/SKILL.md).
 
 - Topical or status question: start with `search_content`, then read selected sources
   with their owning exact-read tools. Browse the knowledge folders with
@@ -42,12 +43,11 @@ conversation language.
   `update_knowledge`. Search only if the target is ambiguous; load guidance only if it
   could shape the change.
 - New concept: search concise candidates, load relevant Workspace guidance, then create.
-- Question or ingestion session: read [questions.md](references/questions.md), list
-  relevant independent questions and review their pending evidence. Apply its
-  tracking criteria before creating questions; zero new questions is a successful
-  outcome. Decision coverage never substitutes for question coverage.
-- Decision or ingestion session: start with `get_decision_catch_up` when the person has a
-  decision monitoring scope, as described in decision-loops.md.
+- Questions: read [questions.md](references/questions.md) for tracking criteria,
+  answers, checks and “Still needed?”. Apply its tracking criteria before creating
+  questions; zero new questions is a successful outcome.
+- Decision evidence, assessments and follow-up plans: read
+  [decision-loops.md](references/decision-loops.md).
 
 Read only the reference needed for the requested operation:
 
@@ -59,14 +59,14 @@ Read only the reference needed for the requested operation:
 - [decisions-and-reviews.md](references/decisions-and-reviews.md): decision records,
   exact-revision standing, direct recording, user-directed browser/MCP review, replacing and
   abandoning.
-- [questions.md](references/questions.md): independent question concepts, evidence
-  review, resolution and migration of embedded open questions.
-- [decision-loops.md](references/decision-loops.md): catch-up, assessments, proposal
-  evidence, findings and follow-up plans within the monitoring scope.
+- [questions.md](references/questions.md): independent question concepts, evidence,
+  dated checks, “Still needed?”, resolution and migration of embedded open questions.
+- [decision-loops.md](references/decision-loops.md): evidence, assessments, proposal
+  evidence, findings, waiting proposals and follow-up plans.
 - [documents.md](references/documents.md): Documents, Templates, exact files and
   signed copies.
 - [document-ingestion.md](references/document-ingestion.md): saving a file and
-  assessing it for OKF.
+  extracting its contacts.
 - [task-scoped-knowledge-capture.md](references/task-scoped-knowledge-capture.md):
   explicitly requested curation.
 - [email-snapshots.md](references/email-snapshots.md): ingested mail.

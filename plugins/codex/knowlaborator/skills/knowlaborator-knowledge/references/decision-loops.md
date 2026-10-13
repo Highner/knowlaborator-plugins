@@ -1,34 +1,25 @@
-# Decision loops: catch-up, assessments and follow-up plans
+# Decision loops: evidence, assessments and follow-up plans
 
 OrgApp has no agent of its own. You are the person's agent; OrgApp stores, validates,
-tracks and presents. Work here only within the person's **decision monitoring scope**
-(Workspaces, source domains and allowed actions they set in the browser). Writes
-outside it fail with `DECISION_MONITORING_SCOPE_REQUIRED`; explain that only the person
-can widen the scope in their settings. The scope grants no extra access and authorizes
-no other capture.
+tracks and presents. Recording assessments and proposal evidence, and preparing plans,
+needs only the caller's access to the decision's Workspace. Nothing here edits a
+decision, changes its standing or replaces it.
 
-## Start each decision or ingestion session with catch-up
+## Where evidence comes from
 
-1. `get_decision_catch_up`: scopes, unreviewed counts and since when, covered-through
-   times, last progress, look-backs, due plans, gaps and mail/calendar windows. Report
-   it in one line, for example "14 items waiting since 2 Oct". Never claim that an
-   unreviewed item affects a particular decision before you have reviewed it.
-2. `claim_decision_catch_up` for one scope. Keep the returned fencing token; a lost or
-   expired lease (`DECISION_CATCH_UP_LEASE_LOST`) means claim again and reread.
-3. Work **decision-first**: `list_active_decisions` for the scope, then for each
-   in-force decision and proposal run `search_content` in the page's time range with
-   its terms, people and project. Read the flagged and linked entries; read the rest in
-   full only when the page is small. Messages and transcripts come from the page.
-4. Save results through the narrow operations (below), then
-   `complete_decision_catch_up` with one disposition per entry: `assessed` (with the
-   assessment or proposal-evidence IDs), `no_applicable_decision`, `unavailable`
-   (reason) or `deferred` (stays pending). Reading a page never completes it.
-5. Repeat while pending work remains, or `release_decision_catch_up`.
+- **Maintenance** lists the proposed and in-force decisions connected to a filed
+  source in `get_maintenance_context` (kind `decision`, the standing as state and the
+  exact `revisionId`); `search_content` hits carry their standing too
+  ([maintenance.md](maintenance.md)).
+- **The Incoming run** reads live mail and messages. When one bears on a proposed or
+  in-force decision, file it with `process_input` in the decision's Workspace and cite
+  the filed copy. When the person's instructions forbid filing, an assessment may
+  cite the live source and stays the author's private draft.
+- **An explicit request** about decisions: `list_active_decisions` for the Workspace,
+  then for each decision and proposal run `search_content` with its terms, people and
+  project, and read the matching sources.
 
-Mail and calendar stay at the provider: review them with the existing provider search
-from the covered time onward, then `record_decision_review_window` with the outcome
-(`reviewed`, `partial`, `unavailable`). Look-backs cover new decisions and widened
-scopes; handle them like pages.
+Never claim that a source affects a particular decision before you have read it.
 
 ## Assess in-force decisions
 
@@ -47,7 +38,8 @@ pass the current assessment version.
 - Explanation: at most 300 characters, what changed and why it matters. Cite exact
   sources with their occurrence time.
 - An assessment never edits the decision, changes standing or replaces it. A low level
-  can only lead you to suggest a change, which the person makes explicitly.
+  can only lead you to suggest a change, which the person makes explicitly. In-force
+  decisions never expire.
 
 **Proposals never get a level.** For a proposed revision use `record_proposal_evidence`:
 one exact source, when it happened, and a neutral note (at most 200 characters) that
@@ -56,9 +48,9 @@ its first assessment must cite or dismiss every proposal-evidence item.
 
 **Private sources.** Visibility follows the cited sources. A private source makes a
 private draft that only its author sees; it never changes the shared score and is never
-shared automatically. To share, ingest the material into the Workspace through the
-existing publication path and cite the shared copy, or drop it; the person does this in
-the browser. Pass `visibility: "shared"` to fail instead of creating a draft.
+shared automatically. To share, file the material into the Workspace and cite the
+shared copy, or drop it; the person does this in the browser. Pass
+`visibility: "shared"` to fail instead of creating a draft.
 
 **Not related.** Sources the person marked "not related" come back as suppressions.
 Do not present the same association again unless materially new evidence justifies it;
@@ -68,6 +60,15 @@ say what changed.
 Knowledge of type `finding` (`create_knowledge`), linking the decision, assessment and
 evidence, with its scope and uncertainty. The person publishes it. Before preparing a
 related decision or plan, search for findings and say how they apply.
+
+## Waiting proposals and reviews
+
+A review request without a respond-by date gets one 14 days ahead, and reviewers are
+reminded. A proposal has a decide-by date: 14 days after it was proposed or after its
+last completed review, unless the person kept it to a later date. Once that date
+passes with no review pending, the proposer sees “Decide or discard?” on Today and a
+weekly reminder. Deciding, discarding (a withdrawal with the reason “Not pursued”)
+and keeping are the person's choices; never withdraw or decide a proposal on your own.
 
 ## Follow-up plans and checks
 
@@ -81,9 +82,10 @@ A plan says who checks what, and when to bring the decision back.
   as suggested. Small decisions may need no plan.
 - The responsible person or the recorder confirms in the browser. Confirming, settling
   (with an outcome) and cancelling (with a reason) through `update_decision_plan` need
-  the person's instruction and the "prepare follow-ups" action in their scope.
-- A due check: read `get_decision_plan`, judge every criterion and assumption against
-  what happened (including follow-through), record a `check` assessment, then propose
-  the next step: keep (new check date or follow-ups), change, or abandon. A check
-  without a response stays due; never assume it went fine.
+  that person's instruction.
+- A due check appears in the responsible member's `get_input_context` Checks, and their
+  Incoming run prepares it: read `get_decision_plan`, judge every criterion and
+  assumption against what happened (including follow-through), record a `check`
+  assessment, then propose the next step: keep (new check date or follow-ups), change,
+  or abandon. A check without a response stays due; never assume it went fine.
 - Replacing or abandoning the decision ends the open plan.

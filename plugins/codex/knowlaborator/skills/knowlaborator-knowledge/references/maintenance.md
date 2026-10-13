@@ -1,22 +1,28 @@
-# Independent knowledge maintenance
+# Knowledge maintenance
 
 Use this procedure when the person says “do the maintenance” or requests upkeep of
-new and existing knowledge. One instruction authorizes the whole session. OrgApp
-coordinates, validates and stores work; semantic extraction and reconciliation run
-in this external agent through MCP. Embeddings and decision models retain their
-existing independent jobs. Navigation, Questions, Agenda and decision monitoring
-are not prerequisites and must not start merely because this procedure runs.
+new and existing knowledge. It is the Maintenance run, one of the two upkeep runs
+(ADR 0174): it turns everything a Workspace has filed into concepts, relations,
+proposed answers and decision evidence. The Incoming run
+([My Day](../../knowlaborator-my-day/SKILL.md)) handles everything personal and
+completes the items a person marked with this same protocol. One instruction
+authorizes the whole session. OrgApp coordinates, validates and stores work;
+semantic extraction and reconciliation run in this external agent through MCP.
+Embeddings and decision models retain their existing independent jobs. Navigation
+and the agenda are not prerequisites and must not start merely because this
+procedure runs.
 
 1. Read whoami, the requested Workspace scope and get_knowledge_maintenance.
    Default scope is accessible Workspaces, never unseen organization content.
    A manager may enable shadow or apply mode only when instructed by the person.
    Off is an explicit stop for maintenance applies; existing indexing continues.
-2. Use existing get_input_catch_up / advance_input_catch_up and process_input to
-   discover and preserve new Incoming sources. Preserve through their established
-   source-specific tools with stable references. Already ingested email, saved
-   Documents and preserved notes/messages are reused, never copied for maintenance.
-   A private source needs an authorized shared destination before shared claims.
-   Saved processing instructions for unrelated tasks keep their own boundaries.
+2. Maintenance works on what Workspaces have filed: new and changed knowledge records
+   (including saved mail, messages, notes and resolved questions) and Document
+   versions. It does not discover or file incoming mail, messages or queued items;
+   that is the Incoming run. Filed sources are reused, never copied for maintenance.
+   A Document is an ordinary source and needs no separate assessment; Templates are
+   not sources. A private source needs an authorized shared destination before
+   shared claims.
 3. Routine work is the default. `claim_knowledge_maintenance` uses `queue: routine`
    and defaults to two sources; at most three may be leased by this caller across
    Workspaces. Historical review needs an explicit user request and `queue: backfill`.
@@ -24,6 +30,11 @@ are not prerequisites and must not start merely because this procedure runs.
    into routine completion. Read `counts`, `backfillCounts` and `backfillAvailable`
    separately. Routine source events use the existing durable outbox; no historical
    corpus scan is a routine prerequisite.
+   Work a person marked with “Process with the agent” is theirs: only their agent
+   claims it (with `workIds`, or first in an ordinary claim), also while the policy
+   is Off. Its `hint` is the person's hint for what matters, read only by them. It
+   applies as in Apply mode; identity, manual-content, conflict and ontology changes
+   still go to review. Completing it closes the person's Incoming entry.
    Finish the current batch before moving to another Workspace. Save the returned
    cutoff, queue, work IDs, fence and progress. A repeated claim resumes active work;
    expiry/release retains acknowledged progress. Renew or release leases before
@@ -45,11 +56,14 @@ are not prerequisites and must not start merely because this procedure runs.
    Checkpoints attest completed processing; do not acknowledge unseen pages. If a planned
    passage becomes unavailable, explicitly restart the checkpoint to rebuild coverage.
 4. Use `get_maintenance_context` for bounded pages of evidence-linked existing concepts
-   and their typed connections. Read relevant exact records, assertions and Workspace
-   ontology. Snippets are discovery aids, not complete evidence. Use the existing
-   `search_content` index for additional semantic matches suggested by the changed
-   passages, especially when a new source has no known links. Do not inventory the
-   whole Workspace or start question/decision catch-up. Include incoming and outgoing
+   and their typed connections, plus the open questions (kind `question`, state `open`
+   or `answer_proposed`) and proposed or in-force decisions (kind `decision`, state =
+   standing, `revisionId` = the exact decision revision) connected to them. Read
+   relevant exact records, assertions and Workspace ontology. Snippets are discovery
+   aids, not complete evidence. Use the existing `search_content` index for additional
+   semantic matches suggested by the changed passages, especially when a new source has
+   no known links; question hits carry their status and decision hits their standing.
+   Do not inventory the whole Workspace. Include incoming and outgoing
    typed connections and their validity periods in reconciliation. A known dependency
    page is not proof that all semantic matches have been found. Resolve
    identities from stable source identifiers and distinguishing evidence. Similar
@@ -83,13 +97,23 @@ are not prerequisites and must not start merely because this procedure runs.
    end an old period and add the new one in one change. Dates are inclusive, so
    a successor normally starts the following day. Later recurring periods are
    distinct edges. Removal is a correction requiring review, not a historical ending.
-6. Apply only previews in proposed state through apply_maintenance_change. In this
+6. In the same pass, handle the connected questions and decisions:
+   - An open question the source answers: `propose_question_answer` with exact
+     citations and precise conditions. Never accept or dismiss it yourself.
+   - A new unresolved need: create a question only under the tracking criteria in
+     [questions.md](questions.md); zero new questions is a successful outcome.
+   - A proposed decision revision: `record_proposal_evidence`, neutral and without a
+     level. An in-force decision: `record_decision_assessment` with labels, as in
+     [decision-loops.md](decision-loops.md). Nothing here edits a decision.
+   An open question record is a target, never a source; a resolved question is an
+   ordinary source because its accepted answer may update concepts.
+7. Apply only previews in proposed state through apply_maintenance_change. In this
    same session, reconcile affected existing concepts and assertions, checking
    independent alternative support before changing a conclusion. Claims depending
    on other assertions name premiseClaimIds. Inferred conclusions always need
    review unless a future explicit approved-rule policy says otherwise. A ruleId
    is never an agent-created authorization.
-7. needs_review is the shared Knowledge → Maintenance review queue. Read and explain
+8. needs_review is the shared Knowledge → Maintenance review queue. Read and explain
    the current evidence and proposal. Conflicts and ontology changes can be resolved
    in chat: after the person's explicit choice, call resolve_maintenance_review with
    confirmed=true and that exact version. No browser confirmation is needed.
@@ -99,7 +123,7 @@ are not prerequisites and must not start merely because this procedure runs.
    expectedProposalVersion and confirmed=true; cite the same work source, preserve
    evidence and review the new preview before accepting it. Never bypass this queue
    with ordinary create/update tools.
-8. Save each affected record's changes or review proposals before acknowledging its
+9. Save each affected record's changes or review proposals before acknowledging its
    `get_maintenance_context` page with `stage: context`. Follow all context pages. If
    those writes change its hash, reread the page and acknowledge the refreshed hash.
    After lease resumption, inspect outstanding proposed changes with
@@ -107,12 +131,16 @@ are not prerequisites and must not start merely because this procedure runs.
    avoid duplicates. Source and context progress survives agent restart. Apply
    candidates are revalidated when adopted under a new lease.
    `complete_maintenance_work` requires both coverage passes, then: completed, no_change, failed or
-   unsupported, with a short content-free reason. Pending reviews are not accepted
+   unsupported, with a short content-free reason. Completing means the source was
+   considered for concepts, relations, questions and decisions. Pending reviews are not accepted
    knowledge. Continue small batches and affected sources within the session budget;
-   release unused leases. Report created/updated records, support added, review
-   links, failures, waiting items and incomplete coverage. Report the separate routine
+   release unused leases. Report created/updated records, support added, proposed
+   answers, decision evidence, review links, failures, waiting items and incomplete
+   coverage. Report the separate routine
    and backfill counts, completed sources, remaining work IDs/cutoff and saved progress.
    “Routine caught up” can coexist with an untouched historical backlog. “No change” is valid.
+
+Reusable prompt: “@Knowlaborator Do the maintenance in {organization}.”
 
 Direct explicit record edits retain the ordinary knowledge-authoring tools. This
 maintenance protocol replaces automatic relationship discovery from Navigation

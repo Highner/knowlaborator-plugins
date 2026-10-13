@@ -1,4 +1,4 @@
 interface:
   display_name: "Knowlaborator My Day"
-  short_description: "Keep my agenda current in each organization"
-  default_prompt: "Use $knowlaborator-my-day to update my agenda in each authorized organization, restore my prior active organization, and keep every item very short without acting on it."
+  short_description: "Process my incoming items and keep my agenda"
+  default_prompt: "Use $knowlaborator-my-day to process my incoming items: give every input its outcome, process what I marked, do my due checks and keep my agenda very short without acting on it."

@@ -47,7 +47,7 @@ later revision. Never include credentials or tokens in arguments or summaries.
    exact original through the client's resource/file support using the shared
    [file inspection](../../knowlaborator-work/references/file-inspection.md) flow.
    Never use indexed chunks, preview text, or metadata as a substitute for the
-   actual file. File storage does not wait for OKF analysis.
+   actual file. File storage does not wait for knowledge maintenance.
 
 ## Extract CRM contacts from an ordinary Document
 
@@ -78,46 +78,15 @@ archived-record, Account-affiliation, and source-linking rules. Report contacts
 created, existing contacts reused, and candidates skipped; report explicitly
 when no qualifying contacts were found.
 
-## Assess an ordinary Document for OKF
+## Knowledge from a saved Document
 
-Templates do not require OKF ingestion. For an ordinary Document, file saving
-and semantic assessment are deliberately separate so analysis cannot delay or
-invalidate the stored file.
-
-1. Wait until the saved version is the Document's exact `currentVersionId`,
-   check it through `get_document_version`, then call `get_document_file` and
-   inspect the original through the client's resource/file support.
-2. Identify durable atomic concepts and search each stable subject. Prepare a
-   bounded assessment with `candidates`, or `no_durable_knowledge` with empty
-   arrays. Every create or update body must include the exact provenance URI
-   `orgapp://documents/{document_id}`. Choose types and fields as in
-   [knowledge-authoring.md](knowledge-authoring.md), and give every create and
-   update a `description` in its metadata: one sentence of at most 200
-   characters that says what the record is. Bodies start after the frontmatter,
-   and the Document belongs in the OKF `sources` list as well as in the body.
-3. Call `ingest_document_okf` with the exact Document and current-version IDs.
-   A complete assessment removes that version from the pending list. A partial
-   failure remains pending; correct it and retry the same non-file operation
-   without saving the file again. Read `warnings` on each saved outcome, such as
-   `description_missing`, and fix them with `update_knowledge`. In organizations
-   that refuse, a candidate without a description fails with
-   `KNOWLEDGE_DESCRIPTION_REQUIRED`; add one and retry.
-   A successful assessment also records the `okf` result and source review on your
-   matching approved Today task for that exact version and Workspace. Refresh
-   `get_input_context` afterward: report only other remaining actions, using the
-   current queue version. Open-ended plans still need your explicit completion.
-
-To find existing work, page through `list_documents` with `purpose=document`
-and `okfIngestionPending=true`; do not assume one page is complete.
-
-## Independent open questions
-
-During authorized ingestion, check relevant question records in the target Workspace
-using [questions.md](questions.md). Existing and new evidence may answer a question;
-propose the answer with exact citations, without automatically accepting it. Apply
-the tracking criteria there before creating new questions: research first, require
-a concrete need and bundle aspects of one clarification. Link qualifying questions
-from the concepts; zero new questions is a successful ingestion outcome.
-Question review is separate from decision catch-up.
+A saved ordinary Document version is an ordinary maintenance source: the next
+maintenance run of its Workspace turns it into concepts, relations, proposed answers
+and decision evidence with [maintenance.md](maintenance.md). There is no separate
+per-Document assessment. When the person wants it processed now, they mark it with
+“Process with the agent”, and their Incoming run completes that marked work in the
+same session. Knowledge taken from it lists the Document (`orgapp://documents/{document_id}`)
+in its OKF `sources`, as in [knowledge-authoring.md](knowledge-authoring.md). Templates are
+not maintenance sources.
 
 Uploaded EML and MSG files also import supported direct attachments as Documents in the same Workspace, and ZIP archives import their supported files the same way. Use `get_document_email_links(documentId, versionId)` to read exact-version attachment or archive-file links, skip reasons and source backlinks. Attached emails and archives inside an archive are saved intact without recursively expanding their contents. All files remain in the original email or ZIP download.

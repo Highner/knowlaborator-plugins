@@ -141,14 +141,23 @@ or modify the user's project to run it.
    own fields and the other frontmatter in `metadata`: `tags` as a JSON array of
    strings, `resource` only for the asset the concept describes (a person,
    organization or project uses `about`), and provenance in `sources` as OKF's
-   JSON list of objects, each with a `resource` (a URL or an `orgapp://` link)
-   and optionally `id`, `title`, `author` or `last_modified`. Never invent keys such
-   as `source_document`; anything else in `sources` is refused with
-   `KNOWLEDGE_SOURCES_INVALID`. When you revise a record that keeps links under
-   such a key, move them into `sources` and drop the key. Also cite sources as
-   links in the body. Set
+   JSON list of objects, each with a `resource` (a URL, an `orgapp://` link, or
+   text naming a source no link reaches, such as a conversation) and optionally
+   `id`, `title`, `author`, `usage_count` (a whole number) or `last_modified` (an
+   ISO 8601 time with an offset, such as `2026-10-11T00:00:00Z`). Never invent
+   keys such as `source_document`; anything else in `sources` is refused with
+   `KNOWLEDGE_SOURCES_INVALID`, and a link under a key of your own returns
+   `link_key` in `typeWarnings`. When you revise a record that keeps links under
+   such a key, move them into `sources` and drop the key. Link other records as
+   Markdown links in the body. To attribute one claim, give its source an `id`
+   without spaces and cite it with a footnote: `claim.[^fgs-opinion]`, then
+   `[^fgs-opinion]: FGS opinion of 11 October` at the end of the body. Set
    `schemaVersion` to the OKF version, `0.2` for a new concept; keep the record's
-   value when revising.
+   value when revising. OrgApp sets `generated` itself with the time of the write;
+   name yourself in it as `<agent>/<model>`, such as
+   `{"by":"claude-code/claude-opus-5-5"}`, or it names your client. Never write
+   `human:` or `process:` there, and never write `verified`: a recorded decision
+   is the record's verification.
 5. Give every concept a `description` in its metadata: one sentence of at most
    200 characters that says what the record is, so an agent can choose it from a
    folder or search hit without opening it. Keep an existing description unless the
