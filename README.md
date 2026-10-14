@@ -22,6 +22,12 @@ ChatGPT or Claude authors interactive charts, calculators and diagrams inside an
 MCP Apps conversation. Its connector is https://orgapp-production-1b56.up.railway.app/mcp/stage-lab.
 This prototype requires an MCP Apps host; terminal-only clients receive text.
 
+Install Knowlaborator Maintenance for scheduled or unattended knowledge maintenance. Its
+connector is https://orgapp-production-1b56.up.railway.app/mcp/maintenance, with only the tools that maintenance needs:
+it keeps relations and the support of existing records current from filed sources,
+proposes answers and records decision evidence, and writes no knowledge text. Install it
+on its own for an unattended run.
+
 The repository contains generated skills, client-specific manifests, and public MCP
 URLs. It contains no credentials, installation keys, documents, or organization data.
 Installing a plugin grants no access: Knowlaborator checks the signed-in account,

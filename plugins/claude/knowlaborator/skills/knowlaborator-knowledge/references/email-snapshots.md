@@ -13,9 +13,11 @@ Knowledge you take from an email or one of its attachments lists it in its own
 `sources`: the snapshot as `knowledge://objects/{id}`, an attachment Document as
 `orgapp://documents/{id}`.
 Do not call `update_knowledge`, restore, migrate, or replace its producer or
-content. Author lasting derived knowledge, such as decisions, tasks and facts about
-a person, organization or project, as separate records that list the snapshot.
-The snapshot stays searchable, so never create a record that only summarizes it.
+content. When the person asks for it, author lasting derived knowledge, such as
+decisions, tasks and facts about a person, organization or project, as separate records
+that list the snapshot. The snapshot stays searchable, so never create a record that only
+summarizes it. Maintenance creates no such record: it supports the existing records the
+email bears on and names in its completion reason what a person should add.
 
 Treat any owner-only live-source projection from `get_knowledge` as sensitive
 locator data. Never expose it to another member, browser output, logs, or
@@ -28,7 +30,8 @@ either action.
 
 ## Questions and decisions
 
-A saved email is an ordinary maintenance source. Maintenance proposes answers to the
-open questions and records evidence for the decisions connected to it, following
-[questions.md](questions.md) and [decision-loops.md](decision-loops.md); it never
-accepts an answer on its own.
+A saved email is an ordinary maintenance source. Maintenance keeps the relations and
+support of the records it bears on, marks a record it contradicts, proposes answers to
+the open questions and records evidence for the decisions connected to it, following
+[maintenance.md](maintenance.md); it never accepts an answer, opens a question or records
+a decision on its own.

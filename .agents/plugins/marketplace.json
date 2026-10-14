@@ -39,6 +39,18 @@
         "path": "./plugins/codex/knowlaborator-stage-lab",
         "source": "local"
       }
+    },
+    {
+      "category": "Productivity",
+      "name": "knowlaborator-maintenance",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/codex/knowlaborator-maintenance",
+        "source": "local"
+      }
     }
   ]
 }

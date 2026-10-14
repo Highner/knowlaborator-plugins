@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "knowlaborator-maintenance": {
+      "url": "https://orgapp-production-1b56.up.railway.app/mcp/maintenance"
+    }
+  }
+}

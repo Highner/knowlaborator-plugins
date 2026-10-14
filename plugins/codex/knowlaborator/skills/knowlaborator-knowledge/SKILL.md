@@ -18,12 +18,14 @@ conversation language.
 ## Fast path
 
 - Knowledge maintenance (“do the maintenance”): use [maintenance.md](references/maintenance.md)
-  for the complete incremental filed source → changed passages → ontology → affected
-  knowledge, questions and decisions workflow. Routine maintenance excludes historical
-  backfill unless expressly requested. During this procedure the source-choice branches
-  below do not start other workflows; use only the maintenance protocol and the owning
-  source/read tools. Incoming items are the Incoming run of
-  [My Day](../knowlaborator-my-day/SKILL.md).
+  for the complete incremental filed source → changed passages → relations, support of
+  existing records, questions and decisions workflow. Maintenance creates and rewrites no
+  record. Routine maintenance excludes historical backfill unless expressly requested.
+  During this procedure the source-choice branches below do not start other workflows; use
+  only the maintenance protocol and the owning source/read tools. Incoming items are the
+  Incoming run of [My Day](../knowlaborator-my-day/SKILL.md). A scheduled or unattended
+  run uses the Knowlaborator Maintenance plugin (`knowlaborator-maintenance`), which carries
+  the same protocol without authoring tools.
 
 - Topical or status question: start with `search_content`, then read selected sources
   with their owning exact-read tools. Browse the knowledge folders with
@@ -51,7 +53,8 @@ conversation language.
 
 Read only the reference needed for the requested operation:
 
-- [maintenance.md](references/maintenance.md): independent maintenance, evidence and chat/browser review.
+- [maintenance.md](references/maintenance.md): independent maintenance, evidence, contradiction marks and
+  chat/browser review.
 - [navigation-learning.md](references/navigation-learning.md): conditional source-choice learning
   for substantive discovery; skip exact known-record reads.
 - [reading.md](references/reading.md): search, exact reads and exports.

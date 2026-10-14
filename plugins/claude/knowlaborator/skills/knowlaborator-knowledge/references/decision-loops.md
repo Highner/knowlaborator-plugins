@@ -58,7 +58,8 @@ say what changed.
 
 **Findings.** A lesson that applies beyond one decision becomes ordinary draft
 Knowledge of type `finding` (`create_knowledge`), linking the decision, assessment and
-evidence, with its scope and uncertainty. The person publishes it. Before preparing a
+evidence, with its scope and uncertainty. The person publishes it. Maintenance writes no
+finding; it names one in its completion reason. Before preparing a
 related decision or plan, search for findings and say how they apply.
 
 ## Waiting proposals and reviews

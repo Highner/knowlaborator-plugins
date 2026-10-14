@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "author": {
+    "email": "info@appligator.de",
+    "name": "Appligator"
+  },
+  "description": "@knowlaborator-maintenance keeps knowledge current from filed sources with the maintenance tools only.",
+  "displayName": "Knowlaborator Maintenance",
+  "homepage": "https://orgapp-production-1b56.up.railway.app/plugin/support",
+  "keywords": [
+    "maintenance",
+    "knowledge",
+    "relations",
+    "mcp"
+  ],
+  "name": "knowlaborator-maintenance",
+  "version": "5.2.0"
+}

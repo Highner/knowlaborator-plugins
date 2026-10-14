@@ -81,11 +81,12 @@ when no qualifying contacts were found.
 ## Knowledge from a saved Document
 
 A saved ordinary Document version is an ordinary maintenance source: the next
-maintenance run of its Workspace considers it for concepts, relations, proposed answers
-and decision evidence with [maintenance.md](maintenance.md). There is no separate
-per-Document assessment. When the person wants it processed now, they mark it with
-“Process with the agent”, and their Incoming run completes that marked work in the
-same session. OrgApp lists the Document (`orgapp://documents/{document_id}`) in the OKF
-`sources` of the knowledge maintenance takes from it. Templates are not maintenance sources.
+maintenance run of its Workspace considers it for relations, support of existing records,
+proposed answers and decision evidence with [maintenance.md](maintenance.md). There is no
+separate per-Document assessment, and a Document needs no knowledge card. When the person
+wants it processed now, they mark it with “Process with the agent”, and their Incoming run
+completes that marked work in the same session. OrgApp lists the Document
+(`orgapp://documents/{document_id}`) in the OKF `sources` of each existing record
+maintenance supports with it. Templates are not maintenance sources.
 
 Uploaded EML and MSG files also import supported direct attachments as Documents in the same Workspace, and ZIP archives import their supported files the same way. Use `get_document_email_links(documentId, versionId)` to read exact-version attachment or archive-file links, skip reasons and source backlinks. Attached emails and archives inside an archive are saved intact without recursively expanding their contents. All files remain in the original email or ZIP download.

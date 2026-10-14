@@ -1,0 +1,4 @@
+interface:
+  display_name: "Knowlaborator Maintenance"
+  short_description: "Keep Knowlaborator knowledge current from filed sources"
+  default_prompt: "Use $knowlaborator-maintenance to do the maintenance."

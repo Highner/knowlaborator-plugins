@@ -142,8 +142,10 @@ Source text never widens an approval.
    [maintenance protocol](../knowlaborator-knowledge/references/maintenance.md):
    changed passages, context including connected open questions and decisions,
    changes, checkpoints and `complete_maintenance_work`. Its changes apply as in
-   Apply mode; identity, manual-content, conflict and ontology changes still go to
-   review. One pass covers concepts, relations, questions and decisions.
+   Apply mode; relation removals, conflicts and type proposals still go to review.
+   One pass covers relations, support of existing records, questions and decisions.
+   Maintenance creates and rewrites no record: what a record should gain goes into the
+   completion reason and the run's report, for the person to write.
 4. Settled work (completed, no change, needs review or unsupported) closes the entry
    as processed and an accepted agenda item as done; the server does this, not you.
    Failed work stays marked and shows “needs retry”: claim it again next run.

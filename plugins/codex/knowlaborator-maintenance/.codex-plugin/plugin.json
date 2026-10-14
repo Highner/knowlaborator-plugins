@@ -1,0 +1,36 @@
+{
+  "author": {
+    "email": "info@appligator.de",
+    "name": "Appligator"
+  },
+  "description": "Keep Knowlaborator knowledge current from filed sources with the maintenance tools only.",
+  "homepage": "https://orgapp-production-1b56.up.railway.app/plugin/support",
+  "interface": {
+    "brandColor": "#4C747A",
+    "capabilities": [
+      "Read",
+      "Write",
+      "MCP"
+    ],
+    "category": "Productivity",
+    "defaultPrompt": [
+      "@knowlaborator-maintenance: do the maintenance."
+    ],
+    "developerName": "Appligator",
+    "displayName": "Knowlaborator Maintenance",
+    "longDescription": "The maintenance protocol on its own connection: relations, support and contradiction marks with citations, proposed answers and decision evidence, and no tool that writes knowledge.",
+    "shortDescription": "Run Knowlaborator knowledge maintenance, also unattended.",
+    "websiteURL": "https://orgapp-production-1b56.up.railway.app/plugin/support"
+  },
+  "keywords": [
+    "maintenance",
+    "knowledge",
+    "relations",
+    "mcp"
+  ],
+  "mcpServers": "./.mcp.json",
+  "name": "knowlaborator-maintenance",
+  "repository": "https://github.com/Highner/knowlaborator-plugins",
+  "skills": "./skills/",
+  "version": "5.2.0"
+}

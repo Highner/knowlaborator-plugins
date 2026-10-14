@@ -6,8 +6,10 @@ decision plan, assessment or score.
 
 ## Decide whether to track a question
 
-Apply these criteria within the person's authorized task, including filing,
-maintenance, curation and migration:
+Apply these criteria within the person's authorized task, including filing, curation
+and migration. Maintenance creates no question: when a source shows a need that meets
+them, it names the need in its completion reason so a person can track it
+([maintenance.md](maintenance.md)).
 
 1. Track a question only when a person actually asked it and wants it pursued
    (directly or evidenced by the source), or its answer would materially affect a
