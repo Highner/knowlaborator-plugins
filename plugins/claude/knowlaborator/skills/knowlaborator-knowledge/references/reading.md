@@ -43,9 +43,13 @@ contents or editing. A missing description means none was written. Keep lifecycl
 `status` separate from `decisionStanding` (a proposal is not a final decision).
 
 Use list_knowledge_relations for one record's typed relations, filtered by
-relationType to enumerate, for example, all products containing a raw material. To
-find related records matching a topic, use search_content with relatedKnowledgeId and
-relationType. An unavailable related record is one you cannot read; do not guess it.
+relationType to enumerate, for example, all products containing a raw material. It
+reads a knowledge record by `knowledgeId`, or a Document, contact, account or Dataset
+record by `record` (`kind` and `id`). Each relation names the other end's `otherKind`
+and `otherId`; open a Document with get_document, a contact with get_crm_contact, an
+account with get_crm_account and a Dataset record with get_dataset_record. To find
+related knowledge records matching a topic, use search_content with relatedKnowledgeId
+and relationType. An unavailable related record is one you cannot read; do not guess it.
 
 `get_knowledge` returns the record's OKF frontmatter in `okf` (`type`, `title`,
 `description`, `tags`, `resource`, OKF `status`, `stale_after` and `sources`) and

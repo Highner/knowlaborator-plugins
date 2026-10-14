@@ -79,8 +79,9 @@ keeps a relation under a new name as a cited pair that administrators may turn i
 
 1. Choose only from the `relations` that `get_workspace_knowledge_guidance`
    returns for the target Workspace. Pick by definition and use-when, and
-   check the allowed source and target types. When none fits, keep a plain
-   Markdown link and tell the user which relation was missing.
+   check the allowed source and target ends: concept types, or Documents, CRM
+   accounts, CRM contacts or the records of one Dataset. When none fits, keep a
+   plain Markdown link and tell the user which relation was missing.
 2. Store each relation once, from its source: the record the name reads from.
    The other record shows it under the inverse name. Never write it again from
    the other end and never keep a reference at both ends.
@@ -90,6 +91,13 @@ keeps a relation under a new name as a cited pair that administrators may turn i
    `until` dates). A new record of a type that requires a relation must bring
    it. For existing records use `change_knowledge_relations` with `add` and
    `remove` (relation IDs from `get_knowledge`); it creates no revision.
+   When the relation ends at a Document, contact, account or Dataset record,
+   name that record as `targetRecord` (`kind` `document`, `crm_account`,
+   `crm_contact` or `dataset_record`, and its `id`) instead of
+   `targetKnowledgeId`; never create a knowledge record that only stands in for
+   it. A relation that starts at such a record is changed with
+   `change_knowledge_relations` and `source` (`kind` and `id`) instead of
+   `knowledgeId`.
 4. Read relations with `list_knowledge_relations`; filter by `relationType` (the
    name for outgoing, the inverse name for incoming) to find the related records.
    Check what exists before adding.

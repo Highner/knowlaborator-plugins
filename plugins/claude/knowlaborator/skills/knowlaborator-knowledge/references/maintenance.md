@@ -119,12 +119,18 @@ completion reason and in your report, so a person can add it.
      versions; end an old period and add the new one in one change. Dates are inclusive, so
      a successor normally starts the following day. Later recurring periods are distinct
      edges. Removal is a correction a person reviews, not a historical ending.
+   - **Documents, contacts, accounts and Dataset records as ends.** When the listed
+     type's ends allow it, name such a record as `targetRecord` (`kind` `document`,
+     `crm_account`, `crm_contact` or `dataset_record`, and its `id`) instead of
+     `targetKnowledgeId`. Relate to the record itself, never to a knowledge record that
+     only stands in for it.
    - **Other ends that are no record yet.** Name the other end as `target` instead of
      `targetKnowledgeId`: a label with a person's email address or phone number, an
      organization's website, or a title with its concept type. The one record you can read
-     with that key becomes the end; otherwise the relation waits, unseen, until such a
-     record appears, and Knowledge → Wanted shows people the records many relations wait
-     for. Never create the record yourself.
+     with that key becomes the end, or, when the type ends at contacts or accounts, the one
+     contact with that email or phone or account with that website; otherwise the relation
+     waits, unseen, until such a record appears, and Knowledge → Wanted shows people the
+     records many relations wait for. Never create the record yourself.
    - **Relation types that do not exist yet.** When no listed type fits, add the relation
      under the name the source suggests, with a `definition` and an `inverseName`; when a
      listed type does not allow the two records' types, add it under that type. Either is
