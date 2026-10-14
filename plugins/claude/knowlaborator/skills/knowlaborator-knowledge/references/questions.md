@@ -8,7 +8,8 @@ decision plan, assessment or score.
 
 Apply these criteria within the person's authorized task, including filing, curation
 and migration. Maintenance creates no question: when a source shows a need that meets
-them, it names the need in its completion reason so a person can track it
+them, it reports the question to the member who asked it, to the proposer of the pending
+decision it blocks, or else to the member the source belongs to
 ([maintenance.md](maintenance.md)).
 
 1. Track a question only when a person actually asked it and wants it pursued
@@ -30,6 +31,16 @@ them, it names the need in its completion reason so a person can track it
 4. Zero new questions is a successful outcome. Processing a source authorizes
    evaluating the need; it does not require producing records. If none qualify,
    report a brief reason.
+
+## Reported questions
+
+Questions maintenance found in sources wait in the Questions inbox under Reported, beside
+"Still needed?". `list_knowledge_reports` with `kind: "question"` reads the person's own.
+After the person's explicit choice in this session, `confirm_knowledge_report` opens the
+question, optionally in their words, with them responsible, the asker and the related
+records; `discard_knowledge_report` discards it, and OrgApp then never reports that
+passage again. Never confirm or discard on your own; undoing a discard happens in the
+browser.
 
 ## Author and link
 

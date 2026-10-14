@@ -62,6 +62,18 @@ evidence, with its scope and uncertainty. The person publishes it. Maintenance w
 finding; it names one in its completion reason. Before preparing a
 related decision or plan, search for findings and say how they apply.
 
+## Reported decisions
+
+Decisions maintenance found in sources wait for the member who judges them: the decider
+the source names when that is a member, otherwise the member the source belongs to. They
+appear on Today as "Confirm or discard?" and above the Decisions history.
+`list_knowledge_reports` with `kind: "decision"` reads the person's own. After the
+person's explicit choice in this session, `confirm_knowledge_report` records the decision,
+optionally in their words: decided by its decider on its date, citing the source, or
+proposed when the source shows it still open. `discard_knowledge_report` discards it, and
+OrgApp then never reports that passage again. Never confirm or discard on your own;
+undoing a discard happens in the browser.
+
 ## Waiting proposals and reviews
 
 A review request without a respond-by date gets one 14 days ahead, and reviewers are

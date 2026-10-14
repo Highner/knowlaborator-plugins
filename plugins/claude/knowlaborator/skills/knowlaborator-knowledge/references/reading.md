@@ -18,8 +18,9 @@ in ResourceUri. Read full values with get_dataset_record, or the exact revision
 with list_dataset_record_revisions and its revisionId; a discovery hit is not the
 full record. includeHistorical does not include superseded or archived record
 revisions. It has no resource-kind filter. Read exact results through their owning
-operation. A knowledge hit carries the record's one-sentence `description` when it
-has one; use it with the snippet to choose what to open. Use get_knowledge for one
+operation. A knowledge or document hit carries its one-sentence `description` when it
+has one, and a document's search matches it too; use it with the snippet to choose what
+to open. Use get_knowledge for one
 record and list_knowledge_revisions for history.
 
 Browse knowledge like the folders of an OKF bundle with `list_knowledge`, and only

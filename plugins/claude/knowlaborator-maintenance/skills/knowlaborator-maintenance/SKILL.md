@@ -20,9 +20,9 @@ boundary; the catalog only keeps the run from trying.
    connection bound to one organization stays there.
 2. Follow [the maintenance protocol](references/maintenance.md) for every requested
    Workspace.
-3. Anything a person should add or correct (a missing record or type, a correction, a
-   question someone asked) goes into the completion reason and your report, never into a
-   record.
+3. Anything a person should add or correct (a missing record or type, a correction) goes
+   into the completion reason and your report, never into a record. A decision or question
+   a source shows is reported to the member who judges it.
 
 A person working with an agent uses the Knowlaborator plugin instead: it keeps every
 authoring tool, and its Incoming run completes the items a person marked with this same

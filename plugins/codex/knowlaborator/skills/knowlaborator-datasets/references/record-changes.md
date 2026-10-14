@@ -5,6 +5,8 @@ dates are `YYYY-MM-DD`, timestamps are UTC ISO-8601, selects use option IDs, and
 record relationships use exact record IDs, and resource references use exact
 `{kind,id}` pairs for Knowledge or Documents. An update replaces the complete values map;
 carry the current expected record revision and schema revision ID automatically.
+When the Dataset declares key fields, values another active row has for them are
+refused with `DATASET_RECORD_KEY_EXISTS`; update the `existingRecordId` row instead.
 
 Use `set_dataset_record_status` for archive or restore. Before permanent
 `remove_dataset_record`, show the exact record and irreversible consequence and

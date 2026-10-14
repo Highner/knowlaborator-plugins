@@ -41,5 +41,15 @@ records. A relationship display field may change, but a target field used by a
 current inbound relationship must remain active until that relationship is
 reconfigured. Schema activation never rewrites historical records.
 
+A schema may declare `keyFieldIds`: 1–5 current single-value fields, not long
+text, whose values identify a row, such as asset and start date for rent
+periods. A second active row with the same key values is refused with
+`DATASET_RECORD_KEY_EXISTS` and that row's `existingRecordId`; text compares
+without case and spacing, and a row without a value for a key field has no key.
+A key is never declared while active rows share its values: the revision is
+refused with `DATASET_KEY_DUPLICATES`, listing the repeated values and their
+`duplicateRecordIds`, which the person resolves first. Maintenance adds rows only
+to Datasets of its Workspace that declare a key.
+
 Exclude formulas, rollups, lookups, attachments, arbitrary JSON fields, field
-ACLs, schema inference, and user-defined uniqueness.
+ACLs, and schema inference.

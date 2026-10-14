@@ -1,7 +1,9 @@
 # Change CRM records
 
 Treat an account as a shared CRM relationship record, never a login account or tenant
-organization. Search with `search_crm` before creating. Preserve exact record IDs and
+organization. Search with `search_crm` before creating. A contact whose email address an
+active contact you can read already has is refused with `CRM_CONTACT_EMAIL_EXISTS` and
+that contact's `existingContactId`: update or restore it instead. Preserve exact record IDs and
 revisions, and reload after a revision conflict. Restore an archived account or contact
 with `set_crm_status` before adding activity, links or follow-ups.
 

@@ -73,7 +73,9 @@ administrators in the browser. Choose from it; never invent a type.
 ## Relate records
 
 A typed relation states how two records relate, such as Produkt `enthält`
-Rohstoff. Only administrators define relation types; agents never add one.
+Rohstoff. Only administrators define relation types; agents never add one. Maintenance
+keeps a relation under a new name as a cited pair that administrators may turn into a type
+([maintenance.md](maintenance.md)).
 
 1. Choose only from the `relations` that `get_workspace_knowledge_guidance`
    returns for the target Workspace. Pick by definition and use-when, and

@@ -15,6 +15,8 @@ later revision. Never include credentials or tokens in arguments or summaries.
    Use `template` only for an example intended to guide creation or editing of
    other documents. `documentType` is independent. Templates require a trimmed
    1–500-character general description; ordinary Documents may omit it.
+   Maintenance may give an undescribed Document one line naming what it is; it never
+   replaces a description someone wrote.
 3. For a new logical Document, call `create_document` once and retain its ID.
    For a revision, reuse the existing ID. Use `update_document` only for title,
    description, document type, or supported logical metadata; it never writes
