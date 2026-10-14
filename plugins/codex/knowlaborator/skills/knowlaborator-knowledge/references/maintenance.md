@@ -201,12 +201,17 @@ completion reason and in your report, so a person can add it.
      approving a loan, is evidence on the related decision or a relation, not a report. A
      lesson that applies beyond one decision is named in the completion reason.
    - A report cites the passage and goes to the member who judges it, who confirms or
-     discards it; nothing is recorded until they do. Check the connected decisions and
-     questions first: when one matches, add evidence instead. OrgApp keys each reported
-     passage and refuses it again with `KNOWLEDGE_REPORT_OPEN`, `KNOWLEDGE_REPORT_DISMISSED`
-     or `KNOWLEDGE_REPORT_CONFIRMED`, whose `resultKnowledgeId` names the record to add
-     evidence to. Report nothing more about such a passage; never search history to avoid
-     repeats.
+     discards it; nothing is recorded until they do. Cite the passage that shows the
+     decision or question first: it becomes the report's quote and key. Passages that only
+     give context, such as a request for feedback on several points, come after it. Check
+     the connected decisions and questions first: when one matches, add evidence instead.
+     OrgApp keys each reported passage and refuses it again with `KNOWLEDGE_REPORT_OPEN`,
+     `KNOWLEDGE_REPORT_DISMISSED` or `KNOWLEDGE_REPORT_CONFIRMED`, whose `resultKnowledgeId`
+     names the record to add evidence to. Report nothing more about such a passage; never
+     search history to avoid repeats. A report refused this way when applied ends
+     `refused` and needs nothing more. A refusal naming `existingProposalId` means another
+     report of this source, not applied yet, starts with the same passage: when this report
+     shows something else, submit it again with its own passage first.
    Nothing here edits a decision or a question. An open question record is a target,
    never a source; a resolved question is an ordinary source because its accepted answer
    may support records.
