@@ -21,11 +21,17 @@ decision, changes its standing or replaces it.
 
 Never claim that a source affects a particular decision before you have read it.
 
+## Record evidence
+
+`record_decision_evidence` takes one exact revision. Its standing decides what it
+records: an assessment for a decision in force, proposal evidence for a proposal.
+Parameters of the other kind are refused.
+
 ## Assess in-force decisions
 
-`record_decision_assessment` judges one exact in-force revision against its clauses
-(`overall`, `criterion-N`, `assumption-N`). Read `get_decision_assessments` first and
-pass the current assessment version.
+An assessment judges one exact in-force revision against its clauses (`overall`,
+`criterion-N`, `assumption-N`). Read `get_decision_assessments` first and pass the
+current assessment version.
 
 - **Levels are labels**, never numbers: strong support, support with open questions,
   mixed, concerns, challenged. Weigh evidence together; repeated imports or
@@ -41,10 +47,10 @@ pass the current assessment version.
   can only lead you to suggest a change, which the person makes explicitly. In-force
   decisions never expire.
 
-**Proposals never get a level.** For a proposed revision use `record_proposal_evidence`:
-one exact source, when it happened, and a neutral note (at most 200 characters) that
-describes the material without judging the proposal. Once the exact revision is decided,
-its first assessment must cite or dismiss every proposal-evidence item.
+**Proposals never get a level.** For a proposed revision, `record_decision_evidence`
+takes one exact `source`, when it happened (`occurredAt`), and a neutral `note` (at most
+200 characters) that describes the material without judging the proposal. Once the exact
+revision is decided, its first assessment must cite or dismiss every proposal-evidence item.
 
 **Private sources.** Visibility follows the cited sources. A private source makes a
 private draft that only its author sees; it never changes the shared score and is never
@@ -68,10 +74,10 @@ Decisions maintenance found in sources wait for the member who judges them: the 
 the source names when that is a member, otherwise the member the source belongs to. They
 appear on Today as "Confirm or discard?" and above the Decisions history.
 `list_knowledge_reports` with `kind: "decision"` reads the person's own. After the
-person's explicit choice in this session, `confirm_knowledge_report` records the decision,
-optionally in their words: decided by its decider on its date, citing the source, or
-proposed when the source shows it still open. `discard_knowledge_report` discards it, and
-OrgApp then never reports that passage again. Never confirm or discard on your own;
+person's explicit choice in this session, `settle_knowledge_report` with `action: "confirm"`
+records the decision, optionally in their words: decided by its decider on its date, citing
+the source, or proposed when the source shows it still open. `action: "discard"` discards
+it, and OrgApp then never reports that passage again. Never confirm or discard on your own;
 undoing a discard happens in the browser.
 
 ## Waiting proposals and reviews
@@ -97,8 +103,8 @@ A plan says who checks what, and when to bring the decision back.
   (with an outcome) and cancelling (with a reason) through `update_decision_plan` need
   that person's instruction.
 - A due check appears in the responsible member's `get_input_context` Checks, and their
-  Incoming run prepares it: read `get_decision_plan`, judge every criterion and
-  assumption against what happened (including follow-through), record a `check`
-  assessment, then propose the next step: keep (new check date or follow-ups), change,
-  or abandon. A check without a response stays due; never assume it went fine.
+  Incoming run prepares it: read the plan in `get_knowledge_decision`, judge every
+  criterion and assumption against what happened (including follow-through), record a
+  `check` assessment, then propose the next step: keep (new check date or follow-ups),
+  change, or abandon. A check without a response stays due; never assume it went fine.
 - Replacing or abandoning the decision ends the open plan.

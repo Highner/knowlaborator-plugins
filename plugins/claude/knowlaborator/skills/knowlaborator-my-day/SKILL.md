@@ -177,7 +177,9 @@ The first page's `Checks` lists what is due for this person:
   call `record_question_check` with outcome `nothing_new` and the question's Version.
   The server moves the next check 30, then 60, then 90 days out; after three empty
   checks the person is asked whether the question is still needed. Never dismiss or
-  answer a question on the person's behalf.
+  answer a question on the person's behalf. When the person settles one in this session,
+  record their choice with `settle_knowledge_question`
+  ([questions.md](../knowlaborator-knowledge/references/questions.md)).
 - **Plans**: follow-up checks of decisions they answer for, due by date, ToDo state or
   milestone. Prepare the check as in
   [decision-loops.md](../knowlaborator-knowledge/references/decision-loops.md): record a

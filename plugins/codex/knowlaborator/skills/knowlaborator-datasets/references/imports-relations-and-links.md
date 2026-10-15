@@ -29,9 +29,15 @@ references to an exact Knowledge object or Document.
 
 ## Dataset-level links
 
-Use `list_dataset_links`, `list_dataset_backlinks` (default `source: "dataset"`),
-and `search_dataset_link_targets` for reads. Links belong to the Dataset, never an
-individual record, and the owning Workspace is not duplicated as a link.
+Use `list_dataset_links` and `list_dataset_backlinks` (default `source: "dataset"`)
+for reads. Links belong to the Dataset, never an individual record, and the owning
+Workspace is not duplicated as a link.
+
+Find the target ID where it lives: `knowledge` and `document` with `search_content`
+(`kinds` `knowledge_object` or `document_chunk`; a Document's ID is in
+`dms://documents/{id}`), `crm_account` and `crm_contact` with `search_crm`, `todo`
+with `list_todos`, a published `component` with `search_components`, and a
+`membership` with `list_messaging_members`.
 
 For `link_dataset_resource`, require Manager access to the source Dataset and
 current visibility of the exact target. For `unlink_dataset_resource`, confirm

@@ -10,10 +10,9 @@ connections cannot change organizations.
 
 Use `list_workspaces` for bounded authorized discovery and `get_workspace` for
 one exact read. Preserve Workspace IDs, kinds, effective roles, revisions,
-cursors, and correlation IDs. Call `set_active_workspace` only after resolving
-an accessible exact Workspace and only where the tool is exposed. A Realm can
+cursors, and correlation IDs. Pass the exact Workspace ID to every operation that
+needs one; there is no active-Workspace selection to change (ADR 0195). A Realm can
 be a focus filter or default, but it does not cap ordinary interactive access.
-Active selection is a UX default, never proof of authorization.
 
 Workspace discovery includes a bounded preview of authorized Dataset names and
 IDs. `datasets.hasMore` means additional Datasets may exist. For a request about

@@ -20,7 +20,7 @@ Create a contact only when no match exists. Preserve only source-explicit fields
 not overwrite conflicting fields on an existing contact. Assign an account only when an
 exact active account already exists; never create an account as a side effect of
 contact extraction. Link each created or reused contact to the exact source Document
-through an eligible target returned by `search_crm_link_targets`.
+with `link_crm_resource`, target kind `document` and the Document's ID.
 
 ## Short descriptions
 
@@ -44,11 +44,12 @@ is set with `set_crm_interaction_mail_source` from the protected message referen
 authorized mail read; never copy mail content into it or expose it to another member.
 
 Before recording an interaction, identify every named organization resource that is
-material to it, such as a vessel, policy or document. Search the live eligible targets
-with `search_crm_link_targets` using the most specific retained name: business objects
-such as vessels and policies as `knowledge`, files as `document`. After recording, link
-the interaction itself to every unambiguous intended target with `link_crm_resource`; do
-not substitute its account or contact as the link subject. The interaction write is
+material to it, such as a vessel, policy or document. Find each with `search_content`
+and the most specific retained name: business objects such as vessels and policies with
+`kinds` `knowledge_object` (target kind `knowledge`, the hit's ID), files with
+`document_chunk` (target kind `document`, the ID in `dms://documents/{id}`). After
+recording, link the interaction itself to every unambiguous intended target with
+`link_crm_resource`; do not substitute its account or contact as the link subject. The interaction write is
 incomplete until these links succeed; report both the interaction and the linked
 targets. If candidates are ambiguous, ask which exact target to use. If no exact target
 exists, say so rather than silently omitting the link or linking a merely related record.

@@ -26,7 +26,8 @@ When the administrator asks for a new type, or a definition for a listed type
 that has none, draft it for them to enter in Settings → Concept types. Say
 that it is a draft until they save it there. First check the catalog and its
 aliases: if a listed type already covers the meaning, propose an alias or a
-sharper definition instead of a second type.
+sharper definition instead of a second type. Read a listed type's full guidance
+with `get_workspace_knowledge_guidance` and its `type`.
 
 For each proposed type:
 

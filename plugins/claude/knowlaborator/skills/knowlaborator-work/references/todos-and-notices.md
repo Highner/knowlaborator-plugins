@@ -75,6 +75,7 @@ The notice board is an optional module (`notices`).
 - Use `publish_notice` or `update_notice` with structured external links and typed
   member, authorized-Document or authorized-Knowledge mentions. Never turn inaccessible
   cross-Workspace targets or display text alone into mentions.
-- Authors can edit or remove their own notices; pinning (`set_notice_pinned`) and
-  broader management remain server-authorized.
+- Authors can edit or remove their own notices. Pin or unpin with `update_notice` and
+  `pinned`, without content to change only the pin; pinning needs an organization
+  administrator, and broader management remains server-authorized.
 - Ask for explicit confirmation before `remove_notice`; it is permanent.

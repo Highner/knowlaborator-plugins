@@ -16,8 +16,9 @@ OrgApp prepares payments; it never transfers money. There are two levels:
 - For an agenda item, `add_agenda_items` and `update_agenda_item` accept `PaymentDraft`.
   A ToDo created from the item keeps the suggestion.
 - An explicitly authorized `create_todo` accepts `PaymentDraft`. For an existing ToDo,
-  `set_todo_payment_draft` adds or replaces the suggestion; PaymentDraft=null removes it.
-  A ToDo with a saved PaymentId refuses a suggestion.
+  `set_todo_payment` with `PaymentDraft` adds or replaces the suggestion; with neither
+  PaymentDraft nor PaymentId and no ExpectedPaymentId it removes it. A ToDo with a
+  saved PaymentId refuses a suggestion.
 - Never invent missing details; leave them absent. The person completes them in the app.
 - In a Collaborative Workspace, everyone with access sees the same suggestion. Name who
   pays in the ToDo, or use Banking's shared payments below.
@@ -30,9 +31,10 @@ OrgApp prepares payments; it never transfers money. There are two levels:
   BIC, a supported Currency and optional ScheduledDate in an authorized Workspace.
   Reuse the same UUID and fields on retries.
 - An explicitly authorized `create_todo` can use PaymentId in the same Workspace. For
-  an existing task use `set_todo_payment` with ExpectedPaymentId from the read;
-  occurrence is the default, future also needs ExpectedSeriesVersion and changes the
-  recurring template. Future tasks receive separate unpaid payments.
+  an existing task use `set_todo_payment` with PaymentId and ExpectedPaymentId from the
+  read; to unlink, send only ExpectedPaymentId. It replaces a suggestion and needs the
+  Banking module. Occurrence is the default, future also needs ExpectedSeriesVersion
+  and changes the recurring template. Future tasks receive separate unpaid payments.
 - For an agenda item, `add_agenda_items` and `update_agenda_item` accept PaymentId
   instead of PaymentDraft, never both. With Banking, the person saves a suggestion through
   Add payment in the browser. Agenda maintenance cannot link or write ToDos.

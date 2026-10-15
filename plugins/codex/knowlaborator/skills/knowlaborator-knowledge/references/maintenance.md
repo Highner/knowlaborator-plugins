@@ -99,7 +99,8 @@ completion reason and in your report, so a person can add it.
    state `open` or `answer_proposed`) and proposed or in-force decisions (kind `decision`,
    state = standing, `revisionId` = the exact decision revision) connected to them. Read
    relevant exact records, assertions and the Workspace's types and relation types
-   (`get_workspace_concept_guidance`). Snippets are discovery aids, not complete evidence.
+   (`get_workspace_knowledge_guidance`, with `type` for one type's full guidance).
+   Snippets are discovery aids, not complete evidence.
    Use the existing `search_content` index for additional matches suggested by the changed
    passages, especially when a new source has no known links; question hits carry their
    status and decision hits their standing, and document hits carry their description.
@@ -188,12 +189,13 @@ completion reason and in your report, so a person can add it.
      one line, the asker as `askedBy` (a member or contact) or the pending decision as
      `blocksDecisionId`, and the answer that would settle it as `expectedEvidence`. A
      missing field, a speculative risk or an interesting unknown is no reason.
-   - A proposed decision revision: `record_proposal_evidence` with one exact source, when
-     it happened and a neutral note of at most 200 characters, without a level.
-   - An in-force decision: read `get_decision_assessments`, then
-     `record_decision_assessment` with labels only, its clause impacts and the
-     assessment version. Weigh correlated reports together; a private source makes a
-     private draft only you see.
+   - A decision takes evidence through `record_decision_evidence` with its exact
+     `revisionId`. Its standing decides the kind; parameters of the other kind are refused.
+   - A proposed decision revision: one exact `source`, when it happened (`occurredAt`)
+     and a neutral `note` of at most 200 characters, without a level.
+   - An in-force decision: read `get_decision_assessments`, then record an assessment
+     with labels only, its clause impacts and the assessment version. Weigh correlated
+     reports together; a private source makes a private draft only you see.
    - An organization decision a source shows that no record holds: submit a
      `report_decision` change with the decision in one line, the decider and date the
      source names (`deciderMembershipId` when you know the member) and `stillOpen` while
@@ -221,12 +223,12 @@ completion reason and in your report, so a person can add it.
    changes, wait for a person. Claims depending on other assertions name
    premiseClaimIds. Inferred relation changes always need review unless a future explicit
    approved-rule policy says otherwise. A ruleId is never an agent-created authorization.
-8. needs_review is the shared Knowledge → Maintenance review queue. Read and explain
-   the current evidence and proposal. Conflicts, relation removals and type proposals can
-   be resolved in chat: after the person's explicit choice, call resolve_maintenance_review
-   with confirmed=true and that exact version. No browser confirmation is needed.
-   Type decisions require an organization administrator. Generic maintenance
-   authorization and the agent's recommendation do not approve an exception.
+8. needs_review is the shared Knowledge → Maintenance review queue. Maintenance never
+   resolves it: conflicts, relation removals and type proposals wait for a person, who
+   decides in the browser's review inbox or in a chat with the Knowlaborator plugin. When
+   the person asks, read and explain the current evidence and proposal with
+   get_maintenance_review. Type decisions require an organization administrator. Generic
+   maintenance authorization and the agent's recommendation do not approve an exception.
    Proposals that waited for review before maintenance stopped creating and rewriting
    records can still be accepted, rejected or kept by a person, but not adjusted.
    For an instructed amendment of another proposal submit a replacement with

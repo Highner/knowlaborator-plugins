@@ -1,7 +1,10 @@
 # Learn from this task’s knowledge navigation
 
-Use this reference only when the task needs a source choice or several discovery steps.
-Skip the learning preflight for an exact known-record read or a trivial lookup. This
+Use this reference only when the task needs a source choice or several discovery steps
+and `get_navigation_guidance` is listed. While the organization's navigation learning is
+off, the server lists neither learning tool (ADR 0195); then skip this procedure and the
+`navigationEpisodeId` argument. Skip the learning preflight for an exact known-record read
+or a trivial lookup. This
 procedure stores bounded internal operational experience; it does not authorize any
 Knowledge, Question, decision, Agenda, ToDo, mail or other domain mutation.
 

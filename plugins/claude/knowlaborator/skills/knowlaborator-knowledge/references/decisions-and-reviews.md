@@ -74,10 +74,10 @@ fields and explain that it creates an unfinalized revision.
 
 Publication `active` means available Knowledge, not a final decision or human
 approval. Read `get_knowledge_decision` for the exact revision's authoritative
-standing, version, current review and provenance. Use
-`list_knowledge_decision_history` for standing events and `list_knowledge_reviews`
-for bounded historical cycles, named reviewers, responses and comments. Follow
-cursors; never claim that a partial page is complete.
+standing, version, current review and provenance, and the decision's follow-up plan.
+Use `list_knowledge_decision_history` for standing events; each review event carries
+its cycle with named reviewers, responses and comments. Follow cursors; never claim
+that a partial page is complete.
 
 Only when the user explicitly directs you, `record_knowledge_decision` records a
 final decision already made in a conversation, meeting or elsewhere. Preserve the
@@ -128,8 +128,8 @@ and recheck the intended action; an adopted proposal needs abandonment and a rea
 Required review names 1-20 currently eligible organization Contributor/Manager
 memberships in the owning Workspace. Every required reviewer must approve through the
 browser or their authenticated MCP connection on explicit user direction. Assignment
-gives no access. `list_outstanding_knowledge_reviews` reads
-the user's current assignments. Direct recording cannot bypass a pending review.
+gives no access. `list_active_decisions` with `awaitingMyReview` reads the user's
+current assignments. Direct recording cannot bypass a pending review.
 
 Edits, reviewer replacement, access loss, Workspace movement or redaction may
 invalidate a pending cycle. Read fresh state after conflict; never carry signatures

@@ -17,11 +17,6 @@ Install Knowlaborator Stage as well to let your agent present records on the Sta
 it places record cards, highlights exact passages and connects them while you watch. Its
 connection follows the organization in which you opened the Stage.
 
-Install Knowlaborator Stage Lab to try the experimental generative UI surface.
-ChatGPT or Claude authors interactive charts, calculators and diagrams inside an
-MCP Apps conversation. Its connector is https://orgapp-production-1b56.up.railway.app/mcp/stage-lab.
-This prototype requires an MCP Apps host; terminal-only clients receive text.
-
 Install Knowlaborator Maintenance for scheduled or unattended knowledge maintenance. Its
 connector is https://orgapp-production-1b56.up.railway.app/mcp/maintenance, with only the tools that maintenance needs:
 it keeps relations and the support of existing records current from filed sources,

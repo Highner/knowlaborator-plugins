@@ -17,7 +17,11 @@ and `dataset://datasets/{datasetId}/records/{recordId}/revisions/{revisionId}`
 in ResourceUri. Read full values with get_dataset_record, or the exact revision
 with list_dataset_record_revisions and its revisionId; a discovery hit is not the
 full record. includeHistorical does not include superseded or archived record
-revisions. It has no resource-kind filter. Read exact results through their owning
+revisions. To keep only some kinds, pass `kinds` (`knowledge_object`,
+`document_chunk`, `dataset`) or `resourceKinds` (such as `dataset_record`,
+`crm_contact`, `project`, `todo`, `calendar_event`); given one, the other's kinds
+are left out. A `document_chunk` hit's ResourceUri starts with
+`dms://documents/{documentId}`. Read exact results through their owning
 operation. A knowledge or document hit carries its one-sentence `description` when it
 has one, and a document's search matches it too; use it with the snippet to choose what
 to open. Use get_knowledge for one
@@ -74,8 +78,8 @@ list_calendar_events read before suggesting a calendar change.
 Preserve revision, lifecycle, Workspace, provenance, evidence, uncertainty,
 unknown fields and redacted references. Taxonomy guidance is advisory metadata,
 not organization facts. Read the compact get_workspace_knowledge_guidance
-catalog of the Workspace's concept types only when relevant; load
-get_workspace_concept_guidance only for the exact needed types in that Workspace.
+catalog of the Workspace's concept types only when relevant; pass its `type`
+only for the exact types needed in that Workspace.
 
 When the user refers to “this”, “here”, or “my basket” in an already-open
 organization conversation, call `get_active_context` without identifiers. Treat
@@ -97,12 +101,9 @@ enabled Follow Codex. Report success and preview precision only from the
 browser acknowledgement; queued, expired, unavailable, or unacknowledged
 commands are not success.
 
-Use get_okf_operation for an already known operation. When an export is ready
-and its actual generated file is needed, use get_okf_export_file with the exact
-operation ID, then stage and verify the exact original using the shared
-[file inspection](../../knowlaborator-work/references/file-inspection.md) flow.
-Do not use a browser
-downloadPath or substitute indexed content for that file.
+OKF export and import run in the browser's Organization Settings (ADR 0195). When the
+person needs an export, point them there; never substitute indexed content for the
+exported file.
 
 For substantive knowledge source choice, conditionally read the shared
 [navigation-learning procedure](navigation-learning.md). Skip it for exact known-record

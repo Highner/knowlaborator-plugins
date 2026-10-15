@@ -44,9 +44,10 @@ reparent or vacate records as an unrequested side effect.
 
 ## Project references
 
-Projects reference units or positions only by authorized ID, label and status. Use
-`search_org_chart_references` to discover candidates and `resolve_org_chart_reference`
-for an exact retained reference; neither grants directory or Workspace access. Missing
-or unavailable references reveal no target identity. Retained references survive Org
-Chart deactivation; new or replaced links need active targets. Setting or removing a
-project's reference is a Projects operation.
+Projects reference units or positions only by authorized ID, label and status. Find
+candidates with `list_org_chart_entries` (kind `unit` or `position`; active is the
+default status) and use `resolve_org_chart_reference` for an exact retained reference;
+neither grants directory or Workspace access. Missing or unavailable references reveal
+no target identity. Retained references survive Org Chart deactivation; new or replaced
+links need active targets. Setting or removing a project's reference is a Projects
+operation.

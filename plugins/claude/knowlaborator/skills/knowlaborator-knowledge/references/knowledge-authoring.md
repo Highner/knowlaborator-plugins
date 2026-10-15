@@ -29,9 +29,10 @@ administrators in the browser. Choose from it; never invent a type.
    lists the types usable in that Workspace, with aliases and one-sentence
    definitions, whether or not the Workspace has its own guidance. A narrow
    edit to an exact existing record with unchanged type needs no lookup.
-2. Choose by definition, not by name. Load `get_workspace_concept_guidance`
-   with the same Workspace ID only for types that could shape the concept, and
-   apply their boundary, path prefix and structural recommendations.
+2. Choose by definition, not by name. Call `get_workspace_knowledge_guidance`
+   again with the same Workspace ID and `type` only for types that could shape
+   the concept, and apply their boundary, path prefix and structural
+   recommendations.
 3. When no listed type fits, use the closest listed type or the built-in
    `note` and write the type you wanted in the `candidate_type` metadata field.
    Tell the user which type was missing. Only an organization administrator
@@ -108,9 +109,9 @@ keeps a relation under a new name as a cited pair that administrators may turn i
    `_CARDINALITY` (a `one` relation already has a current edge: remove it
    first; edges cannot be edited) and `_CYCLE` are always refused. Correct the
    request and retry once with a new idempotency key.
-6. `get_workspace_concept_guidance` lists in `supersededFields` the fields a
-   relation replaced on that type, such as `artist_profile_id` replaced by
-   `von`. Never set or change such a field; send its relation instead. A write
+6. `get_workspace_knowledge_guidance` with `type` lists in `supersededFields`
+   the fields a relation replaced on that type, such as `artist_profile_id`
+   replaced by `von`. Never set or change such a field; send its relation instead. A write
    that does gets `field_superseded`, or `KNOWLEDGE_FIELD_SUPERSEDED` in
    organizations that refuse. A value the record already has may stay.
 7. Keep plain Markdown links for mentions, evidence and anything no relation

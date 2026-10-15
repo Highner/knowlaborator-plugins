@@ -26,6 +26,10 @@ conversation language.
   Incoming run of [My Day](../knowlaborator-my-day/SKILL.md). A scheduled or unattended
   run uses the Knowlaborator Maintenance plugin (`knowlaborator-maintenance`), which carries
   the same protocol without authoring tools.
+- Maintenance review the person decides in chat: after their explicit choice for one exact
+  proposal, call `resolve_maintenance_review` with confirmed=true and that version. No
+  browser confirmation is needed. Only this plugin offers the tool; the maintenance plugin
+  leaves every review to a person.
 
 - Topical or status question: start with `search_content`, then read selected sources
   with their owning exact-read tools. Browse the knowledge folders with

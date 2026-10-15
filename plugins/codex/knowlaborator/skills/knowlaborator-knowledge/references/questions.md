@@ -36,11 +36,11 @@ decision it blocks, or else to the member the source belongs to
 
 Questions maintenance found in sources wait in the Questions inbox under Reported, beside
 "Still needed?". `list_knowledge_reports` with `kind: "question"` reads the person's own.
-After the person's explicit choice in this session, `confirm_knowledge_report` opens the
-question, optionally in their words, with them responsible, the asker and the related
-records; `discard_knowledge_report` discards it, and OrgApp then never reports that
-passage again. Never confirm or discard on your own; undoing a discard happens in the
-browser.
+After the person's explicit choice in this session, `settle_knowledge_report` with
+`action: "confirm"` opens the question, optionally in their words, with them responsible,
+the asker and the related records; `action: "discard"` discards it, and OrgApp then never
+reports that passage again. Never confirm or discard on your own; undoing a discard
+happens in the browser.
 
 ## Author and link
 
@@ -83,23 +83,25 @@ Rules for every answer:
 - Save an answer discovered in context with `propose_question_answer`, including precise conditions.
   Evidence is optional; cite exact sources when available. This leaves the question `answer_proposed`
   under To confirm, attributed to the authenticated member's agent. Never invent sources.
-- When the person explicitly supplies or accepts an answer (for example, “the answer is X”), use
-  `answer_knowledge_question` with that text, current `expectedVersion`, and `confirmed: true` to
-  answer and resolve atomically. No documents or second confirmation are required. Your own discovery
-  remains a proposal; never set confirmed based only on finding evidence.
-- `resolve_knowledge_question` requires the person's explicit instruction to accept
-  the answer. Update dependent concept facts when authorized and appropriate. Never
-  manufacture human approval from the presence of an answer candidate.
-- When the person says a proposed answer is wrong or not wanted, use `dismiss_question_answer` with the
-  current version and, if they gave one, a short reason. It deletes only the proposal: the question is
-  unanswered again for everyone, keeps its review generation, and the proposal stays only in revision
-  history. Never delete a proposal on your own judgment, and do not re-propose the same answer from
-  sources you already checked.
-- Use `dismiss_knowledge_question` only on the person's instruction, with the current version and a
-  short reason (no longer relevant, duplicate, or no longer being pursued). It closes the shared question
-  for everyone, preserves its history, and stops its checks. Dismissed questions are absent from default
-  lists, even with `includeResolved`; request `status: "dismissed"` explicitly to inspect them. Reopen
-  with a reason before answering or checking again.
+- Only the person settles a question. Record their explicit choice in this session with
+  `settle_knowledge_question`, the current `expectedVersion` and `confirmed: true`. Your own
+  discovery remains a proposal; never set confirmed based only on finding evidence. Pick the action:
+  - `answer` when the person supplies or accepts an answer (for example, “the answer is X”). Pass
+    that text as `answer`; it is recorded and the question resolved atomically. Evidence is
+    optional. No documents or second confirmation are required.
+  - `accept_answer` when the person accepts the proposed answer. Update dependent concept facts
+    when authorized and appropriate. Never manufacture human approval from the presence of an
+    answer candidate.
+  - `reject_answer` when the person says a proposed answer is wrong or not wanted, with their short
+    `reason` if they gave one. It deletes only the proposal: the question is unanswered again for
+    everyone, keeps its review generation, and the proposal stays only in revision history. Do not
+    re-propose the same answer from sources you already checked.
+  - `dismiss` when the person wants the whole question closed, with a short `reason` (no longer
+    relevant, duplicate, or no longer being pursued). It closes the shared question for everyone,
+    preserves its history, and stops its checks. To drop only a wrong answer, use `reject_answer`.
+    Dismissed questions are absent from default lists, even with `includeResolved`; request
+    `status: "dismissed"` explicitly to inspect them. Reopen with a reason before answering or
+    checking again.
 - New contradictory material can justify `reopen_knowledge_question`, with a reason.
   Preserve the previous answer and its history. Reopening starts a new review
   generation and a new check date.
