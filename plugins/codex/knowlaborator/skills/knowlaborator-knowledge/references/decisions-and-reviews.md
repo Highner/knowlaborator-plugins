@@ -1,33 +1,113 @@
 # Decisions and required reviews
 
+## Draft the decision that the sources actually support
+
+A decision can be organizational work before anyone is ready to finalize it. Read all
+relevant authorized material: Documents, mail, messages, notes, meeting records, Dataset
+records and other sources. The number or medium of the sources does not decide whether
+a separate decision record is useful.
+
+Before creating anything, search for the choice and its subject, then read matching
+records and their exact decision standing. Reuse a matching decision and add new evidence;
+never create a second record because the same choice appears in another source or wording.
+A missing dedicated record alone is no reason to create one.
+
+Use `create_decision_draft` with the exact destination Workspace, a stable operation UUID,
+a compact `title` and `bodyMarkdown`, and one of these `situation` values:
+
+| Situation | What to preserve | Gate for creating a draft |
+| --- | --- | --- |
+| `needed` | A concrete choice nobody has explicitly recognized, and why work depends on it. | Cite a real consequence or dependency; a missing detail, hypothetical risk or interesting unknown is insufficient. |
+| `discussing` | The options actually discussed, any emerging preference, and unresolved points. | Distinguish suggestions and assumptions from agreements; do not invent a preferred option. |
+| `waiting` | What confirmation, information, event or person the choice depends on. | `waitingFor` is required. Waiting is a legitimate state; do not demand premature finalization. |
+| `agreed` | An actual agreement scattered across sources, including its scope and conditions. | The sources must establish the agreement; make clear what is a synthesis and what participants explicitly agreed. |
+| `documented` | A decision already clearly stated in an existing source. | Normally use that source and create nothing. Only supply `coordinationPurpose` when separate coordination, follow-up or review adds concrete value. Without it the operation returns no change. |
+
+`reason` explains the specific value of writing this down. Use `options`,
+`emergingPreference`, `unresolved` and `waitingFor` for what is known; unknown details stay
+empty. If useful, name the known owner, confirmation provider and readiness condition in
+that context, without inventing assignments or treating an external party's confirmation
+as the organization's choice. A bank's loan approval, for example, is evidence for the
+organization's financing choice, not automatically another organization decision.
+
+Provide `sources` with all materially contributing evidence, at most 200 entries. Cite
+each exact source once and combine its contribution in at most 200 characters. Each
+entry carries its exact typed `source`, a concise `contribution` explaining which choice,
+condition or unresolved point it supports, and `occurredAt` from the source's occurrence
+or exact revision date. Never substitute a decision date or invent an earlier event. Read
+each source and retain its exact supported revision coordinates. Do not include everything
+read, count copies as independent corroboration, or replace several contributors with one
+primary source. Sources are retained as proposal evidence for the created revision. Read them
+with `list_decision_sources` for the decision and exact revision, following `nextCursor`
+until it is empty (1–50 entries per page); the active-decision preview is not the complete
+source list. They must be
+shareable in the destination: private material stays in its authorized personal Workspace
+or is explicitly filed into an authorized shared destination first.
+
+When a matching decision exists, pass `existingDecisionId` to reuse it. The operation also
+checks the title within the destination Workspace, but that is a deterministic guard,
+not semantic matching; you still search by meaning. A `reused` result leaves the existing
+record unchanged: it does not attach any supplied sources, update draft context or inherit
+approval for new wording. Read the returned decision's current revision and standing, and
+page through `list_decision_sources` before treating contributions as preserved.
+
+For a proposed decision, use `record_decision_evidence` separately for each additional
+material source, carrying its exact `source`, factual `occurredAt`, and contribution as the
+neutral `note`. For an in-force decision, use that tool's existing assessment path only
+when the new material warrants an assessment; read its assessment history first. If the
+existing decision and sources already cover the material, cite them without another write.
+Report a refused or failed evidence attachment explicitly; a successful reuse is not proof
+that new evidence was saved. A substantive revision remains a separate action.
+
+Every newly created draft has standing **proposed**, including `agreed` and `documented`.
+Its situation describes what the sources show, not local approval. Draft creation neither
+records a final maker/date nor starts a required review. Confirming the accuracy of a
+synthesis is different from making a new choice; explain which human judgment is needed.
+A waiting draft stays outside automatic “Decide or discard?” reminders while it waits.
+
+## Continue an existing draft
+
+When new evidence changes an unfinished decision's situation, use `update_decision_draft`
+with that same `knowledgeId`. Read the current record and `get_knowledge_decision` first,
+then supply its exact `revisionId`, `expectedKnowledgeVersion`, decision `expectedVersion` and
+a fresh operation UUID. It accepts the updated situation and context fields, leaving the
+title and body unchanged. Source evidence keeps its original revision provenance and
+remains available with the new proposal as earlier evidence that may still apply. Read it
+before deciding what still supports the updated context. Add newly contributing sources
+through `record_decision_evidence`.
+
+For example, supplier confirmation may move a choice from `waiting` to `discussing`, with
+one unresolved question left. Only change what the evidence establishes; receipt of a
+confirmation does not itself establish the organization's final choice. The operation is
+for a current proposed draft without an active review. It neither revises a final decision
+nor bypasses a pending review. A substantive change to the choice or wording uses the
+existing revision operation. Maintenance adds evidence and leaves such context updates to
+ordinary authorized decision work; its catalog does not expose this update tool.
+
 ## Author a compact decision OKF record
 
-A decision records the choice and its reason. Supporting facts stay in the existing
-OKF records; link to them instead of maintaining a second copy.
+A decision records the choice and its reason, or the specific choice still being worked
+out. Supporting facts stay at their existing sources; link to them instead of maintaining
+a second copy.
 
-- **Title:** One very short, plain-language statement of the chosen action, for
-  example, "Use one shared customer directory".
-- **Body:** Usually 1–3 short sentences: why this choice, plus only the conditions
-  or scope needed to understand it. Do not restate the title or summarize each
-  source. Preserve uncertainty and proposed status.
-- **References:** A few verified links to the relevant evidence or affected OKF
-  records, using descriptive labels. Read the records before citing them. Keep
-  research, alternatives, detailed plans and implementation instructions in those
-  records. Do not add a mini-summary to every link.
-- **Provenance:** Use the existing structured decision fields for maker, date,
-  recorder, source and standing. Do not repeat those fields in the body or invent
-  missing provenance; an unknown decision date stays empty. Authoring text alone never
-  establishes approval.
+- **Title:** One very short, plain-language statement of the choice or open choice.
+  “Choose a supplier after sample approval” does not assert that a supplier was selected.
+- **Body:** Usually 1–3 short sentences: why the choice matters, its essential scope or
+  conditions, and what remains open. Preserve uncertainty and proposed status.
+- **References:** Verified links to the relevant evidence or affected records, using
+  descriptive labels. Keep research and detailed plans at their sources. The draft's
+  structured source contributions explain why each source matters.
+- **Provenance:** Use the existing structured decision fields for maker, date, recorder,
+  source and standing. Never invent missing provenance or treat authoring as approval.
 
 Example:
 
-> **Use one shared customer directory**
+> **Choose the supplier after sample approval**
 >
-> One directory avoids duplicate customer maintenance. Each team keeps its own
-> access permissions.
+> Supplier A is the current preference within the approved budget. The choice is waiting
+> for confirmation that the samples meet the documented acceptance requirements.
 >
-> References: Customer data policy, Access requirements (each a link to the
-> verified record).
+> Sources: supplier discussion, acceptance requirements, budget record.
 
 ### Optional basis
 
@@ -41,7 +121,8 @@ that later assessments judge:
   verified link.
 - **Set aside** (Verworfen): at most 3 alternatives actually considered and why not.
 
-State the choice actually reached; never turn it into a poll. Keep agreed facts apart
+State an agreement as reached only when the sources establish it. Preserve an open choice
+as open; never invent agreement or alternatives. Keep agreed facts apart
 from your suggestions, ask only for information that would change the choice or its
 follow-up, and never invent what a team originally believed. A follow-up plan is drafted
 with the decision when useful; see [decision-loops.md](decision-loops.md).

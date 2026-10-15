@@ -3,8 +3,8 @@
 Use this procedure when the person says “do the maintenance” or requests upkeep of
 filed knowledge. It is the Maintenance run, one of the two upkeep runs (ADR 0174): it
 considers everything a Workspace has filed, keeps the relations between existing records
-and their support current, proposes answers to open questions and records evidence for
-decisions. Many sources rightly change nothing. The Incoming run of the Knowlaborator
+and their support current, proposes answers to open questions, records decision evidence
+and prepares supported decision drafts. Many sources rightly change nothing. The Incoming run of the Knowlaborator
 plugin (its My Day skill) completes the items a person marked with this same protocol.
 One instruction authorizes the whole session. OrgApp coordinates, validates and stores
 work; reading and judging run in this external agent through MCP. Embeddings and decision
@@ -13,11 +13,11 @@ prerequisites and must not start merely because this procedure runs.
 
 For a scheduled or unattended run, install only the Knowlaborator Maintenance plugin
 (`knowlaborator-maintenance`). It carries this protocol on its own connection,
-`/mcp/maintenance`, which lists no authoring tool.
+`/mcp/maintenance`, whose only knowledge creation operation is a decision draft.
 
 ## What maintenance writes
 
-Maintenance keeps sources and relations; people write knowledge (ADR 0183). It may:
+Maintenance keeps sources and relations and may prepare decision drafts (ADRs 0183 and 0199). It may:
 
 - add, end and replace typed relations between existing records (`change_relations`),
   each citing its source;
@@ -31,16 +31,17 @@ Maintenance keeps sources and relations; people write knowledge (ADR 0183). It m
 - keep CRM contacts and accounts, the rows of Datasets that declare key fields and the
   descriptions of undescribed Documents current from what its sources state (step 5);
 - propose answers to open questions and record evidence for decisions (step 6);
-- report a decision or question a source shows to the member who judges it (step 6);
+- prepare a decision draft across contributing sources, preserving discussion and waiting
+  dependencies; report questions to the member who judges them (step 6);
 - propose a concept type, which an organization administrator accepts; a relation under a
   name on no list becomes a cited pair, from which administrators create relation types.
 
-It never creates a knowledge record (a concept, note, question or person file), never
-changes a record's text or fields, never writes prose into CRM records or Dataset rows,
-and never confirms a decision or opens a question.
-OrgApp refuses any other change. When a source holds something a record should say, or a
-record or type is missing, create nothing: name it, without quoting the source, in the
-completion reason and in your report, so a person can add it.
+Apart from the dedicated decision draft, it never creates a knowledge record (a concept,
+note, question or person file), never rewrites existing knowledge text, never writes prose
+into CRM records or Dataset rows, and never confirms a decision or opens a question.
+OrgApp refuses any other change. When other knowledge text or a type is missing, create
+nothing: name the need, without quoting the source, in the page review assessment and in
+your report, so a person can add it.
 
 ## Procedure
 
@@ -82,7 +83,9 @@ completion reason and in your report, so a person can add it.
    changes or review proposals; do not leave decisions only in chat memory. If a passage
    needs more context, obtain it before acknowledging.
    After processing each page, call `checkpoint_maintenance_work` with `stage: source`,
-   its page hash, current progress version and a new non-empty operation UUID (reuse the
+   its page hash, current progress version, and `review`: an `outcome` of `changes` with saved
+   `proposalIds`, `no_change` with an empty list, or `blocked` with an empty list; always give a
+   concise substantive `reason`. Include a new non-empty operation UUID (reuse the
    exact UUID only for an identical retry; never append labels to a work ID). The response
    contains `work` with saved progress and the next unacknowledged `nextSourcePage`.
    Process that returned page directly instead of calling `get_maintenance_changes` again.
@@ -168,7 +171,7 @@ completion reason and in your report, so a person can add it.
      source dated after the record's last change: an email by when it was sent, an
      attachment by its email; filed messages and notes have no date and only fill empty
      fields. When the record changed later, leave the value and name it in the
-     completion reason.
+     page review assessment.
    - **Document descriptions.** `describe_document` gives a Document without a
      description one line, at most 500 characters, naming what it is (kind, parties,
      date, subject), not what it says, with the Document's `expectedVersion`. A
@@ -191,36 +194,90 @@ completion reason and in your report, so a person can add it.
      missing field, a speculative risk or an interesting unknown is no reason.
    - A decision takes evidence through `record_decision_evidence` with its exact
      `revisionId`. Its standing decides the kind; parameters of the other kind are refused.
+     Read `list_decision_sources` for the exact revision and follow every `nextCursor`;
+     each page has 1–50 entries. The active-decision preview does not show every source.
    - A proposed decision revision: one exact `source`, when it happened (`occurredAt`)
-     and a neutral `note` of at most 200 characters, without a level.
+     and a neutral `note` of at most 200 characters, without a level. At most 200 pending
+     source entries may accumulate; a further new source is refused without writing. Do not
+     drop relevant evidence merely to get under the limit; report the blocked attachment.
    - An in-force decision: read `get_decision_assessments`, then record an assessment
      with labels only, its clause impacts and the assessment version. Weigh correlated
      reports together; a private source makes a private draft only you see.
-   - An organization decision a source shows that no record holds: submit a
-     `report_decision` change with the decision in one line, the decider and date the
-     source names (`deciderMembershipId` when you know the member) and `stillOpen` while
-     the source shows it undecided. A decision of an outside party, such as a bank
-     approving a loan, is evidence on the related decision or a relation, not a report. A
-     lesson that applies beyond one decision is named in the completion reason.
-   - A report cites the passage and goes to the member who judges it, who confirms or
-     discards it; nothing is recorded until they do. Cite the passage that shows the
-     decision or question first: it becomes the report's quote and key. Passages that only
-     give context, such as a request for feedback on several points, come after it. Check
-     the connected decisions and questions first: when one matches, add evidence instead.
-     OrgApp keys each reported passage and refuses it again with `KNOWLEDGE_REPORT_OPEN`,
+   - **Decisions from any relevant data.** Read the contributing Documents, mail, messages,
+     notes, meeting records, Dataset records or other authorized sources. Search for the
+     concrete choice and read matching decisions first; use the existing decision and add
+     evidence when it matches. Source count alone never justifies a new record.
+   - **Five situations.** Use `situation` to distinguish:
+     - `needed`: a concrete unrecognized choice and why work depends on it. A real
+       consequence or dependency is required; missing details or speculative risks are not.
+     - `discussing`: the options people discussed, any emerging preference and what remains
+       unresolved. Do not invent an agreement or alternatives.
+     - `waiting`: the choice depends on confirmation, information, an event or a person.
+       State that dependency in required `waitingFor`. Waiting is legitimate, not a demand
+       to finalize; these drafts get no automatic decide-or-discard reminder.
+     - `agreed`: the sources establish an agreement that needs a coherent written account.
+       Preserve scope and conditions; distinguish participants' words from your synthesis.
+     - `documented`: a source already clearly records the decision. Use that source and
+       create nothing unless a separate record adds concrete coordination or follow-up.
+       Name that value in `coordinationPurpose`; without it, record a no-change page
+       assessment instead of submitting a draft.
+   - **Prepare a draft.** Submit a `create_decision_draft` change through
+     `submit_maintenance_change`, then apply the preview. Use its `decisionDraft` payload
+     with a short `title`, `bodyMarkdown`, `situation`, `reason` (why writing this down helps),
+     `options`, `emergingPreference`, `unresolved`, `waitingFor` and `coordinationPurpose`
+     as applicable.
+     Unknown facts stay unknown. Name an owner or a person providing confirmation only
+     when the evidence establishes them. A decision by an outside party, such as a bank
+     approving a loan, is normally evidence for the organization's choice or a relation.
+   - **Keep every contributor.** Cite contributing filed Knowledge and Document passages
+     in the proposal's `claims`, with exact revisions, quotes and coordinates; include the
+     maintained source. Each claim states what its evidence contributes. For other relevant
+     data, or additional exact references, use `decisionDraft.sources`: each entry gives its
+     typed `source`, `contribution` (at most 200 characters) and factual `occurredAt` from the
+     source or its exact revision. Supported kinds include Dataset records, messages, tasks,
+     projects, calls, mail and calendar events as well as Knowledge and Documents. Read each
+     source first; unknown occurrence times are not a reason to invent a decision date.
+     The adapter combines these with every distinct source from the claims, preserving up
+     to 200 exact source references in proposal evidence. The existing claim bounds stay:
+     50 claims, 100 citations total, 20 citations per claim. Exact passage quotes remain in
+     the claims. Exclude unrelated reading; copied statements are not independent evidence.
+     Sources must be shareable in the destination; private material stays in an authorized
+     personal Workspace. Do not bypass filing or access boundaries to put private
+     correspondence into a shared draft.
+   - Pass `existingDecisionId` when reusing a matching decision. The server also guards
+     exact titles within the Workspace; it does not compare meaning, so semantic matching
+     remains your job. Reuse leaves the existing record unchanged and attaches none of the
+     submitted sources, including when the maintenance proposal becomes applied. Read
+     the result's current revision and standing, and page through `list_decision_sources`.
+     For a proposed decision, preserve every additional material source separately with
+     `record_decision_evidence`, its exact source, factual occurrence time and neutral
+     contribution note. For an in-force decision, follow the assessment path above when
+     the new material warrants it; otherwise cite the existing decision and sources.
+     Verify the evidence writes before reporting sources preserved. Report failed or
+     refused attachments in the page assessment and run report; applying a reused draft
+     alone does not save new evidence. Every new draft is proposed,
+     even if its situation is agreed or documented. It records no final maker/date or human
+     approval. An existing decision's substantive revision is outside maintenance.
+   - New decision reports are no longer submitted. Existing reports and their pending
+     proposals remain readable and resolvable through the normal legacy workflow.
+   - **Question reports.** A report goes to the member who judges it, who confirms or
+     discards it; no question is created until they do. Cite the passage that shows the
+     question first: it becomes the report's quote and key. Context passages come after it.
+     When a connected question matches, add evidence instead. OrgApp keys each reported
+     passage and refuses it again with `KNOWLEDGE_REPORT_OPEN`,
      `KNOWLEDGE_REPORT_DISMISSED` or `KNOWLEDGE_REPORT_CONFIRMED`, whose `resultKnowledgeId`
      names the record to add evidence to. Report nothing more about such a passage; never
      search history to avoid repeats. A report refused this way when applied ends
      `refused` and needs nothing more. A refusal naming `existingProposalId` means another
-     report of this source, not applied yet, starts with the same passage: when this report
-     shows something else, submit it again with its own passage first.
-   Nothing here edits a decision or a question. An open question record is a target,
-   never a source; a resolved question is an ordinary source because its accepted answer
-   may support records.
+     unapplied report starts with the same passage: only when this report shows something
+     else, submit it again with its own passage first.
+   An open question record is a target, never a source; a resolved question is an ordinary
+   source because its accepted answer may support records.
 7. Apply only previews in proposed state through apply_maintenance_change, in this same
    session. `add_support` and reports apply wherever maintenance runs, also in
-   Proposals-only mode; there the other changes, including CRM, Dataset and Document
-   changes, wait for a person. Claims depending on other assertions name
+   Proposals-only mode; there the other changes, including decision drafts, CRM, Dataset
+   and Document changes, wait for a person. Never call the shared draft tool directly to
+   bypass a maintenance policy or proposal review. Claims depending on other assertions name
    premiseClaimIds. Inferred relation changes always need review unless a future explicit
    approved-rule policy says otherwise. A ruleId is never an agent-created authorization.
 8. needs_review is the shared Knowledge → Maintenance review queue. Maintenance never
@@ -247,15 +304,22 @@ completion reason and in your report, so a person can add it.
    `list_maintenance_reviews` (pageSize 1–50, default 25) / `get_maintenance_review`;
    use refreshed versions and avoid duplicates. Source and context progress survives agent restart. Apply
    candidates are revalidated when adopted under a new lease.
-   `complete_maintenance_work` requires both coverage passes, then: completed, no_change, failed or
-   unsupported, with a short reason that names, without quoting the source, what a person
-   should add or correct. Completing means the source was considered for relations,
-   support, questions and decisions, and for the CRM records, Dataset rows and Document
-   descriptions it states. Pending reviews are not accepted knowledge. Continue
+   Each source/context checkpoint includes `review`: `outcome` (`changes`, `no_change`, or
+   `blocked`), a short substantive `reason`, and `proposalIds` linking saved findings for
+   `changes` (empty for the other outcomes). Save findings before checkpointing. A blocked
+   assessment keeps the page uncovered and releases the lease for retry. Reading or claiming
+   work never means it was reviewed. The app derives settlement after both coverage passes
+   and all saved results settle; there is no separate completion call. Pending proposals
+   keep work open; human review proposals and open decision/question reports show that a
+   human decision is still needed. An applied decision draft is a settled processing result,
+   including a legitimate waiting draft: finishing the source does not finalize the choice.
+   Resolving the final result updates completion automatically. Consider relations, support, questions, decisions, CRM records, Dataset rows and Document
+   descriptions. Pending reviews are not accepted knowledge. Continue
    small batches and affected sources within the session budget; release unused leases.
    Report support and contradiction marks added, relations changed, CRM records, Dataset
    rows and descriptions written, values left because the record changed later, proposed answers,
-   decision evidence, the needs you named for people, review links, failures, waiting
+   decision evidence and drafts with their situations, decisions reused or left in their
+   documented source, the needs you named for people, review links, failures, waiting
    items and incomplete coverage. Report the separate routine and backfill counts,
    completed sources, remaining work IDs/cutoff and saved progress.
    “Routine caught up” can coexist with an untouched historical backlog. “No change” is valid.

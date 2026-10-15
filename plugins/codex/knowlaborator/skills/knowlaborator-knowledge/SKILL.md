@@ -19,13 +19,14 @@ conversation language.
 
 - Knowledge maintenance (“do the maintenance”): use [maintenance.md](references/maintenance.md)
   for the complete incremental filed source → changed passages → relations, support of
-  existing records, questions and decisions workflow. Maintenance creates and rewrites no
-  record. Routine maintenance excludes historical backfill unless expressly requested.
+  existing records, questions and decision drafts workflow. Maintenance may create a
+  supported decision draft; other knowledge authoring stays with a person. Routine
+  maintenance excludes historical backfill unless expressly requested.
   During this procedure the source-choice branches below do not start other workflows; use
   only the maintenance protocol and the owning source/read tools. Incoming items are the
   Incoming run of [My Day](../knowlaborator-my-day/SKILL.md). A scheduled or unattended
   run uses the Knowlaborator Maintenance plugin (`knowlaborator-maintenance`), which carries
-  the same protocol without authoring tools.
+  the same protocol with only the narrow decision-draft authoring operation.
 - Maintenance review the person decides in chat: after their explicit choice for one exact
   proposal, call `resolve_maintenance_review` with confirmed=true and that version. No
   browser confirmation is needed. Only this plugin offers the tool; the maintenance plugin
@@ -52,6 +53,10 @@ conversation language.
 - Questions: read [questions.md](references/questions.md) for tracking criteria,
   answers, checks and “Still needed?”. Apply its tracking criteria before creating
   questions; zero new questions is a successful outcome.
+- Decision drafts from any relevant sources: read
+  [decisions-and-reviews.md](references/decisions-and-reviews.md). Distinguish a needed,
+  discussing, waiting, agreed or already documented choice; search for an existing decision
+  and create no duplicate merely because a source has no dedicated decision record.
 - Decision evidence, assessments and follow-up plans: read
   [decision-loops.md](references/decision-loops.md).
 

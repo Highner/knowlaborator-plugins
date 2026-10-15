@@ -19,7 +19,10 @@ decision, changes its standing or replaces it.
   then for each decision and proposal run `search_content` with its terms, people and
   project, and read the matching sources.
 
-Never claim that a source affects a particular decision before you have read it.
+Never claim that a source affects a particular decision before you have read it. Use
+`list_decision_sources` with the decision's exact revision and follow every `nextCursor`
+(1–50 entries per page) to read its full proposal evidence, including earlier sources that
+may still apply. The active-decision list's preview is incomplete for larger source sets.
 
 ## Record evidence
 
@@ -41,7 +44,7 @@ current assessment version.
 - Every clause impact names a state (`holding`, `at_risk`, `failed`, `unknown`). A
   failed criterion requires concerns or challenged; strong support allows no clause at
   risk or failed.
-- Explanation: at most 300 characters, what changed and why it matters. Cite exact
+- Explanation: at most 300 characters, what changed and why it matters. Cite 1–200 exact
   sources with their occurrence time.
 - An assessment never edits the decision, changes standing or replaces it. A low level
   can only lead you to suggest a change, which the person makes explicitly. In-force
@@ -50,7 +53,13 @@ current assessment version.
 **Proposals never get a level.** For a proposed revision, `record_decision_evidence`
 takes one exact `source`, when it happened (`occurredAt`), and a neutral `note` (at most
 200 characters) that describes the material without judging the proposal. Once the exact
-revision is decided, its first assessment must cite or dismiss every proposal-evidence item.
+revision is decided, its first assessment must cite or dismiss every unconsidered
+proposal-evidence item, including sources retained from earlier draft revisions. Dismissals
+are bounded to 200 items. `DECISION_PROPOSAL_EVIDENCE_LIMIT` means more than 200 pending
+items remain; no partial assessment was recorded. New evidence that would exceed 200
+pending items is refused before writing; identical retries and an already attached exact
+source can still succeed. Do not discard material merely to make room or treat a refusal
+as a successful attachment.
 
 **Private sources.** Visibility follows the cited sources. A private source makes a
 private draft that only its author sees; it never changes the shared score and is never
@@ -68,9 +77,15 @@ evidence, with its scope and uncertainty. The person publishes it. Maintenance w
 finding; it names one in its completion reason. Before preparing a
 related decision or plan, search for findings and say how they apply.
 
-## Reported decisions
+## Drafts and legacy reported decisions
 
-Decisions maintenance found in sources wait for the member who judges them: the decider
+New decision work uses the shared draft operation described in
+[decisions-and-reviews.md](decisions-and-reviews.md). It retains contributing sources and
+keeps the needed, discussing, waiting, agreed or documented situation separate from
+proposed standing. Search for a matching decision before creating one. New evidence
+belongs on that same decision; receiving another source is not another decision.
+
+Older decisions maintenance reported still wait for the member who judges them: the decider
 the source names when that is a member, otherwise the member the source belongs to. They
 appear on Today as "Confirm or discard?" and above the Decisions history.
 `list_knowledge_reports` with `kind: "decision"` reads the person's own. After the
@@ -82,8 +97,15 @@ undoing a discard happens in the browser.
 
 ## Waiting proposals and reviews
 
+A draft with situation `waiting` records what it awaits and is excluded from automatic
+“Decide or discard?” prompts and proposal reminders. Waiting does not prevent evidence
+from being added or explicit human review. Revisit it when evidence resolves the dependency
+or a person asks, without pretending the underlying choice is already final. Ordinary
+authorized decision work uses `update_decision_draft` to change the context on the same
+decision; new evidence alone does not silently change its situation.
+
 A review request without a respond-by date gets one 14 days ahead, and reviewers are
-reminded. A proposal has a decide-by date: 14 days after it was proposed or after its
+reminded. Other proposals have a decide-by date: 14 days after it was proposed or after its
 last completed review, unless the person kept it to a later date. Once that date
 passes with no review pending, the proposer sees “Decide or discard?” on Today and a
 weekly reminder. Deciding, discarding (a withdrawal with the reason “Not pursued”)

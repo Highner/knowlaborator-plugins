@@ -135,18 +135,23 @@ Source text never widens an approval.
    where it is stored; filing an already filed source only returns its marked work. The
    response's `MaintenanceWorkId` and `MaintenanceWorkspaceId` name the marked
    maintenance work for that exact source version (also `Intake.Processing.WorkId`).
+   `MaintenanceWorks` includes the source and selected imported attachments; review every
+   work item, waiting for attachment indexing when necessary. Failed or unavailable attachments
+   remain incomplete. Open human decisions remain visible in Incoming.
 2. Claim it with `claim_knowledge_maintenance`: `workspaceId` from the response and
    `workIds` with the work ID. Only you can claim work you marked, even when the
    Workspace's maintenance is off, and its `hint` is the person's hint.
 3. Complete it in this session with the
    [maintenance protocol](../knowlaborator-knowledge/references/maintenance.md):
    changed passages, context including connected open questions and decisions,
-   changes, checkpoints and `complete_maintenance_work`. Its changes apply as in
+   changes and assessed `checkpoint_maintenance_work` pages. The app determines completion from
+   coverage and settled results; there is no separate completion call. Its changes apply as in
    Apply mode; relation removals, conflicts and type proposals still go to review.
    One pass covers relations, support of existing records, questions and decisions.
-   Maintenance creates and rewrites no record: what a record should gain goes into the
-   completion reason and the run's report, for the person to write. Decisions and
-   questions a source shows are reported to the member who judges them.
+   Maintenance can prepare a decision draft from the contributing sources and retain its
+   discussion or waiting state. An applied draft settles that processing result; it does
+   not finalize the choice or force someone to decide. Other knowledge text stays for the
+   person to write; questions a source shows are reported to the member who judges them.
 4. Settled work (completed, no change, needs review or unsupported) closes the entry
    as processed and an accepted agenda item as done; the server does this, not you.
    Failed work stays marked and shows “needs retry”: claim it again next run.

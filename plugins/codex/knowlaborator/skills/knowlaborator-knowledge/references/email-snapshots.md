@@ -34,4 +34,5 @@ A saved email is an ordinary maintenance source. Maintenance keeps the relations
 support of the records it bears on, marks a record it contradicts, proposes answers to
 the open questions and records evidence for the decisions connected to it, following
 [maintenance.md](maintenance.md); it never accepts an answer, opens a question or records
-a decision on its own.
+a final decision on its own. Supported decision drafts may consolidate evidence across
+sources while retaining an explicit discussion or waiting state.
