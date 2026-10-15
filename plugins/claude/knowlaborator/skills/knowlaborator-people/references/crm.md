@@ -1,6 +1,6 @@
 # Change CRM records
 
-Treat an account as a shared CRM relationship record, never a login account or tenant
+Treat an account as a durable shared company identity, never a login account or tenant
 organization. Search with `search_crm` before creating. A contact whose email address an
 active contact you can read already has is refused with `CRM_CONTACT_EMAIL_EXISTS` and
 that contact's `existingContactId`: update or restore it instead. Preserve exact record IDs and
@@ -67,3 +67,18 @@ archived first. Load the current revision, explain the effect, and obtain curren
 confirmation. Confirm the exact association before `unlink_crm_resource` or removing a
 personal mail locator. Report the returned record and revision or the exact association
 removed.
+
+## Roles from dated relationships
+
+Companies have no fixed classification. Use `list_crm_account_roles` for current, ended
+and upcoming roles, with counterparties and inclusive periods. It also reads relationships
+on authorized current knowledge profiles whose `about` names the company. Keep substantive
+profiles; do not create a `Lieferant` profile merely to assign a role. Tags are broad search
+labels and descriptions context, never an alternative role field.
+
+Use existing typed relation operations and exact source evidence to add a role or end its
+period. Do not infer dates or migrate old categories into relationships. An announced
+service end does not settle disputed fees or an earlier proposed termination date. Keep
+that unresolved choice waiting with its confirmation dependency. Archive a redundant
+decision only under the user's lifecycle authorization, after verifying the relationship
+and source links retain the fact.

@@ -162,9 +162,17 @@ your report, so a person can add it.
      account's name in the passage and no account with that name or website. Updates
      (`update_crm_contact`, `update_crm_account`) carry the record's `expectedRevision`
      and set only typed values: a contact's job title, phone number or account, an
-     account's relationship type, or its website while it is empty. Names and email
+     account's website while it is empty. Names and email
      addresses identify records and never change. A source in a personal Workspace
      writes only that Workspace's records.
+     Company roles come from dated typed relationships. Read `list_crm_account_roles`,
+     including roles on readable profiles linked by `about`; reuse the exact company.
+     No fixed Prospect/Customer/Partner/Supplier/Other field remains. Tags and descriptions
+     are context, never role evidence. Keep former and future periods; unknown dates stay
+     unknown. Cite the source when adding or ending a relation. An announced end and a
+     proposed settlement date are separate facts: keep the settlement waiting until accepted.
+     A relationship ending already recorded there needs no duplicate decision unless that
+     record adds distinct coordination or follow-up.
    - **Dataset rows.** Only Datasets of the Workspace that declare key fields take rows.
      `create_dataset_record` names a value for every key field; `update_dataset_record`
      names only the fields it changes, never a key field or long text, with

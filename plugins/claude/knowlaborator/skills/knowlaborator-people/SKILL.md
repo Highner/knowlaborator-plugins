@@ -10,7 +10,7 @@ installed.
 
 ## Contacts & accounts (CRM, module `crm`)
 
-An account is a CRM relationship, not a login or tenant. Use `search_crm` (kind
+An account is a durable company identity, not a login or tenant. Read `list_crm_account_roles` for its dated relationships; fixed company classifications are retired. Use `search_crm` (kind
 `account` or `contact`) for discovery, `get_crm_account` and `get_crm_contact` for exact
 reads, and `list_crm_interactions`, `get_crm_interaction` and `list_crm_resources`
 within an authorized record. Preserve revisions, archived state and redacted
