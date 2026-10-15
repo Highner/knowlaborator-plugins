@@ -61,7 +61,12 @@ pending items is refused before writing; identical retries and an already attach
 source can still succeed. Do not discard material merely to make room or treat a refusal
 as a successful attachment.
 
-**Private sources.** Visibility follows the cited sources. A private source makes a
+**Workspace sources.** Sources can come from any readable Workspace in the organization.
+References grant no access. Source labels and contribution notes follow each reader's current
+permissions; derived assessment results are withheld when their basis is protected. Old
+cross-Workspace proposal references use these checks in place, without attaching duplicates.
+
+**Private sources.** Live personal mail, direct messages, calls and external calendar sources make a
 private draft that only its author sees; it never changes the shared score and is never
 shared automatically. To share, file the material into the Workspace and cite the
 shared copy, or drop it; the person does this in the browser. Pass

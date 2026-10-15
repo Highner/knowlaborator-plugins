@@ -40,9 +40,11 @@ read, count copies as independent corroboration, or replace several contributors
 primary source. Sources are retained as proposal evidence for the created revision. Read them
 with `list_decision_sources` for the decision and exact revision, following `nextCursor`
 until it is empty (1–50 entries per page); the active-decision preview is not the complete
-source list. They must be
-shareable in the destination: private material stays in its authorized personal Workspace
-or is explicitly filed into an authorized shared destination first.
+source list. Workspace sources may come from any Workspace you can read in this organization.
+A reference never grants access: readers without source access see an unavailable reference,
+without its contribution note. Keep restricted source excerpts out of shared decision wording.
+Live personal mail, direct messages, calls and external calendar references still require an
+authorized personal draft or explicit filing through the existing publication flow.
 
 When a matching decision exists, pass `existingDecisionId` to reuse it. The operation also
 checks the title within the destination Workspace, but that is a deterministic guard,

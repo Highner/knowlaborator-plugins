@@ -54,7 +54,10 @@ your report, so a person can add it.
    versions. It does not discover or file incoming mail, messages or queued items;
    that is the Incoming run. Filed sources are reused, never copied for maintenance.
    A Document is an ordinary source and needs no knowledge card; Templates are not
-   sources. A private source needs an authorized shared destination before shared claims.
+   sources. Workspace references may cross Workspaces you can read; they never grant access.
+   Source notes and derived assessments follow each reader's permissions. Do not copy restricted
+   excerpts into shared decision wording. Live personal sources need an authorized shared
+   destination before shared claims.
 3. Routine work is the default. `claim_knowledge_maintenance` uses `queue: routine`
    and defaults to two sources; at most three may be leased by this caller across
    Workspaces. Historical review needs an explicit user request and `queue: backfill`.
@@ -202,7 +205,7 @@ your report, so a person can add it.
      drop relevant evidence merely to get under the limit; report the blocked attachment.
    - An in-force decision: read `get_decision_assessments`, then record an assessment
      with labels only, its clause impacts and the assessment version. Weigh correlated
-     reports together; a private source makes a private draft only you see.
+     reports together; a live personal source makes a private draft only you see. Workspace sources may cross readable Workspaces, with notes and derived results protected for each reader.
    - **Decisions from any relevant data.** Read the contributing Documents, mail, messages,
      notes, meeting records, Dataset records or other authorized sources. Search for the
      concrete choice and read matching decisions first; use the existing decision and add
@@ -241,9 +244,10 @@ your report, so a person can add it.
      to 200 exact source references in proposal evidence. The existing claim bounds stay:
      50 claims, 100 citations total, 20 citations per claim. Exact passage quotes remain in
      the claims. Exclude unrelated reading; copied statements are not independent evidence.
-     Sources must be shareable in the destination; private material stays in an authorized
-     personal Workspace. Do not bypass filing or access boundaries to put private
-     correspondence into a shared draft.
+     Workspace sources may cross readable Workspaces in this organization; references grant
+     no access. Their contribution notes follow each reader's source permissions. Keep restricted
+     excerpts out of shared draft wording. Live personal correspondence still requires an
+     authorized personal Workspace or explicit filing through its existing publication flow.
    - Pass `existingDecisionId` when reusing a matching decision. The server also guards
      exact titles within the Workspace; it does not compare meaning, so semantic matching
      remains your job. Reuse leaves the existing record unchanged and attaches none of the

@@ -46,7 +46,7 @@ happens in the browser.
 
 For a qualifying unresolved need, use `create_knowledge_question` with a stable
 operation UUID, the organization's primary OKF language, a responsible member (who is asked) and originating
-`relatedKnowledgeIds`. Set `askedBy` only when the person or the source names who
+`relatedKnowledgeIds` from any Workspace you can read in this organization. Links grant no access; related titles are filtered for each reader. Set `askedBy` only when the person or the source names who
 asked: `{ "kind": "member", "id": membershipId }` or `{ "kind": "contact", "id":
 contactId }` for a Contacts contact. Never infer an asker from who created a record.
 Without a `nextCheckDate` the first check is 30 days ahead.
