@@ -67,7 +67,7 @@ Read only the reference needed for the requested operation:
   exact-revision standing, direct recording, user-directed browser/MCP review, replacing and
   abandoning.
 - [questions.md](references/questions.md): independent question concepts, evidence,
-  dated checks, “Still needed?”, resolution and migration of embedded open questions.
+  dated checks, “Still needed?” and resolution.
 - [decision-loops.md](references/decision-loops.md): evidence, assessments, proposal
   evidence, findings, waiting proposals and follow-up plans.
 - [documents.md](references/documents.md): Documents, Templates, exact files and

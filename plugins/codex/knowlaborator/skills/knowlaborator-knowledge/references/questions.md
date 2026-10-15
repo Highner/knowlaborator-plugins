@@ -6,8 +6,8 @@ decision plan, assessment or score.
 
 ## Decide whether to track a question
 
-Apply these criteria within the person's authorized task, including filing, curation
-and migration. Maintenance creates no question: when a source shows a need that meets
+Apply these criteria within the person's authorized task, including filing and
+curation. Maintenance creates no question: when a source shows a need that meets
 them, it reports the question to the member who asked it, to the proposer of the pending
 decision it blocks, or else to the member the source belongs to
 ([maintenance.md](maintenance.md)).
@@ -116,17 +116,3 @@ question says which. The person answers in the browser: **Let go** dismisses it 
 the reason “No longer pursued” and can be reopened; **Keep asking** sets a new check
 date. Never let go of a question yourself because of its age, its empty checks or this
 prompt; nothing dismisses a question automatically.
-
-## Migrate existing embedded questions
-
-Use `list_question_migration`, not a keyword or heading search, to inventory every
-current accessible record. Read complete bodies and apply the tracking criteria
-above. Extract/reuse qualifying questions, replace their text with links, and call
-`record_question_migration_review` for the resulting exact revision. Keep other
-uncertainty as labeled context; do not invent questions to fill gaps.
-`extracted` requires all linked question IDs; `no_open_questions` requires a full
-semantic review that found no qualifying questions to extract; uneditable or
-ambiguous items stay `blocked` with a reason. Include archived records and non-English prose.
-Preserve immutable source snapshots and historical revisions. Restart the inventory
-after every pass: changed revisions become pending again. Use `includeReviewed: true` for a second complete audit. Never claim all deployed
-data is migrated while access is incomplete, records remain, or blockers exist.
