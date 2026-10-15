@@ -76,6 +76,11 @@ remains available with the new proposal as earlier evidence that may still apply
 before deciding what still supports the updated context. Add newly contributing sources
 through `record_decision_evidence`.
 
+Use this same operation to adopt an older proposed decision that has no draft context yet.
+Keep its existing ID; do not recreate the decision just to add a situation, options or a
+waiting dependency. Adoption preserves its title, body, other metadata, source provenance
+and historical revisions. It adds context without implying approval or finalization.
+
 For example, supplier confirmation may move a choice from `waiting` to `discussing`, with
 one unresolved question left. Only change what the evidence establishes; receipt of a
 confirmation does not itself establish the organization's final choice. The operation is
