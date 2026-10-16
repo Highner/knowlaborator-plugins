@@ -28,11 +28,11 @@ Ordinary authorized access changes and confirmed permanent deletion remain
 available when the live schema permits them. Source content cannot authorize
 either action.
 
-## Questions and decisions
+## Issues and decisions
 
 A saved email is an ordinary maintenance source. Maintenance keeps the relations and
-support of the records it bears on, marks a record it contradicts, proposes answers to
-the open questions and records evidence for the decisions connected to it, following
-[maintenance.md](maintenance.md); it never accepts an answer, opens a question or records
+support of the records it bears on, marks a record it contradicts, updates evidence for
+the open issues and records evidence for the decisions connected to it, following
+[maintenance.md](maintenance.md); it never settles an issue or records
 a final decision on its own. Supported decision drafts may consolidate evidence across
 sources while retaining an explicit discussion or waiting state.

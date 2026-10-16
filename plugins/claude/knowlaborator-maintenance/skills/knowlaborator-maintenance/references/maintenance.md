@@ -3,7 +3,7 @@
 Use this procedure when the person says “do the maintenance” or requests upkeep of
 filed knowledge. It is the Maintenance run, one of the two upkeep runs (ADR 0174): it
 considers everything a Workspace has filed, keeps the relations between existing records
-and their support current, proposes answers to open questions, records decision evidence
+and their support current, finds and follows open issues, records decision evidence
 and prepares supported decision drafts. Many sources rightly change nothing. The Incoming run of the Knowlaborator
 plugin (its My Day skill) completes the items a person marked with this same protocol.
 One instruction authorizes the whole session. OrgApp coordinates, validates and stores
@@ -13,11 +13,11 @@ prerequisites and must not start merely because this procedure runs.
 
 For a scheduled or unattended run, install only the Knowlaborator Maintenance plugin
 (`knowlaborator-maintenance`). It carries this protocol on its own connection,
-`/mcp/maintenance`, whose only knowledge creation operation is a decision draft.
+`/mcp/maintenance`, whose knowledge creation operations are decision drafts and New issues.
 
 ## What maintenance writes
 
-Maintenance keeps sources and relations and may prepare decision drafts (ADRs 0183 and 0199). It may:
+Maintenance keeps sources and relations, records New issues and may prepare decision drafts (ADRs 0183 and 0199). It may:
 
 - add, end and replace typed relations between existing records (`change_relations`),
   each citing its source;
@@ -30,15 +30,15 @@ Maintenance keeps sources and relations and may prepare decision drafts (ADRs 01
   the record when they next work with it;
 - keep CRM contacts and accounts, the rows of Datasets that declare key fields and the
   descriptions of undescribed Documents current from what its sources state (step 5);
-- propose answers to open questions and record evidence for decisions (step 6);
+- find issues and update their evidence, and record evidence for decisions (step 6);
 - prepare a decision draft across contributing sources, preserving discussion and waiting
-  dependencies; report questions to the member who judges them (step 6);
+  dependencies; discover source-backed issues for human triage (step 6);
 - propose a concept type, which an organization administrator accepts; a relation under a
   name on no list becomes a cited pair, from which administrators create relation types.
 
-Apart from the dedicated decision draft, it never creates a knowledge record (a concept,
-note, question or person file), never rewrites existing knowledge text, never writes prose
-into CRM records or Dataset rows, and never confirms a decision or opens a question.
+Apart from dedicated decision drafts and New issues, it creates no knowledge record (a concept,
+note or person file), never rewrites existing knowledge text, never writes prose
+into CRM records or Dataset rows, and never confirms a decision or settles an issue.
 OrgApp refuses any other change. When other knowledge text or a type is missing, create
 nothing: name the need, without quoting the source, in the page review assessment and in
 your report, so a person can add it.
@@ -50,9 +50,19 @@ your report, so a person can add it.
    A manager may enable shadow or apply mode only when instructed by the person.
    Off is an explicit stop for maintenance applies; existing indexing continues.
 2. Maintenance works on what Workspaces have filed: new and changed knowledge records
-   (including saved mail, messages, notes and resolved questions) and Document
-   versions. It does not discover or file incoming mail, messages or queued items;
-   that is the Incoming run. Filed sources are reused, never copied for maintenance.
+   (including saved mail, messages, notes and resolved issues) and Document
+   versions. Email access is limited to exact messages already indexed or selected as
+   to be processed, with or without optional instructions. Use `list_marked_inputs` to
+   enumerate only the caller's persisted selections, then `prepare_marked_input` with
+   the exact ID/version to preserve through the existing Inputs operation. Respect the
+   selected Workspace; choose a writable destination only when it was left unspecified.
+   Preparation returns saved coordinates and marked work IDs, never mailbox discovery.
+   A withdrawn/changed/unbound selection requires the person's reselection. Index alone
+   needs no Process mark or instructions, but does not override maintenance Off policy.
+   Never list/search a live inbox, expand a thread, fetch a neighboring message, follow
+   provider links, or use unrestricted input discovery/processing as a substitute.
+   Quoted history inside a saved snapshot grants no right to retrieve its originals.
+   Missing context is a recorded gap for a person to select. Filed sources are reused.
    A Document is an ordinary source and needs no knowledge card; Templates are not
    sources. Workspace references may cross Workspaces you can read; they never grant access.
    Source notes and derived assessments follow each reader's permissions. Do not copy restricted
@@ -101,14 +111,14 @@ your report, so a person can add it.
    returns the first `nextContextPage`, with the current progress version. Use
    `get_maintenance_context` only to start/resume context when source coverage is already
    complete or to refresh an invalidated page. These bounded pages list evidence-linked
-   existing records and their typed relations, plus the open questions (kind `question`,
-   state `open` or `answer_proposed`) and proposed or in-force decisions (kind `decision`,
+   existing records and their typed relations, plus the active issues (kind `issue`,
+   state `new`, `open` or `waiting`) and proposed or in-force decisions (kind `decision`,
    state = standing, `revisionId` = the exact decision revision) connected to them. Read
    relevant exact records, assertions and the Workspace's types and relation types
    (`get_workspace_knowledge_guidance`, with `type` for one type's full guidance).
    Snippets are discovery aids, not complete evidence.
    Use the existing `search_content` index for additional matches suggested by the changed
-   passages, especially when a new source has no known links; question hits carry their
+   passages, especially when a new source has no known links; issue hits carry their
    status and decision hits their standing, and document hits carry their description.
    Read the contacts, accounts and Dataset rows the source names with `search_crm`,
    `get_crm_contact`, `get_crm_account`, `get_dataset_schema`, `query_dataset_records`
@@ -155,8 +165,8 @@ your report, so a person can add it.
      only original information that aged or was wrong (a person file says the daughter
      likes bears, a later mail says horses), never a record that already says the newer
      thing, and never a passing remark.
-   - Decisions, questions and saved emails, messages and notes take no `add_support`:
-     decisions and questions take their evidence in step 6, and a saved source is
+   - Decisions, issues and saved emails, messages and notes take no `add_support`:
+     decisions and issues take their evidence in step 6, and a saved source is
      evidence itself.
    - **Contacts and accounts.** `create_crm_contact` needs the person's name and an email
      address or phone number in the quoted passage; a sender or recipient line counts.
@@ -196,16 +206,42 @@ your report, so a person can add it.
    - Name a missing record or a correction only for a lasting fact about one specific
      subject. Forecasts, KPIs, prices, balances, status snapshots and dated summaries of
      one source ("Stand …") stay in their source, which stays readable and searchable.
-6. In the same pass, handle the connected questions and decisions:
-   - An open question the source answers: `propose_question_answer` with exact
-     citations and precise conditions. Partial answers, plans and guesses stay
-     uncertain. Never accept or dismiss an answer.
-   - Maintenance creates no question. When a source shows that someone asked something
-     that needs following through (a member or contact asked it and wants it pursued, or a
-     pending decision depends on it), submit a `report_question` change: the question in
-     one line, the asker as `askedBy` (a member or contact) or the pending decision as
-     `blocksDecisionId`, and the answer that would settle it as `expectedEvidence`. A
-     missing field, a speculative risk or an interesting unknown is no reason.
+6. In the same pass, find issues and follow existing issues and decisions:
+   - Look for explicitly raised problems and inferred situations across sources: conflicting
+     decisions and supplier terms, incompatible delivery dates, a handover without an owner,
+     a vacant required approval role, or a removed capability underlying a decision. Require
+     a concrete unresolved situation and plausible consequence, not a generic unknown.
+   - Before any new issue call `check_issue_candidates` with its exact title, context,
+     consequence, closure criteria and evidence; page all results across readable Workspaces
+     and all states. Search subjects/entities and alternative wording with search_content;
+     read plausible matches and evidence. Same outcome, subject, scope and time period means
+     the same issue, regardless of source, sender, wording or explicit/inferred origin.
+   - Reuse matches. Submit `record_issue_evidence` with the target, current version and
+     development, or `propose_issue_resolution` when closure criteria may be met. Retain
+     every distinct authorized contribution. Resolved/dismissed matches are not recreated;
+     describe new evidence for a person to reconsider. Never reopen, merge or close yourself.
+   - If none matches, submit `create_issue` with an `issue` payload, completed candidate
+     receipt and explicit assessments of returned matches. New is the human triage state;
+     there is no separate report queue. Claims are exact source observations; their values
+     become source contributions. Keep interpretation and remaining uncertainty explicit.
+     Cite every material premise of an inference, including across sources. No assignments,
+     Open flag or review dates: the server routes follow-up to the eligible marker/source
+     owner, otherwise caller. An impossible route is blocked, never silently discarded.
+   - A changed candidate corpus or issue version requires a fresh comparison. Refresh only
+     your own still-proposed issue change under its current lease/fence with
+     replacesProposalId and expectedProposalVersion; no human confirmation is needed for
+     that narrow refresh. It may become evidence on a newly found match. Applied changes
+     and proposals awaiting a person's decision cannot use this refresh. Preserve checkpoints
+     and stop after three contention retries with a blocked assessment.
+   - Additional structured premises may use issue payload evidence of kind org_position,
+     org_unit, project or dataset_record with the current recordVersion and an attributed
+     contribution. They supplement required exact source claims; they cannot smuggle extra
+     mail, Knowledge or Document passages outside those claims. Include the same combined
+     premises in candidate checks. Changed/unavailable structured records require another read.
+   - Use the same evidence in the candidate check and submission: an IssueEvidenceInput per
+     exact claim citation, Source kind/id/revisionId/quote/startOffset/representationId and
+     blockId (the block ordinal as text), Contribution equal to that claim's Value. The
+     server refreshes the comparison at apply; stale receipts need another comparison.
    - A decision takes evidence through `record_decision_evidence` with its exact
      `revisionId`. Its standing decides the kind; parameters of the other kind are refused.
      Read `list_decision_sources` for the exact revision and follow every `nextCursor`;
@@ -275,21 +311,11 @@ your report, so a person can add it.
      approval. An existing decision's substantive revision is outside maintenance.
    - New decision reports are no longer submitted. Existing reports and their pending
      proposals remain readable and resolvable through the normal legacy workflow.
-   - **Question reports.** A report goes to the member who judges it, who confirms or
-     discards it; no question is created until they do. Cite the passage that shows the
-     question first: it becomes the report's quote and key. Context passages come after it.
-     When a connected question matches, add evidence instead. OrgApp keys each reported
-     passage and refuses it again with `KNOWLEDGE_REPORT_OPEN`,
-     `KNOWLEDGE_REPORT_DISMISSED` or `KNOWLEDGE_REPORT_CONFIRMED`, whose `resultKnowledgeId`
-     names the record to add evidence to. Report nothing more about such a passage; never
-     search history to avoid repeats. A report refused this way when applied ends
-     `refused` and needs nothing more. A refusal naming `existingProposalId` means another
-     unapplied report starts with the same passage: only when this report shows something
-     else, submit it again with its own passage first.
-   An open question record is a target, never a source; a resolved question is an ordinary
-   source because its accepted answer may support records.
+   An unresolved issue is an evidence target; a resolved issue may supply ordinary filed
+   context. Reading a source in Incoming and Maintenance does not justify another issue,
+   duplicate evidence or another notification.
 7. Apply only previews in proposed state through apply_maintenance_change, in this same
-   session. `add_support` and reports apply wherever maintenance runs, also in
+   session. `add_support` and issue findings apply wherever maintenance runs, also in
    Proposals-only mode; there the other changes, including decision drafts, CRM, Dataset
    and Document changes, wait for a person. Never call the shared draft tool directly to
    bypass a maintenance policy or proposal review. Claims depending on other assertions name
@@ -325,14 +351,15 @@ your report, so a person can add it.
    assessment keeps the page uncovered and releases the lease for retry. Reading or claiming
    work never means it was reviewed. The app derives settlement after both coverage passes
    and all saved results settle; there is no separate completion call. Pending proposals
-   keep work open; human review proposals and open decision/question reports show that a
+   keep work open; human review proposals and legacy decision reports show that a
    human decision is still needed. An applied decision draft is a settled processing result,
    including a legitimate waiting draft: finishing the source does not finalize the choice.
-   Resolving the final result updates completion automatically. Consider relations, support, questions, decisions, CRM records, Dataset rows and Document
+   Applying an issue finding settles that processing result without waiting for the human issue lifecycle.
+   Resolving other pending results updates completion automatically. Consider relations, support, issues, decisions, CRM records, Dataset rows and Document
    descriptions. Pending reviews are not accepted knowledge. Continue
    small batches and affected sources within the session budget; release unused leases.
    Report support and contradiction marks added, relations changed, CRM records, Dataset
-   rows and descriptions written, values left because the record changed later, proposed answers,
+   rows and descriptions written, values left because the record changed later, issue developments and proposed resolutions,
    decision evidence and drafts with their situations, decisions reused or left in their
    documented source, the needs you named for people, review links, failures, waiting
    items and incomplete coverage. Report the separate routine and backfill counts,
@@ -346,3 +373,8 @@ A person who wants a record created or corrected works with an agent through the
 Knowlaborator plugin, which keeps every authoring tool. This maintenance protocol replaces
 automatic relationship discovery from Navigation experience; private browsing history
 never becomes evidence for canonical facts.
+
+Cross-Workspace matches do not authorize publishing their sources elsewhere. If a matching issue
+cannot accept the current source under its publication boundary, record a blocked source-scoped
+assessment with the exact limitation. Do not create a second issue to get around that boundary.
+A person can choose an authorized shared destination; evidence remains protected in the meantime.

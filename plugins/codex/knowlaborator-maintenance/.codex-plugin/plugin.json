@@ -18,7 +18,7 @@
     ],
     "developerName": "Appligator",
     "displayName": "Knowlaborator Maintenance",
-    "longDescription": "The maintenance protocol on its own connection: relations, support and contradiction marks with citations, proposed answers and decision evidence, and no tool that writes knowledge.",
+    "longDescription": "The maintenance protocol on its own connection: relations, support and contradiction marks with citations, issue discovery and evidence across selected or indexed sources, plus decision drafts and evidence.",
     "shortDescription": "Run Knowlaborator knowledge maintenance, also unattended.",
     "websiteURL": "https://orgapp-production-1b56.up.railway.app/plugin/support"
   },
@@ -32,5 +32,5 @@
   "name": "knowlaborator-maintenance",
   "repository": "https://github.com/Highner/knowlaborator-plugins",
   "skills": "./skills/",
-  "version": "5.11.1"
+  "version": "6.0.0"
 }

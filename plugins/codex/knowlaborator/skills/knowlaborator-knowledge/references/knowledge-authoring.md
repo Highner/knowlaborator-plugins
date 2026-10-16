@@ -143,8 +143,8 @@ or modify the user's project to run it.
    compact read does not mean the record has none.
 3. Preserve authorized provenance, claim-level citations, unknown OKF fields,
    producer extensions, and unrelated content. Label estimates, hypotheses, and
-   uncertainty honestly. Apply the tracking criteria in [questions.md](questions.md)
-   before creating or reusing a `question` record and replacing its embedded text
+   uncertainty honestly. Apply the tracking criteria in [issues.md](issues.md)
+   before creating or reusing a `issue` record and replacing its embedded text
    with a link. Keep other uncertainty as labeled context. Do not use decision plans
    for this. New knowledge is `active` by default. Use `draft`
    only when the user explicitly asks to store it as a draft; do not use draft

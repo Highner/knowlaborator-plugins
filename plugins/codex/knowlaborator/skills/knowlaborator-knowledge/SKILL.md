@@ -19,7 +19,7 @@ conversation language.
 
 - Knowledge maintenance (“do the maintenance”): use [maintenance.md](references/maintenance.md)
   for the complete incremental filed source → changed passages → relations, support of
-  existing records, questions and decision drafts workflow. Maintenance may create a
+  existing records, issues and decision drafts workflow. Maintenance may create a
   supported decision draft; other knowledge authoring stays with a person. Routine
   maintenance excludes historical backfill unless expressly requested.
   During this procedure the source-choice branches below do not start other workflows; use
@@ -50,9 +50,9 @@ conversation language.
   `update_knowledge`. Search only if the target is ambiguous; load guidance only if it
   could shape the change.
 - New concept: search concise candidates, load relevant Workspace guidance, then create.
-- Questions: read [questions.md](references/questions.md) for tracking criteria,
-  answers, checks and “Still needed?”. Apply its tracking criteria before creating
-  questions; zero new questions is a successful outcome.
+- Open issues: read [issues.md](references/issues.md) for discovery, duplicate checking,
+  evidence, assignment and the human lifecycle. Both runs can infer issues across sources;
+  update matching issues before creating New. Zero findings is a successful outcome.
 - Decision drafts from any relevant sources: read
   [decisions-and-reviews.md](references/decisions-and-reviews.md). Distinguish a needed,
   discussing, waiting, agreed or already documented choice; search for an existing decision
@@ -71,8 +71,8 @@ Read only the reference needed for the requested operation:
 - [decisions-and-reviews.md](references/decisions-and-reviews.md): decision records,
   exact-revision standing, direct recording, user-directed browser/MCP review, replacing and
   abandoning.
-- [questions.md](references/questions.md): independent question concepts, evidence,
-  dated checks, “Still needed?” and resolution.
+- [issues.md](references/issues.md): organizational issues, candidate checks, evidence,
+  assignment, review dates and resolution.
 - [decision-loops.md](references/decision-loops.md): evidence, assessments, proposal
   evidence, findings, waiting proposals and follow-up plans.
 - [documents.md](references/documents.md): Documents, Templates, exact files and

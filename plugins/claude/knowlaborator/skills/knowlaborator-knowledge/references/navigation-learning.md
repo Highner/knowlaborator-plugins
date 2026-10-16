@@ -6,7 +6,7 @@ off, the server lists neither learning tool (ADR 0195); then skip this procedure
 `navigationEpisodeId` argument. Skip the learning preflight for an exact known-record read
 or a trivial lookup. This
 procedure stores bounded internal operational experience; it does not authorize any
-Knowledge, Question, decision, Agenda, ToDo, mail or other domain mutation.
+Knowledge, Issue, decision, Agenda, ToDo, mail or other domain mutation.
 
 1. Bound an episode to one concrete purpose, not to a chat or a time window. Split unrelated
    questions into separate episodes; follow-ups pursuing the same purpose can continue it.

@@ -6,7 +6,7 @@ Otherwise choose by the information's role:
 | Information | Destination |
 | --- | --- |
 | Repeatable typed records | An existing Active Dataset with a matching schema |
-| Reusable concepts, claims, decisions, policies, hypotheses or open questions | OKF Knowledge |
+| Reusable concepts, claims, decisions, policies, hypotheses or open issues | OKF Knowledge |
 | Original bytes, layout, or a complete formatted artifact | An ordinary Document |
 | An example for producing later Documents | A Document Template, never the output itself |
 | Accounts, contacts and interactions | Contacts & accounts (CRM module) |
