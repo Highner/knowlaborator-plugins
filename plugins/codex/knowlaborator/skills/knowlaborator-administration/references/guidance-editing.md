@@ -3,7 +3,8 @@
 A Workspace's guidance profile holds only its description and general
 guidance. Concept types live on the organization's one type list, which only
 organization administrators change in the browser (Settings → Concept types).
-No tool can add, rename, map, assign or retire a type.
+No tool can add, rename, place, assign or retire a type; an administrator's
+agent can only propose changes for them to apply.
 
 ## Load the baseline
 
@@ -20,43 +21,13 @@ No tool can add, rename, map, assign or retire a type.
   relationships, lifecycle, organization, and reuse across the listed types.
   Refer to types by their listed names; do not define new ones here.
 
-## Propose a concept type
+## Concept types and relation types
 
-When the administrator asks for a new type, or a definition for a listed type
-that has none, draft it for them to enter in Settings → Concept types. Say
-that it is a draft until they save it there. First check the catalog and its
-aliases: if a listed type already covers the meaning, propose an alias or a
-sharper definition instead of a second type. Read a listed type's full guidance
-with `get_workspace_knowledge_guidance` and its `type`.
-
-For each proposed type:
-
-- Use a short, unique name in the organization's language and a
-  one-sentence `definition` with concrete `useWhen` and `doNotUseWhen`
-  boundaries. Agents classify by the definition, so make it decide edge cases.
-- Name the base kind: `person` or `organization` for people and parties
-  (say whether every record must link to a Contacts or Org Chart record),
-  `project`, `document` for cards about one Document, `event` for things
-  with a date, otherwise `other`. The base kind cannot change later.
-- Decide every optional field deliberately. Populate it when one stable rule
-  applies to nearly every concept of this type; otherwise leave it empty. Do
-  not add filler, repeat the definition, or encode a current organization
-  fact.
-
-## Relation types
-
-Relation types (how records of the listed types relate, such as Produkt
-`enthält` Rohstoff) are on the same list. Organization administrators maintain
-them in the browser only, in the Relation types section of Settings → Concept
-types; no tool creates, renames or retires one. `get_workspace_knowledge_guidance`
-returns the ones a Workspace can use.
-
-When asked, draft one for the administrator to enter there: a name read from
-source to target, an inverse name read back, a one-sentence definition with
-use-when text, the allowed source and target types (concept types, base kinds or
-any), cardinality `one` or `many`, symmetric or hierarchical if it applies, and
-which source types require it. Say that ends, cardinality and flags cannot change
-after creation. Guidance never asks agents to keep a reference at both ends.
+To design or extend the type list, or to place existing types in schema.org's
+hierarchy, follow [type-list-design.md](type-list-design.md): an organization
+administrator's agent submits one proposal, and the administrator applies it in
+Settings. Read a listed type's full guidance with
+`get_workspace_knowledge_guidance` and its `type`.
 
 Promoting existing links or ID fields into a relation type, and marking a field
 superseded on a type, are done by organization administrators in the browser
@@ -67,12 +38,16 @@ recommended frontmatter.
 
 ## Protect the durable-form boundary
 
-Guidance and type proposals describe reusable OKF types, not real
+Guidance and type list proposals describe reusable OKF types, not real
 organization facts or a schema for all data. Apply [Work's durable-form rules](../../knowlaborator-work/references/durable-form.md).
 Keep current people, products, projects, records, IDs and source bodies out of
 the profile and the proposals. Inspect Dataset structure only when needed and exposed; otherwise
 request selection through the appropriate same-organization binding. Do not
 query records, create schemas or persist facts merely to design guidance.
+
+Administrators set a type's path prefix, tags, body sections and relationship
+guidance in Settings; a proposal carries its name, definitions, place and
+fields. When they ask for advice on these, apply the rules below.
 
 ### Choose `pathPrefix`
 
@@ -105,7 +80,9 @@ suffix. For example, use `governance/decisions`, not
 - `recommendedFrontmatter`: Recommend zero to 20 type-specific metadata fields.
   Each item is `{ "field": "...", "guidance": "..." }`: `field` is the exact
   YAML key; `guidance` explains the value shape, controlled vocabulary,
-  applicability, and when to omit it. Use a field name matching
+  applicability, and when to omit it. A field picked from schema.org is named
+  by its property and carries it as `schemaOrgProperty`; a type inherits its
+  ancestors' fields and cannot remove them. Use a field name matching
   `[A-Za-z_][A-Za-z0-9_.-]*`, at most 100 characters, and guidance of at most
   500 characters. Do not repeat generic fields merely because OKF supports
   them. Never recommend Knowlaborator-managed identity, organization,
@@ -128,7 +105,7 @@ case-insensitively.
 
 ### Check the complete shape
 
-A metadata-only proposal for a `Product` type could use this shape:
+A `Product` type that adopts schema.org's `Product` could have this guidance:
 
 ```json
 {
@@ -142,6 +119,11 @@ A metadata-only proposal for a `Product` type could use this shape:
     {
       "field": "lifecycle_stage",
       "guidance": "Use one approved lifecycle-stage value; omit it when the stage is unknown."
+    },
+    {
+      "field": "releaseDate",
+      "guidance": "The date the offering first went on sale, as YYYY-MM-DD; omit it before launch.",
+      "schemaOrgProperty": "releaseDate"
     }
   ],
   "recommendedBodySections": ["Overview", "Audience", "Evidence", "Related issues"],

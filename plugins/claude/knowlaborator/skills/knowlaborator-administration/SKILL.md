@@ -1,6 +1,6 @@
 ---
 name: knowlaborator-administration
-description: Administer membership, organization settings, audit, optional modules, Workspace knowledge guidance and the knowledge policy.
+description: Administer membership, organization settings, audit, optional modules, Workspace knowledge guidance, type list proposals and the knowledge policy.
 ---
 
 # Knowlaborator Administration
@@ -18,7 +18,11 @@ destructive: reload and name the exact target, explain the effect, and obtain cu
 confirmation immediately before the call.
 
 For Workspace knowledge guidance, read
-[guidance-editing.md](references/guidance-editing.md). Load every ordered entry at the
+[guidance-editing.md](references/guidance-editing.md). To design the organization's
+type list with an administrator, or place its types in schema.org's hierarchy, read
+[type-list-design.md](references/type-list-design.md): you propose with
+`search_schema_org_terms` and `propose_type_list_changes`, and the administrator
+applies the proposal in Settings → Concept types. Load every ordered entry at the
 same revision before replacing a complete profile. For removal, reload the exact
 profile, explain that Documents and Knowledge remain, and obtain fresh confirmation
 before `remove_workspace_knowledge_guidance`.

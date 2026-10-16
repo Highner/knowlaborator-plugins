@@ -51,5 +51,19 @@ refused with `DATASET_KEY_DUPLICATES`, listing the repeated values and their
 `duplicateRecordIds`, which the person resolves first. Maintenance adds rows only
 to Datasets of its Workspace that declare a key.
 
+A Dataset may declare the schema.org type of its rows with `schemaOrgType` on
+`create_dataset`: one type of the pinned schema.org release such as `Product`
+or `Apartment`, never a data type such as `Text`
+(`DATASET_SCHEMA_ORG_TYPE_UNKNOWN`). Declare one when each row is an instance of
+that type. Relation types whose schema.org type ends name it, or a type above
+it, then accept the rows, and `get_dataset` returns it. Take fields from the
+type's properties where the rows have them, keyed by the property in snake case
+(`release_date` for `releaseDate`), with the type its values need: dates as
+`date`, numbers, quantities and amounts as `decimal`, text and URLs as
+`short_text`, another schema.org thing as `resource_reference`. Own fields stay
+possible. `update_dataset` leaves the type unchanged; a Manager changes or
+removes it in the Dataset's settings, which is refused while stored relations
+of the rows need it.
+
 Exclude formulas, rollups, lookups, attachments, arbitrary JSON fields, field
 ACLs, and schema inference.

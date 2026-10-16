@@ -32,16 +32,24 @@ administrators in the browser. Choose from it; never invent a type.
 2. Choose by definition, not by name. Call `get_workspace_knowledge_guidance`
    again with the same Workspace ID and `type` only for types that could shape
    the concept, and apply their boundary, path prefix and structural
-   recommendations.
+   recommendations, including the fields a type inherits from its ancestors.
+   A type's `schemaOrg` place (the schema.org type it adopts or extends, and
+   its parent chain) says what the type is in general; the organization's
+   definition decides what belongs to it. Within a chain, choose the most
+   specific type that fits: `Wirkstoff` before `Rohstoff` before `Product`.
 3. When no listed type fits, use the closest listed type or the built-in
-   `note` and write the type you wanted in the `candidate_type` metadata field.
+   `note` and write the type you wanted in the `candidate_type` metadata field;
+   a schema.org type such as `Brand` is a good candidate, because
+   administrators can adopt or extend it directly.
    Tell the user which type was missing. Only an organization administrator
    adds types; a candidate on three or more records is shown to them.
    Maintenance uses the dedicated decision-draft operation only for supported decision
    work; it names any other missing record or type in its page review assessment
    ([maintenance.md](maintenance.md)).
 4. Read `typeWarnings` in the write result. `type_alias_resolved` means the
-   server stored the listed name for an alias; nothing to do.
+   server stored the listed name for an alias, or for a schema.org term a
+   listed type adopts (`type: Organization`); nothing to do. A term that listed
+   types only extend resolves to none of them: name the type itself.
    `type_unknown` means the type is not usable in that Workspace: if one of the
    suggestions fits, correct the type with `update_knowledge`; otherwise report
    it. `type_deprecated` means the type is retired: choose another for new
@@ -81,7 +89,9 @@ keeps a relation under a new name as a cited pair that administrators may turn i
 
 1. Choose only from the `relations` that `get_workspace_knowledge_guidance`
    returns for the target Workspace. Pick by definition and use-when, and
-   check the allowed source and target ends: concept types, or Documents, CRM
+   check the allowed source and target ends: concept types (with their
+   subtypes), a schema.org type (every listed type whose chain reaches it, and
+   the CRM contacts, CRM accounts or Documents it covers), or Documents, CRM
    accounts, CRM contacts or the records of one Dataset. When none fits, keep a
    plain Markdown link and tell the user which relation was missing.
 2. Store each relation once, from its source: the record the name reads from.
@@ -102,6 +112,9 @@ keeps a relation under a new name as a cited pair that administrators may turn i
    `knowledgeId`.
 4. Read relations with `list_knowledge_relations`; filter by `relationType` (the
    name for outgoing, the inverse name for incoming) to find the related records.
+   A schema.org property a relation type adopts, such as `memberOf`, names it
+   there and in writes, and that property's declared inverse names its inverse
+   direction.
    Check what exists before adding.
 5. Read `relation_type_mismatch` and `relation_required` in a write's
    `typeWarnings` or `change_knowledge_relations`' `warnings`; in
