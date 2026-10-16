@@ -145,7 +145,10 @@ your report, so a person can add it.
      types; the proposal's other changes apply.
    - **Support.** When the source confirms what an existing record says, use `add_support`
      on that record with the claims and quotes that confirm it. Cite current source
-     revisions only, and do not set `conflict`.
+     revisions only, and do not set `conflict`. Ordinary support and relation targets may live
+     in another Workspace in the same organization when you can contribute to both source and
+     target Workspaces. Keep the source in place; links grant no access. The source Workspace's
+     maintenance policy still governs review. Never copy restricted excerpts into the target's text.
    - **Contradiction.** When a newer source contradicts what a record says, use
      `add_support` on that record with the contradicted statements as `negated` claims,
      citing the passage; the source's own statement may follow as a further claim. Mark
