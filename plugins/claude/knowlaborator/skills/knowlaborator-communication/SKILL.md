@@ -1,6 +1,6 @@
 ---
 name: knowlaborator-communication
-description: Read connected mail, conversations, Workspace channels and subscribed Microsoft Teams channels; create or edit an unsent mail draft, preserve or trash an exact message, or send an organization message.
+description: Read connected mail, conversations, Workspace channels and subscribed Microsoft Teams channels; create or edit an unsent mail draft, preserve an externally supplied email or preserve or trash an exact connected message, or send an organization message.
 ---
 
 # Knowlaborator Communication
@@ -21,11 +21,16 @@ change provider read state.
 - [mail-deletion.md](references/mail-deletion.md): user-requested deletion of an exact
   message by moving it to Trash or Deleted Items.
 - [mail-ingestion.md](references/mail-ingestion.md): explicit preservation of one
-  message and requested attachments.
+  connected message and requested attachments, or an email supplied by an external connector.
 
 `delete_mail_message` moves only the requested exact message to the provider's Trash or
 Deleted Items folder. No MCP operation permanently deletes mail or sends, archives,
 generally moves, labels or flags provider mail.
+
+For email read through the user's own external connector, `ingest_external_email`
+preserves its original headers and complete body without an OrgApp mail connection.
+Read [mail-ingestion.md](references/mail-ingestion.md) for required identity fields,
+canonical email sharing, Workspace-specific references, and attachment selection/upload/linking.
 
 ## Messages
 
