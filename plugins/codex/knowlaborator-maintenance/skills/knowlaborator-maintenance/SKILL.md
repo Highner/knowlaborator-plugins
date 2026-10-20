@@ -34,6 +34,8 @@ boundary; the catalog only keeps the run from trying.
    selected items. Never browse/search the live inbox, expand threads or read unselected mail.
    Missing evidence remains a gap for the person to select. No provider fallback.
 
-A person working with an agent uses the Knowlaborator plugin instead: it keeps every
-authoring tool, and its Incoming run completes the items a person marked with this same
-protocol.
+This plugin also supports interactive maintenance, including explicit recovery of failed
+work through the maintenance protocol. Stay with it when maintenance needs recovery.
+When the person requests a different task, choose that task's skill again: general
+authoring and the Incoming run belong to the Knowlaborator plugin for the same organization.
+Switching plugins does not repair a failed work item or authorize broader writes.
