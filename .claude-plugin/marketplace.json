@@ -5,7 +5,7 @@
     "email": "info@appligator.de"
   },
   "description": "Membership-aware Knowlaborator plugins for Claude Code.",
-  "version": "6.2.2",
+  "version": "7.0.0",
   "plugins": [
     {
       "author": {
@@ -24,25 +24,7 @@
       ],
       "name": "knowlaborator",
       "source": "./plugins/claude/knowlaborator",
-      "version": "6.2.2"
-    },
-    {
-      "author": {
-        "email": "info@appligator.de",
-        "name": "Appligator"
-      },
-      "category": "productivity",
-      "description": "Mention @knowlaborator-stage to present records on your open Stage.",
-      "displayName": "Knowlaborator Stage",
-      "keywords": [
-        "presentation",
-        "knowledge",
-        "stage",
-        "mcp"
-      ],
-      "name": "knowlaborator-stage",
-      "source": "./plugins/claude/knowlaborator-stage",
-      "version": "1.3.1"
+      "version": "7.0.0"
     },
     {
       "author": {
@@ -60,7 +42,7 @@
       ],
       "name": "knowlaborator-maintenance",
       "source": "./plugins/claude/knowlaborator-maintenance",
-      "version": "6.2.2"
+      "version": "7.0.0"
     }
   ]
 }

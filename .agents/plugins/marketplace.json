@@ -18,18 +18,6 @@
     },
     {
       "category": "Productivity",
-      "name": "knowlaborator-stage",
-      "policy": {
-        "authentication": "ON_INSTALL",
-        "installation": "AVAILABLE"
-      },
-      "source": {
-        "path": "./plugins/codex/knowlaborator-stage",
-        "source": "local"
-      }
-    },
-    {
-      "category": "Productivity",
       "name": "knowlaborator-maintenance",
       "policy": {
         "authentication": "ON_INSTALL",

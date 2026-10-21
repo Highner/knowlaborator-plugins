@@ -1,82 +1,97 @@
-# Charts and their sources
+# Visuals and their sources
 
-A `chart` item is a bounded declarative specification plus the data snapshot
-it renders. Nothing in the payload is executed; the server rejects HTML,
-script, CSS, remote loads and arbitrary color values. Create or update it
-through `apply_canvas_changes` like any other item.
+You send data; the board draws it with its own look. Never send coordinates, SVG, HTML, colors or code. Add a visual
+with `add_visual` and change it with `update_visual` after people answer in lines. People never edit a visual's
+data; they write lines, and you update the visual when you next read the board.
 
-## Payload
+## Sources and estimates
+
+The table, chart, matrix and timeline visuals list their `sources`. Each source cites a record:
+
+- `page`: a Document page;
+- `field`: a record field, for CRM records, Dataset records, projects, ToDos and org-chart records;
+- or the record's exact revision alone.
 
 ```json
-{
-  "title": "p95 latency by week",
-  "mark": "line",
-  "xLabel": "Week",
-  "yLabel": "ms",
-  "series": [
-    { "id": "eu", "label": "EU", "color": "series-1",
-      "points": [ { "x": "2026-W33", "y": 412 }, { "x": "2026-W34", "y": 838 } ] },
-    { "id": "us", "label": "US", "color": "series-2",
-      "points": [ { "x": "2026-W33", "y": 390 }, { "x": "2026-W34", "y": 401 } ] }
-  ],
-  "sources": [
-    { "kind": "dataset", "id": "0193a7c0-…", "revision": "0193a7c1-…" },
-    { "kind": "canvas_item", "id": "0193b0a2-…", "revision": 3 }
-  ],
-  "refresh": {
-    "datasetId": "0193a7c0-…",
-    "query": { "fields": ["week", "region", "p95_ms"], "filters": [], "sort": [], "pageSize": 200 }
-  }
-}
+"sources": [
+  { "id": "blau", "record": { "kind": "document", "id": "…" }, "page": 4, "label": "Blau deck p. 4" },
+  { "id": "rate", "record": { "kind": "dataset_record", "id": "…" }, "field": "day_rate" }
+]
 ```
 
-- `mark` is `bar`, `line`, `area`, `scatter` or `donut`.
-- `title`, `xLabel` and `yLabel` are optional, at most 200 characters.
-- `series` holds 1–50 entries. Each needs a unique `id` (1–64 characters), a
-  `label` (≤ 200), a `points` array and an optional `color` token `series-1`
-  through `series-8`. Across all series a chart stores at most 2,000 points.
-- Each point has a finite numeric `y` and an `x` that is either a finite
-  number or a string of at most 200 characters.
-- `sources` is required with 1–20 entries. Each has `kind` `canvas_item`,
-  `knowledge` or `dataset`, a GUID `id` and an optional `revision` (string or
-  number, ≤ 64 characters). Sources become explicit item references and count
-  toward the 20-reference limit.
-- `refresh` is optional: a Dataset GUID plus a bounded query object
-  (≤ 8,192 characters serialized).
+- Values cite a source by id. A value without a source is your estimate and is shown in italics; say so in the
+  visual's note.
+- A table cell whose source names a `field` takes its value from the record: leave its `text` out. The board refuses
+  typed figures there.
+- The board pins each record's revision. When a cited record changes, the visual shows "Changed since added".
+- Readers who cannot read a source's record see no label for it. Still never copy restricted content into labels.
 
-## Snapshot semantics
+Ids are 1–40 lower-case letters, digits, `-` or `_`, unique within their list.
 
-The chart always stores the exact values it rendered. Readers of a historical
-revision see the numbers that were on the canvas then, not a live query. A
-refresh recipe is documentation of how the snapshot was produced; it does not
-run by itself. Refreshing means running the cited query again and submitting a
-new `update` operation with the new `series` and the exact
-`expectedItemRevision`. That creates a new item revision and a new canvas
-revision, so the history shows before and after.
+## The nine visuals
 
-## Building from a Dataset
+**Comparison table** (≤ 8 columns, ≤ 20 rows)
 
-Use `$knowlaborator-datasets` for the data: inspect the Dataset with
-`get_dataset` and `get_dataset_schema`, then call `query_dataset_records` with
-`validateOnly: true` and again without it, using bounded fields, filters, sorts and
-page size.
-Cite the Dataset as `{ "kind": "dataset", "id": "<datasetId>", "revision": "<schemaRevisionId>" }`
-so the values are pinned to the schema revision they were read under. Map
-record values into points yourself; the server does not infer charts from
-records. Keep the `refresh.query` identical to the validated query you ran.
+```json
+{ "type": "table", "title": "Three pitches side by side",
+  "columns": [ { "id": "blau", "label": "Blau" }, { "id": "nord", "label": "Nordlicht" } ],
+  "rows": [ { "id": "fee", "label": "Fee", "cells": [ { "text": "€84k", "source": "blau" }, { "text": "€96k", "source": "nord" } ] },
+            { "id": "media", "label": "Media", "cells": [ { "text": "~€30k" }, { "text": "~€24k" } ] } ],
+  "sources": [ … ] }
+```
 
-Cite a Knowledge record as `{ "kind": "knowledge", "id": "<knowledgeId>", "revision": "<version>" }`
-when the numbers come from a stated claim. Cite a canvas item as
-`{ "kind": "canvas_item", "id": "<itemId>", "revision": <itemRevision> }`
-when the values were typed on the canvas, for example in a sticky or text
-item. When a source is another chart, cite that chart's item and revision.
+**Chart** (`mark`: `bar`, `stacked_bar`, `line` or `donut`; ≤ 4 series, ≤ 24 categories; a donut has one series).
+Each series has one value per category (`null` for a gap) and optional `sources`, one source id or `null` per value.
+Mark a series without sources `"estimate": true`. `unit` formats values: `{ "prefix": "€", "suffix": "k" }`.
 
-## Source boundaries
+```json
+{ "type": "chart", "title": "First-year cost", "mark": "stacked_bar", "categories": ["Blau", "Nordlicht", "Feld und Form"],
+  "series": [ { "id": "fee", "label": "Fee, from the decks", "values": [84, 96, 71], "sources": ["blau", "nord", "feld"] },
+              { "id": "media", "label": "Media, agent's estimate", "values": [30, 24, 38], "estimate": true } ],
+  "unit": { "prefix": "€", "suffix": "k" }, "sources": [ … ] }
+```
 
-Every source must be a canvas item of this canvas or a Knowledge record or
-Dataset the current user can read in this same Workspace. The server
-validates declared sources, but it cannot detect values that were copied by
-hand. Never transcribe numbers, labels, quotes or summaries from a more
-restrictive Workspace, a private mail or Teams message, or any source you may
-not cite into a chart or into any other item. If the only evidence lives
-somewhere you cannot cite, say so and leave the chart unmade.
+**2×2 matrix** (≤ 8 points; `x` and `y` from 0 to 1)
+
+```json
+{ "type": "matrix", "title": "Cost against fit", "xAxis": "Cost", "yAxis": "Fit",
+  "quadrants": { "topLeft": "Fits, affordable", "topRight": "Fits, costly" },
+  "points": [ { "id": "nord", "label": "Nordlicht", "x": 0.68, "y": 0.8, "source": "nord" } ],
+  "note": "Cost from the decks · fit is the agent's estimate from the selection criteria", "sources": [ … ] }
+```
+
+**Timeline** (≤ 12 entries). A `date` is `2027`, `2027-01` or `2027-04-14`, with an optional short `dateLabel`.
+Entries citing a calendar event show as calendar entries, entries citing other records as record entries, and
+entries without a source as your own (dashed).
+
+**Diagram** (≤ 16 nodes, ≤ 24 links; `layout` `flow`, `tree` or `mindmap`). A node may have the `state` `done`,
+`current` or `alternative`. Links join two node ids, with an optional label. The board lays it out.
+
+**Quotes** (≤ 6 passages from any records). Send `quotes`; the board verifies each against the exact revision:
+
+```json
+{ "type": "quotes", "title": "On team stability",
+  "quotes": [ { "record": { "kind": "document", "id": "…" }, "quote": "A named replacement joins two weeks before any hand-over.", "page": 12 } ] }
+```
+
+Give `prefix`, `suffix` or `occurrence` when a quote appears more than once, and `page` or `block` for long
+Documents. People open each passage from its numbered bookmark.
+
+**Checklist** (≤ 12 steps, each ≤ 200 characters). A step can be `done` and can cite one line (`lineId`, "from Clara's
+line") or one item (`itemId`). Turn an open step into a ToDo suggestion when the group agrees on it.
+
+**Summary** (≤ 6 themes and ≤ 6 open points). Each has a short title, a sentence of at most 400 characters, and
+`items`, the items it draws on (≤ 12), each with a short name for its chip (`label`, at most 40 characters, such as
+"Budget note": a note has no title of its own). The summary replaces a written-up distillation: keep it current with
+`update_visual` as the board grows.
+
+```json
+{ "type": "summary", "title": "What the board says so far",
+  "themes": [ { "id": "cost", "title": "Cost", "text": "Feld und Form is cheapest, but media is extra at all three.", "items": [ { "itemId": "…", "label": "Feld und Form pitch" }, { "itemId": "…", "label": "Media cost note" } ] } ],
+  "open": [ { "id": "cap", "title": "Open", "text": "Is media inside the €90k cap?", "items": [ { "itemId": "…", "label": "Budget note" } ] } ] }
+```
+
+**Image**: upload it and add it with `add_image` (assets-and-ingestion.md). It is not a `visual`.
+
+`title` (≤ 120 characters) is optional on every visual. Labels and values hold at most 80 and 120 characters; notes
+hold at most 300.

@@ -1,4 +1,4 @@
 interface:
-  display_name: "Knowlaborator Canvases"
-  short_description: "Read, author and distill shared canvases"
-  default_prompt: "Use $knowlaborator-canvases to work on this canvas."
+  display_name: "Knowlaborator Boards"
+  short_description: "Work on shared boards with people"
+  default_prompt: "Use $knowlaborator-canvases to work on this board."

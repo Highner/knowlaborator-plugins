@@ -1,106 +1,62 @@
-# Read and inspect canvases
+# Reading a board
 
-If the user means the Canvas currently shared from OrgApp, call
-`get_active_context` first. Require `state: ACTIVE` and `surface: canvas`, then
-pass the returned Canvas ID and `canvasRevision` to `get_canvas_scene` for an
-exact read of that shared view. The returned lens and `selectedCanvasItems`
-explain the browser view and selection; they contain no item payloads and do
-not replace the paginated scene. For an edit, read the current scene without a
-revision parameter and check the selected item revisions against it.
+## Find the board
 
-Use only the calls needed for the request:
+- **Shared by the person:** `get_active_context` (surface `canvas`, state `ACTIVE`) names the board, the revision the
+  person sees and up to 25 selected item ids with their revisions. Its only perspective is `all`.
+- **Picked in Today:** pass this chat's latest `localSelection` to `get_active_context`. An empty or unavailable local
+  selection never falls back to the shared browser view.
+- **Discovery:** `list_canvases` pages the boards of the person's Workspaces by title, with `query`, `workspaceId`
+  and `state` (`active` or `archived`). Ids never grant access.
 
-1. Use `list_canvases` when the canvas ID is unknown and no shared active
-   context identifies it. Optional filters are
-   `workspaceId`, `state` (`active` or `archived`), `query`, `cursor` and
-   `pageSize` (default 50, at most 200). Each summary carries `id`,
-   `workspaceId`, `title`, `state`, `revision`, `itemCount` and
-   `capabilities` (`canRead`, `canEdit`, `canManage`). Follow `nextCursor`
-   unchanged until it is null; a returned ID never grants access.
-2. Use `get_canvas` when metadata, capabilities or lifecycle state is needed.
-   It returns the current `revision`, stored lenses and `archivedAt`.
-3. Use `get_canvas_scene` for item content. Omit `revision` for the current
-   scene, or pass an exact historical `revision` to reconstruct that state;
-   `historical` is then true and removed items appear with `deleted: true`.
-   Page with `cursor` and `pageSize` (at most 200). For a targeted task, stop
-   once every needed item is found; for a complete scene, continue until
-   `nextCursor` is null. A partial page is never a complete scene.
+## `read_canvas`
 
-## Item shape
+`read_canvas` returns the whole board as the person may see it, on pages of up to 200 items (`nextCursor`
+continues).
 
-```json
-{
-  "id": "0193b0a2-…", "canvasId": "0193a9f1-…", "kind": "sticky",
-  "itemRevision": 3, "canvasRevision": 41, "deleted": false,
-  "geometry": { "x": 120, "y": 80, "width": 200, "height": 120, "rotation": 0, "z": 4 },
-  "parentItemId": "0193b09c-…", "parentOrder": 2,
-  "sourceItemId": null, "targetItemId": null,
-  "lenses": ["context"],
-  "payload": { "color": "yellow", "text": "Latency doubled after the 3.2 rollout." },
-  "references": [],
-  "creatorMembershipId": "…", "creatorActorKind": "member",
-  "lastEditorMembershipId": "…", "lastEditorActorKind": "agent",
-  "createdAt": "2026-09-01T09:12:00Z", "updatedAt": "2026-09-02T07:40:00Z"
-}
-```
+**The board:** its title, goal, Workspace, revision and the person's capabilities.
 
-- `itemRevision` is the object-level concurrency value; every later update or
-  delete of this item must quote it exactly. `canvasRevision` is the canvas
-  revision that produced this item revision.
-- `parentItemId` names the frame or group that contains the item;
-  `parentOrder` is its position among siblings. Containment is authoritative
-  membership. An item without a parent is top-level.
-- `sourceItemId` and `targetItemId` are set only on `connector` items and name
-  the related items; the payload's `directed`, `label` and `type` describe the
-  relation. A connector is an authoritative relationship.
-- `lenses` lists the stored lens flags `context`, `questions` and
-  `decisions`. `all` is a browser view, not a stored value; an unclassified
-  item is valid and belongs only to `all`.
-- `references` lists explicit outgoing links declared by the payload:
-  `kind` is `asset`, `resource` or `source`; `targetKind` names the target
-  domain; `targetRevision` is the pinned revision where one was declared.
-- `payload` is the kind-specific content described in
-  [authoring-changes.md](authoring-changes.md). A `decision` payload carries
-  the server-owned `state` (`proposed` or `confirmed`) plus
-  `confirmedByMembershipId` and `confirmedAt` when confirmed.
-- `creatorActorKind` and `lastEditorActorKind` are `member` or `agent`.
+**Items** (`items`), each with:
 
-## Spatial inference
+- its `id` and its content `revision`, which you send back as `expectedRevision`;
+- `kind`, `x`, `y`, `width`, `z`, `author` (a person, or `kind: agent` for a person's agent: "Anna's agent") and
+  `can` (what *you* may move, edit and remove);
+- its content by kind:
+  - `note`: `{text}`;
+  - `image`: asset id, title, caption, alt text and provenance (`source`: upload, paste, phone, generated or
+    downloaded; `sourceUrl`);
+  - `record`: the record card, with `ref` (kind, id, the revision it was added at), title, subtitle (a Knowledge
+    type, a dataset), a body by family (excerpt, document page count, fields, person, email, event, ToDo), `status`,
+    the verified `quotes`, and `changedSinceAdded` when the record has a newer revision;
+  - `locked`: a record the person cannot read. It shows the kind and who added it, never a title. Do not ask what it
+    is and do not look it up;
+  - `visual`: its data as the board draws it, with resolved sources (see charts-and-sources.md).
+- `lines` under the item, oldest first: text, author, an optional linked record, and `canRemove`. `pinned` names the
+  pinned line, shown first.
+- `likes`: count and who liked it. Likes are people's. Many likes say what the group favors; they decide nothing.
+- `suggestedBy`, when a person placed the item from an agent's suggestion.
+- `near`: up to four nearby item ids. They are derived from positions, never a fact.
 
-Geometry, proximity, overlap, color and z-order are supportive visual context.
-Two items placed side by side, stacked, or sharing a color are not thereby
-related, grouped, ordered or agreed. Report only what frames, groups,
-connectors, typed items and explicit references state. When a visual
-arrangement suggests a relationship the structure does not record, say so as
-an observation and propose an explicit connector or grouping instead of
-treating it as fact.
+**Suggestions** (`suggestions`): open ones and created outcomes, each with its agent, note and state. Your own are
+those whose `by.membershipId` is your person's and whose kind is `agent`.
 
-## Overview image
+**Agents and people:** `recentAgents` are the agents active in the last ten minutes; `people` are the Workspace's
+members (ids for outcome fields).
 
-`get_canvas_overview` (optional exact `revision`) returns a link to one
-deterministic inert `image/svg+xml` resource with structured metadata
-`canvasId`, `revision`, `mediaType`, `byteSize` and `sha256`. Follow the shared
-[file inspection](../../knowlaborator-work/references/file-inspection.md) flow
-to stage and verify the SVG. Images and files appear as placeholders. Use
-it to orient, never as the source of item text or values; read the scene for
-content.
+## Only what changed
 
-## Exact asset originals
+Pass `afterRevision` with the revision you hold. The answer lists the items, removed ones included (`deleted`), and
+the suggestions changed since, plus the board's metadata.
 
-`get_canvas_asset_file` with `canvasId` and `assetRevisionId` returns a link to
-the exact original bytes of one asset revision with authoritative `fileName`,
-`mediaType`, `byteSize`, `sha256` and, for raster images, `width` and `height`.
-Use the same download and verification flow before inspecting the
-original; no OCR, caption, alt text or thumbnail substitutes for it.
-`CANVAS_ASSET_TOO_LARGE` means the original exceeds the MCP resource limit;
-report that rather than guessing its content.
+- `requiresFullReload: true` means more than 200 items changed: read the board again without `afterRevision`.
+- Keep the last board you read and its revision.
+- Read again only for an unknown board, a conflict, a newer revision you noticed, or a request that depends on what
+  the person is doing now.
 
-## Distillation reads
+## Overview and images
 
-`list_canvas_distillations` pages saved immutable artifacts (`scope` `canvas`,
-`lens` or `selection`, and `sourceCanvasRevision`). `get_canvas_distillation`
-returns one exact distillation with `currentRevision.content` (the seven fixed
-sections and `citations`) and `sourceDigest`. Citations pin `itemId` plus
-`itemRevision`; resolve them with `get_canvas_scene` at the distillation's
-`sourceCanvasRevision`, not the current scene. See
-[distillation.md](distillation.md) for status meanings.
+- `includeOverview: true` adds a link to an inert SVG overview of the board as the person sees it.
+- To look at an image people added, pass its `assetRevisionId` to `get_canvas_asset_file`.
+- Stage and verify the overview and every image with the shared
+  [file inspection](../../knowlaborator-work/references/file-inspection.md) flow, then inspect the saved file.
+- Alt text and captions are authored descriptions, not verified content.

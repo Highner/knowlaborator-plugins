@@ -13,10 +13,6 @@ Install Knowlaborator and sign in when prompted. The plugin discovers only the
 organizations available to the signed-in user. If more than one is available,
 use `list_organizations` and `set_active_organization` to select the active context.
 
-Install Knowlaborator Stage as well to let your agent present records on the Stage page:
-it places record cards, highlights exact passages and connects them while you watch. Its
-connection follows the organization in which you opened the Stage.
-
 Install Knowlaborator Maintenance for scheduled or unattended knowledge maintenance. Its
 connector is https://orgapp-production-1b56.up.railway.app/mcp/maintenance, with only the tools that maintenance needs:
 it keeps relations and the support of existing records current from filed sources,
