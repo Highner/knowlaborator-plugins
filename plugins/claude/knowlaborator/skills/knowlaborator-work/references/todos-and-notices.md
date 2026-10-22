@@ -51,6 +51,10 @@ description, assignees, deadline and state after every write.
 - A deadline may be absent, date-only, or date-and-time in the organization timezone
   from current context or an explicit user value. If the timezone is unavailable, ask
   rather than infer it. Never invent a time for a date-only deadline.
+- `startDate` is an optional first day of work without time, never after the deadline
+  date, and it may stand alone. Set it only from an explicit value. `update_todo`
+  replaces every field, so send the current `startDate` back to keep it. It belongs to
+  the one occurrence and never enters a recurring series.
 - Allowed transitions are `Open` to `Done` or `Closed`, and either terminal state back
   to `Open`. Do not request `Done` directly to `Closed` or vice versa.
 - For fixed-date recurrence, provide `recurrence` on `create_todo`: `frequency` is
@@ -64,8 +68,8 @@ description, assignees, deadline and state after every write.
   resume, or use `frequency=none` to stop; a stopped series cannot restart. Historical
   occurrences keep their content and completion state, and recurring tasks keep their
   captured `organizationTimeZone`.
-- Confirm the saved header, description, assignees, deadline, status and derived
-  overdue state from the mutation result.
+- Confirm the saved header, description, assignees, start date, deadline, status and
+  derived overdue state from the mutation result.
 
 ## Notices
 

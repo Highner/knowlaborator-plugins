@@ -21,9 +21,9 @@ for an identical retry. `baseRevision` is diagnostic: changes to different items
 
 | Operation | Fields | Notes |
 | --- | --- | --- |
-| `add_note` | `itemId`, `text` (≤ 2,000), placement, optional `width` | Your own note, shown as "Anna's agent" |
-| `update_note` | `itemId`, `expectedRevision`, `text` | Only notes your person's agents wrote |
-| `add_visual` | `itemId`, `visual`, placement, optional `width` | See charts-and-sources.md |
+| `add_note` | `itemId`, `text` (keep it ≤ 140), optional `title` (≤ 120), `details` (≤ 4,000) and `sources` (≤ 6), placement, optional `width` | Your own note, a white card marked "Anna's agent"; Read opens the details (text-items.md) |
+| `update_note` | `itemId`, `expectedRevision`, `text`, optional `title`, `details`, `sources` | Only notes your person's agents wrote; send the whole note |
+| `add_visual` | `itemId`, `visual`, placement, optional `width` | See text-items.md and charts-and-sources.md |
 | `update_visual` | `itemId`, `expectedRevision`, `visual` | Only your own visuals; people answer with lines, you update |
 | `add_image` | `itemId`, `assetRevisionId`, `source` (`generated` or `downloaded`), `sourceUrl` (https, for downloaded), `title`, `caption`, `altText`, placement | Upload first (assets-and-ingestion.md) |
 | `move` | `itemId`, `x`, `y`, optional `z`, optional `expectedRevision` | Only your own notes, visuals and images |

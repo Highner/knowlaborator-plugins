@@ -6,7 +6,8 @@ data; they write lines, and you update the visual when you next read the board.
 
 ## Sources and estimates
 
-The table, chart, matrix and timeline visuals list their `sources`. Each source cites a record:
+The table, chart, matrix, timeline, outline and argument visuals list their `sources`, and so may your notes
+(text-items.md). Each source cites a record:
 
 - `page`: a Document page;
 - `field`: a record field, for CRM records, Dataset records, projects, ToDos and org-chart records;
@@ -28,7 +29,9 @@ The table, chart, matrix and timeline visuals list their `sources`. Each source 
 
 Ids are 1–40 lower-case letters, digits, `-` or `_`, unique within their list.
 
-## The nine visuals
+## The data visuals
+
+The outline and the argument, which carry reasoning rather than data, are in text-items.md.
 
 **Comparison table** (≤ 8 columns, ≤ 20 rows)
 
@@ -80,13 +83,14 @@ Documents. People open each passage from its numbered bookmark.
 **Checklist** (≤ 12 steps, each ≤ 200 characters). A step can be `done` and can cite one line (`lineId`, "from Clara's
 line") or one item (`itemId`). Turn an open step into a ToDo suggestion when the group agrees on it.
 
-**Summary** (≤ 6 themes and ≤ 6 open points). Each has a short title, a sentence of at most 400 characters, and
+**Summary** (≤ 6 themes and ≤ 6 open points, and a `summary` of at most 140 characters that the board shows; Read
+opens the themes). Each theme has a short title, a sentence of at most 400 characters, and
 `items`, the items it draws on (≤ 12), each with a short name for its chip (`label`, at most 40 characters, such as
 "Budget note": a note has no title of its own). The summary replaces a written-up distillation: keep it current with
 `update_visual` as the board grows.
 
 ```json
-{ "type": "summary", "title": "What the board says so far",
+{ "type": "summary", "title": "What the board says so far", "summary": "Blau fits best; media cost is open at all three.",
   "themes": [ { "id": "cost", "title": "Cost", "text": "Feld und Form is cheapest, but media is extra at all three.", "items": [ { "itemId": "…", "label": "Feld und Form pitch" }, { "itemId": "…", "label": "Media cost note" } ] } ],
   "open": [ { "id": "cap", "title": "Open", "text": "Is media inside the €90k cap?", "items": [ { "itemId": "…", "label": "Budget note" } ] } ] }
 ```

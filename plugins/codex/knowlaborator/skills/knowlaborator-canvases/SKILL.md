@@ -21,13 +21,42 @@ canvas.
   board finds free space.
 - To show a board in the chat, call `open_canvas`.
 
+## Compose the board
+
+People take a board in at a glance; the details are a click away. Before you write, decide what the board needs and
+choose the item for the job:
+
+| To show | Use |
+| --- | --- |
+| Structured reasoning: routes, the steps of an analysis, a brief | `outline` |
+| A position with the grounds for and against it | `argument` |
+| Options compared on the same criteria | `table`; numbers over options: `chart`; two criteria: `matrix` |
+| Dates and deadlines | `timeline` |
+| Steps the group agreed on | `checklist` |
+| Exact passages people should read | `quotes`, or `suggest_record` with quotes |
+| What the board says so far | `summary` |
+| One short thought, question or reminder | a note |
+
+- **Few, complete items.** One outline with three sections, not seven notes. A note holds one thought of at most 140
+  characters; when it needs more, give it a title and details, or make it an outline.
+- **Short board text.** Outlines, arguments, summaries and notes with details show only their title, a summary of at
+  most 140 characters and Read. Write the summary as the answer, not as a teaser, and put the rest in the details.
+- **Reading order.** Start next to what the person asked: `near` their note or the record, `side` `right`. Place
+  each next item beside the one it follows: the argument right of the outline, a note below what it is about.
+- **Sources over claims.** Cite a record for every factual point and ground. Points and grounds without a source
+  show as your structure or your reading.
+- **Update, don't pile up.** When people answer in lines, update your outline, argument or summary with
+  `update_visual` instead of adding notes.
+
 Read only the reference you need:
 
 - [reading-and-inspection.md](references/reading-and-inspection.md): `read_canvas`, changes, locked records,
   nearness, the overview and images.
 - [authoring-changes.md](references/authoring-changes.md): every `change_canvas` operation, placement,
   revisions, conflicts and errors.
-- [charts-and-sources.md](references/charts-and-sources.md): the nine visuals, their bounds, sources and
+- [text-items.md](references/text-items.md): outlines, arguments, the summary's board text and notes with
+  details.
+- [charts-and-sources.md](references/charts-and-sources.md): the data visuals, their bounds, sources and
   estimates.
 - [suggestions-and-outcomes.md](references/suggestions-and-outcomes.md): suggesting records and outcomes
   (decision, ToDo, issue, Knowledge record).
