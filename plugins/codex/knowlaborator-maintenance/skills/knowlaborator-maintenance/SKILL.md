@@ -27,8 +27,10 @@ boundary; the catalog only keeps the run from trying.
    Reuse attaches no new sources; follow the protocol's evidence flow for that decision's
    standing and verify any needed writes before reporting new sources preserved.
    Other missing records or corrections go into the page review assessment and your report.
-   Find explicit and inferred issues, compare all existing states across readable Workspaces,
-   and add new evidence to a matching issue. Create New only after a complete candidate check.
+   Find explicit and inferred issues using the bounded candidate check across readable
+   Workspaces and all states. Keep dismissed findings dismissed, including those without a
+   reason, and apply supplied reasons to similar findings. Add new evidence to a matching
+   issue. Create New only after assessing the returned relevant candidates.
 4. Email is restricted to already indexed snapshots and exact persisted Process selections,
    with or without optional instructions. Use list_marked_inputs/prepare_marked_input for
    selected items. Never browse/search the live inbox, expand threads or read unselected mail.

@@ -180,7 +180,9 @@ consequence. People may report it directly or it may emerge across several sourc
 as inconsistent dates, unclear handover responsibility or a decision whose premise changed.
 Follow [issues.md](../knowlaborator-knowledge/references/issues.md): preserve the input
 through `process_input` before sharing its content, then check existing issues across all
-readable Workspaces and all states. Complete candidate checks and read plausible matches.
+readable Workspaces and all states through the bounded candidate check. Review its returned
+shortlist, not all historical issues. Keep dismissed findings dismissed even without a reason;
+apply supplied reasons to similar findings as described in the issues protocol.
 Different wording or sources never justify a duplicate when the same outcome would settle it.
 Add distinct evidence/developments to the existing issue, or propose a resolution without
 closing it. Only create New when no equivalent issue covers it, with the receipt, all

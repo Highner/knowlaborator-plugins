@@ -250,9 +250,14 @@ your report, so a person can add it.
      a vacant required approval role, or a removed capability underlying a decision. Require
      a concrete unresolved situation and plausible consequence, not a generic unknown.
    - Before any new issue call `check_issue_candidates` with its exact title, context,
-     consequence, closure criteria and evidence; page all results across readable Workspaces
-     and all states. Search subjects/entities and alternative wording with search_content;
-     read plausible matches and evidence. Same outcome, subject, scope and time period means
+     consequence, closure criteria, evidence and relatedKnowledgeIds. Review the returned
+     bounded shortlist (at most 25 across readable Workspaces and all states), not the full
+     history; there are no further candidate pages. Read the returned matches and evidence.
+     If suppressedByIssueId is present, do not create or reword this dismissed finding.
+     Apply a person's dismissal reason to similar irrelevant findings too. Only if it does
+     not apply to a materially distinct situation, explain why in dismissalReasonDoesNotApply
+     for that candidate. No reason still means the same situation stays dismissed.
+     Same outcome, subject, scope and time period means
      the same issue, regardless of source, sender, wording or explicit/inferred origin.
    - Reuse matches. Submit `record_issue_evidence` with the target, current version and
      development, or `propose_issue_resolution` when closure criteria may be met. Retain
@@ -265,7 +270,7 @@ your report, so a person can add it.
      Cite every material premise of an inference, including across sources. No assignments,
      Open flag or review dates: the server routes follow-up to the eligible marker/source
      owner, otherwise caller. An impossible route is blocked, never silently discarded.
-   - A changed candidate corpus or issue version requires a fresh comparison. Refresh only
+   - A changed relevant shortlist or candidate version requires a fresh comparison. Refresh only
      your own still-proposed issue change under its current lease/fence with
      replacesProposalId and expectedProposalVersion; no human confirmation is needed for
      that narrow refresh. It may become evidence on a newly found match. Applied changes
