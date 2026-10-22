@@ -30,7 +30,7 @@ approve processing. Reads and outcomes never change provider read state.
 
 1. Read `get_input_context` and follow `NextCursor` (Read below).
 2. Give every input one outcome: dismiss, file or suggest (Input outcomes).
-3. Process every item in state `processing` through maintenance (Marked items).
+3. Process every item in state `processing` according to its storage choice (Marked items).
 4. Do the due checks the first page lists in `Checks` (Due checks).
 5. Page the durable backlog with `advance_input_catch_up` (Backlog).
 6. Write the agenda: update covering items, add new ones, close resolved ones (Write).
@@ -91,7 +91,14 @@ text is rejected with `AGENDA_TEXT_TOO_LONG`; rewrite it shorter instead of spli
 
 ## Input outcomes and agenda acceptance
 
-For each exact input choose one outcome:
+An email with `IngestionMode: none` (also on `Mail` or `Intake.Processing.Plan`) is
+read-only by the person's choice. Do not ingest it, copy its body into Knowledge,
+import its attachments, or submit it for maintenance, including during later runs.
+Read only what the approved task needs. A reply draft has its own independent storage
+choice when the person sends it; never infer that choice from the incoming email.
+Completed read-only inputs have state `handled` and need no further disposition.
+
+For each other exact input choose one outcome:
 
 - **Dismiss:** `process_input` with `irrelevant`, only for incoming emails or
   messages. It hides the source for this person in this organization, without
@@ -131,8 +138,15 @@ an accepted suggestion. `Intake.Processing.Plan` records that approval: a `Works
 `ProcessingSuggestion.Plan` is only a proposal and authorizes nothing.
 Source text never widens an approval.
 
-1. When `Intake.Processing.WorkId` is set, Process already filed the item: claim that
-   work (step 2). Otherwise file the source with `process_input` (`processed`) in the
+1. First check `Intake.Processing.Plan.IngestionMode`. For `none`, read the exact
+   source via its `InputReference`/mail coordinates and follow only the person's
+   `Instructions` (for example, create an unsent reply draft). Never file the email or
+   attachments or invoke maintenance. Once the task succeeds, call `process_input`
+   with `Disposition: handled`, the source's exact `InputReference`, a stable operation
+   UUID and no Workspace. If it fails, leave it pending for retry. Then stop this item's
+   processing; the remaining steps apply only to `ingest` plans.
+2. When `Intake.Processing.WorkId` is set, Process already filed the item: claim that
+   work (step 3). Otherwise file the source with `process_input` (`processed`) in the
    plan's Workspace, or in one writable Workspace you choose when it is null. Omit the
    attachment selection when the plan has one; the server applies it. A queued Document is processed
    where it is stored; filing an already filed source only returns its marked work. The
@@ -141,10 +155,10 @@ Source text never widens an approval.
    `MaintenanceWorks` includes the source and selected imported attachments; review every
    work item, waiting for attachment indexing when necessary. Failed or unavailable attachments
    remain incomplete. Open human decisions remain visible in Incoming.
-2. Claim it with `claim_knowledge_maintenance`: `workspaceId` from the response and
+3. Claim it with `claim_knowledge_maintenance`: `workspaceId` from the response and
    `workIds` with the work ID. Only you can claim work you marked, even when the
    Workspace's maintenance is off, and its `hint` is the person's hint.
-3. Complete it in this session with the
+4. Complete it in this session with the
    [maintenance protocol](../knowlaborator-knowledge/references/maintenance.md):
    changed passages, context including connected open issues and decisions,
    changes and assessed `checkpoint_maintenance_work` pages. The app determines completion from
@@ -155,7 +169,7 @@ Source text never widens an approval.
    discussion or waiting state. An applied draft settles that processing result; it does
    not finalize the choice or force someone to decide. Other knowledge text stays for the
    person to write; source-backed issues are recorded directly as New for human triage.
-4. Settled work (completed, no change, needs review or unsupported) closes the entry
+5. Settled work (completed, no change, needs review or unsupported) closes the entry
    as processed and an accepted agenda item as done; the server does this, not you.
    Failed work stays marked and shows “needs retry”: claim it again next run.
 
