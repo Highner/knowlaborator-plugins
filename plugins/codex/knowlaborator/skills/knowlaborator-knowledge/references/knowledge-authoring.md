@@ -153,7 +153,9 @@ or modify the user's project to run it.
    revision, no-op, or lack of edit permission; do not repeat discovery. The body
    and editable record fields are top-level; `currentRevision` carries revision
    identifiers and provenance without a repeated snapshot. Omitted metadata in a
-   compact read does not mean the record has none.
+   compact read does not mean the record has none. A line window (`fromLine`,
+   `lineCount`) or a body on a `list_knowledge` page is never the basis of an update:
+   the update replaces the whole body.
 3. Preserve authorized provenance, claim-level citations, unknown OKF fields,
    producer extensions, and unrelated content. Label estimates, hypotheses, and
    uncertainty honestly. Apply the tracking criteria in [issues.md](issues.md)

@@ -36,7 +36,9 @@ conversation language.
   with their owning exact-read tools. Browse the knowledge folders with
   `list_knowledge` only when the task needs an inventory or a systematic review, and
   read relations with `list_knowledge_relations`; do not routinely add a folder scan
-  to a topical search.
+  to a topical search. When the answer must be complete, such as every record that
+  mentions a name or number, use `list_knowledge` with `match`, then read around the
+  reported lines with `get_knowledge` `fromLine` ([reading](references/reading.md)).
 - Source choice or several discovery steps: read the
   [navigation-learning procedure](references/navigation-learning.md) before the first
   read. Generate one task-local episode UUID and reuse it as `navigationEpisodeId`

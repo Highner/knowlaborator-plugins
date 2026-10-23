@@ -41,10 +41,35 @@ cannot enumerate the catalog.
    size.
 3. `workspaceId` narrows both levels to one Workspace. `changedFrom` keeps records
    updated since then, so counts show what changed per folder.
+4. `match` finds every record that contains a literal term, like `grep -rn` over a
+   bundle: give 1 to 10 terms of 2 to 200 characters; a record matches when its
+   title, description or body contains any of them, ignoring case and accents
+   (`strasse` finds `Straße`). Terms are substrings, never words, patterns or
+   operators, and never span lines. Without `type` it lists the folders with matches
+   and counts only matching records; with `type` it pages through the matching
+   records, each with `matches`: `fields` (`title`, `description`), up to five body
+   `lines` with their line number and text, and `lineCount`. Use it when the answer
+   must be complete ("every record that mentions the contract number"); search
+   ranks and stops at its limit. A saved email can match in its stored HTML section.
+5. `includeBodies` (with `type`) adds each entry's `bodyMarkdown`, as a whole
+   `get_knowledge` read returns it, for reviewing a folder or a match result page by
+   page. A page holds at most 40,000 body characters, so it can end before
+   `pageSize`; follow `nextCursor`. `bodyCut` marks a body cut to the budget: read the
+   rest with `get_knowledge`.
 
 A folder entry is not the full record: use `get_knowledge` before answering from its
-contents or editing. A missing description means none was written. Keep lifecycle
-`status` separate from `decisionStanding` (a proposal is not a final decision).
+metadata, decision or relations, and before editing; a body on a folder page is
+reading text, not an edit basis. A missing description means none was written. Keep
+lifecycle `status` separate from `decisionStanding` (a proposal is not a final decision).
+
+Read part of a long record with `get_knowledge` `fromLine` (from 1, such as a line a
+match reported) and `lineCount` (1 to 1,000, default 200). The window reads the stored
+body, numbered as matches number it and including a saved email's HTML section; it
+holds at most 24,000 characters. `bodyWindow` names `fromLine`, `toLine`,
+`totalLines` and `nextLine`, `lineCut` marks a single line longer than a window, and
+`outline` lists the headings with their line numbers so you can pick the next window.
+Read the whole record, with `includeMetadata=true`, before `update_knowledge`: an
+update replaces the whole body.
 
 Use list_knowledge_relations for one record's typed relations, filtered by
 relationType to enumerate, for example, all products containing a raw material. It
