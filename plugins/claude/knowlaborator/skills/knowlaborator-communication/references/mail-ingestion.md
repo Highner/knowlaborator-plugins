@@ -17,14 +17,12 @@ exact message read. Never download and upload attachments to imitate ingestion.
 Inspect AttachmentOutcomes and IndexingState; report skipped or failed imports and
 pending indexing accurately. The provider read state is unchanged.
 
-An agenda suggestion, including a ProcessingSuggestion, does not ingest anything.
-Its destination and optional enrichment steps remain proposals until the person
-reviews and accepts them. Draft snapshots are labelled unsent; editing a draft
-creates a new input version requiring a new decision.
+Agenda/ProcessingSuggestion proposals ingest nothing until accepted. Draft snapshots
+are unsent; editing creates a new input version requiring a new decision.
 
-Matching preserved email content may reuse a shared Workspace snapshot, while
-mailbox references and dispositions remain private to each membership and organization.
-Original provider messages are neither deleted nor altered by input processing.
+Snapshots may be reused; mailbox references/dispositions stay private. Provider mail stays unchanged.
+For “sent, please link”, verify the sent source and reuse/preserve it once. Add only relations
+(`revise_knowledge_issue` for issues), never summaries or evidence.
 
 ## Email from an external connector
 

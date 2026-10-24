@@ -5,13 +5,17 @@ concrete unresolved situation with a plausible consequence. It may be explicitly
 by a person or inferred by combining sources. Missing fields, generic risk lists and
 interesting unknowns alone do not qualify. Finding no issues is a valid outcome.
 
+For “link/associate only”, verify saved sources and targets, then use `revise_knowledge_issue`
+with only expectedVersion, operationId and relatedKnowledgeIds. Reuse/preserve sources once. Add no summary,
+interpretation, evidence or knowledge note; earlier analysis requests do not widen this task.
+
 ## Find the existing issue first
 
 Incoming and Maintenance share this protocol. Before creating, call `check_issue_candidates`
 with the intended title, context, consequence, closure criteria, exact evidence and
 `relatedKnowledgeIds` for the records the situation concerns. The server returns at most 25
-relevant issues across readable Workspaces and all states, including Resolved, Dismissed and
-archived records. Shared linked records, evidence sources, one-hop relations and current
+relevant issues across readable Workspaces and all states, including Resolved and Dismissed,
+and archived records. Shared linked records, evidence sources, one-hop relations and current
 full-text matches rank candidates without waiting for embeddings. No candidate pagination
 or review of the entire issue history is needed. Read each returned candidate and its evidence;
 retain the receipt and explicit reasons why each nonmatching candidate does not cover the finding.
@@ -28,11 +32,12 @@ do not make two issues equivalent. Do not infer blanket exclusions beyond what t
 
 Two findings are the same issue when the same outcome would settle them for the same subject,
 scope and time period. Different sources, senders, wording and explicit versus inferred
-origins do not create separate issues. New information belongs to the matching record:
+origins do not create separate issues. Within authorized analysis, new information belongs
+to the matching record:
 
 - Add a new contribution with `record_issue_evidence`: strengthened/contradicted evidence,
-  changed circumstances, a dependency or clarification. Keep every distinct authorized
-  source contribution; reading it again does not justify a duplicate entry or notification.
+  changed circumstances, a dependency or clarification. Keep distinct authorized contributions;
+  rereading warrants no duplicate entry or notification.
 - Use `propose_issue_resolution` only when the evidence may meet the closure criteria.
   Partial information remains evidence, without a lifecycle change.
 - Resolved or dismissed matches retain their history. Add the concrete new evidence and
@@ -49,11 +54,6 @@ consequence, closure criteria, observations, interpretation and remaining uncert
 Keep what the source establishes distinct from the agent's inference. Cite every material
 premise at its exact authorized revision/passage. Copied statements are not independent
 confirmation. Structured facts use their actual typed version; never invent a quote.
-
-Examples: a supplier's documented backups conflict with an EU-only storage decision;
-a component arrives after the promised delivery date; two teams both expect the other to
-perform a handover; a required approval role is vacant; a capability used to justify a
-choice is being removed; two sources specify incompatible acceptance criteria.
 
 Incoming first preserves live mail/messages through its authorized `process_input` path.
 Shared issue evidence cites the saved coordinates. If publication is not authorized, keep
