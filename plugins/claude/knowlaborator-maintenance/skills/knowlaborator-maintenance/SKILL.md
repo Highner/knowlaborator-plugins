@@ -17,8 +17,11 @@ protocol links the operation details to read only when a passage needs them.
 - Read the returned passages once, identify concrete maintenance signals, then search and
   read relevant matches. CRM, Dataset, description, issue and decision work remains
   supported; each branch runs only when the source supplies a reason for it.
-- Preserve exact evidence, policy and human review boundaries. Every supplied passage
-  must be assessed, but maintenance is not an exhaustive audit of the source's subject.
+- Use the server's numeric relevance packets. Expand selected areas only when a concrete
+  maintenance signal needs their values. Assess all ordinary passages and returned context;
+  the server closes empty context. Report screened passages separately from full reads.
+- Preserve exact evidence, policy and human review boundaries. Maintenance is not an
+  exhaustive audit of the source's subject.
 - Email inputs are indexed snapshots and exact persisted Process selections through
   `list_marked_inputs` / `prepare_marked_input`. No live inbox discovery or thread expansion.
 - Report completed work, saved progress, review items and blockers, separating routine

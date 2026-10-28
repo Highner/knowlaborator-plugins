@@ -47,8 +47,8 @@ your report, so a person can add it.
 
 Read every supplied changed passage, then follow only concrete signals for the supported
 operations. These are conditional branches, not seven separate searches for every page.
-A source with no relevant change needs a substantive `no_change` assessment and its normal
-context pass. Do not manufacture findings to demonstrate activity.
+A source with no relevant change needs a substantive `no_change` assessment and any
+returned context pages; the server closes empty context itself. Do not manufacture findings to demonstrate activity.
 
 Use `search_content` for named subjects and plausible matches, then exact readers for
 selected results. Reuse verified context within the pass until its revision changes; do
@@ -58,7 +58,15 @@ bounded shortlist rather than all issues. Discover matching Datasets only when c
 source values could belong to one; existing descriptions and populated fields need no
 speculative enrichment.
 
-Full passage coverage is a maintenance review, not a financial, legal or spreadsheet
+The server groups large numeric areas in first-read, unmarked Documents into relevance
+packets. `kind: screening` supplies four exact examples in `after`, every distinct textual
+label in `context`, and a `screening` extent. Prose remains fully visible. Decide whether
+the area has a concrete maintenance target; do not audit every unshown number. When values
+matter (a matching Dataset, known issue, contradiction, anomaly, or uncertainty), expand
+that packet before judging them. Never infer unshown values from examples. Do not expand
+all packets mechanically. A relevance assessment is explicitly not a full numeric read.
+
+Full passage coverage elsewhere is a maintenance review, not a financial, legal or spreadsheet
 audit. Inspect original pages, charts or relevant formula dependencies when the indexed
 passages are insufficient for a maintenance judgment. An `.xlsx` file alone does not
 require recalculating its model. Preserve source qualifications and uncertainty. If a
@@ -137,7 +145,8 @@ is making progress.
    mark it for processing, change policy or switch plugins to force a retry.
    For each work item, use `get_maintenance_changes`. It returns the next unacknowledged
    page of changed passages, removed text and neighboring context against a previously reviewed
-   revision. `full` or `metadata_changed` requires all supplied source passages. For
+   revision. `full` may contain server-prepared numeric relevance packets; all other supplied
+   source passages require full assessment. For
    `metadata_changed`, also compare the record fields using `get_knowledge` with
    `includeMetadata: true` and `list_knowledge_revisions`; the passage page covers body text.
    Interpret changes in context; use `read_maintenance_source` for wider exact context
@@ -146,6 +155,13 @@ is making progress.
    Process each page through the steps below before advancing. Persist its resulting
    changes or review proposals; do not leave decisions only in chat memory. If a passage
    needs more context, obtain it before acknowledging.
+   To open numeric areas, call `checkpoint_maintenance_work` with `stage: expand`, the
+   current page hash/progress version/fence, a new operation UUID, and `expandPositions`
+   listing the selected `screening.position` values. Omit `review`. This replaces only
+   those packets with all exact passages, advances no coverage, and returns `nextSourcePage`.
+   Process that replacement page, using its new hash/version. Expansion retries reuse the UUID.
+   Otherwise assess a screening packet for relevance with a substantive reason; if several
+   packets share a page, expand every relevant one before acknowledging that page.
    After processing each page, call `checkpoint_maintenance_work` with `stage: source`,
    its page hash, current progress version, and `review`: an `outcome` of `changes` with saved
    `proposalIds`, `no_change` with an empty list, or `blocked` with an empty list; always give a
@@ -153,13 +169,18 @@ is making progress.
    exact UUID only for an identical retry; never append labels to a work ID). The response
    contains `work` with saved progress and the next unacknowledged `nextSourcePage`.
    Process that returned page directly instead of calling `get_maintenance_changes` again.
-   Pages pack at most 12,000 text characters and 64 changes; every passage remains in
-   the coverage plan. Follow until source coverage is complete.
+   Pages pack at most 12,000 text characters and 64 review units (at most 4,096 represented
+   passages). Follow until source coverage is complete. `progress.screenedPassages` counts
+   passages covered by relevance packets: report these as screened, never as fully read.
+   The server upgrades the unacknowledged suffix of older plans on claim/checkpoint;
+   already acknowledged coverage and saved proposals remain intact.
    Checkpoints attest completed processing; do not acknowledge unseen pages. If a planned
    passage becomes unavailable, explicitly restart the checkpoint to rebuild coverage.
 4. Finish all source checkpoints before reading context; do not prefetch context alongside
    source pages, because source progress invalidates its hash. The final source checkpoint
-   returns the first `nextContextPage`, with the current progress version. Use
+   returns the first `nextContextPage`, with the current progress version, unless the
+   server finds no remaining authorized context and closes it automatically. Check returned
+   progress/state; do not create an extra empty-context checkpoint. Use
    `get_maintenance_context` only to start/resume context when source coverage is already
    complete or to refresh an invalidated page. These bounded pages list evidence-linked
    existing records and their typed relations, plus the active issues (kind `issue`,
