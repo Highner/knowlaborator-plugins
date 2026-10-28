@@ -1,43 +1,29 @@
 ---
 name: knowlaborator-maintenance
-description: Do the knowledge maintenance in a Knowlaborator organization ("Do the maintenance in {organization}"), also as a scheduled or unattended run. Claims what Workspaces have filed, reads the changed passages and their context, keeps typed relations and the support of existing records with exact citations, marks records a newer source contradicts, discovers explicitly raised and inferred issues across sources and updates existing issues and records evidence and drafts for decisions across sources. Preserves discussion and waiting states without finalizing a choice or duplicating a clearly documented decision.
+description: Maintain filed Knowlaborator sources incrementally, including relationships, evidence, issues, decision drafts, CRM fields, keyed Dataset rows and Document descriptions. Use for requested or scheduled knowledge maintenance.
 ---
 
 # Knowlaborator Maintenance
 
-This plugin connects to `/mcp/maintenance`, the maintenance catalog of the organization's
-Knowlaborator connection (ADR 0183). It lists only what knowledge maintenance needs: the
-maintenance tools; reads of knowledge, relations, Documents, issues, decisions, contacts
-and Datasets; and the evidence tools for issues and decisions. Its knowledge
-creation operations are supported decision drafts and New issues through leased maintenance changes. General knowledge, CRM,
-Dataset and Document authoring tools remain outside this catalog.
+Use the organization's `/mcp/maintenance` connection and the shared
+[maintenance protocol](references/maintenance.md). This plugin has one skill; the
+protocol links the operation details to read only when a passage needs them.
 
-Install only this plugin for a scheduled or unattended run, so the run cannot reach the
-authoring tools of the Knowlaborator plugin. The server holds every connection to the same
-boundary; the catalog only keeps the run from trying.
+- Resolve the organization and authorized Workspace scope from the connection. Use
+  `whoami` or organization selection when that context is missing or ambiguous; a bound
+  connection stays in its organization.
+- Default to routine work: new or changed filed sources plus affected context. Historical
+  backfill needs an explicit request. Resume checkpoints and retained proposals.
+- Read the returned passages once, identify concrete maintenance signals, then search and
+  read relevant matches. CRM, Dataset, description, issue and decision work remains
+  supported; each branch runs only when the source supplies a reason for it.
+- Preserve exact evidence, policy and human review boundaries. Every supplied passage
+  must be assessed, but maintenance is not an exhaustive audit of the source's subject.
+- Email inputs are indexed snapshots and exact persisted Process selections through
+  `list_marked_inputs` / `prepare_marked_input`. No live inbox discovery or thread expansion.
+- Report completed work, saved progress, review items and blockers, separating routine
+  from backfill. Continue from that state on the next run.
 
-1. Choose the organization. Read `whoami`; when the prompt names another organization,
-   find it with `list_organizations` and select it with `set_active_organization`. A
-   connection bound to one organization stays there.
-2. Follow [the maintenance protocol](references/maintenance.md) for every requested
-   Workspace.
-3. For decisions, follow the protocol's five situations and use the draft change kind:
-   retain all contributing sources, reuse matching decisions, and keep waiting dependencies
-   explicit. A clearly documented decision needs no copy without a coordination purpose.
-   Reuse attaches no new sources; follow the protocol's evidence flow for that decision's
-   standing and verify any needed writes before reporting new sources preserved.
-   Other missing records or corrections go into the page review assessment and your report.
-   Find explicit and inferred issues using the bounded candidate check across readable
-   Workspaces and all states. Keep dismissed findings dismissed, including those without a
-   reason, and apply supplied reasons to similar findings. Add new evidence to a matching
-   issue. Create New only after assessing the returned relevant candidates.
-4. Email is restricted to already indexed snapshots and exact persisted Process selections,
-   with or without optional instructions. Use list_marked_inputs/prepare_marked_input for
-   selected items. Never browse/search the live inbox, expand threads or read unselected mail.
-   Missing evidence remains a gap for the person to select. No provider fallback.
-
-This plugin also supports interactive maintenance, including explicit recovery of failed
-work through the maintenance protocol. Stay with it when maintenance needs recovery.
-When the person requests a different task, choose that task's skill again: general
-authoring and the Incoming run belong to the Knowlaborator plugin for the same organization.
-Switching plugins does not repair a failed work item or authorize broader writes.
+For scheduled or unattended runs, install only this plugin. General authoring and
+Incoming belong to the organization's Knowlaborator plugin. A recovery stays on this
+maintenance connection; switching plugins never widens an authorized write.
