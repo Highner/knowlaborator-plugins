@@ -58,10 +58,11 @@ bounded shortlist rather than all issues. Discover matching Datasets only when c
 source values could belong to one; existing descriptions and populated fields need no
 speculative enrichment.
 
-The server groups large numeric areas in first-read, unmarked Documents into relevance
+The server groups large numeric areas and mixed tables in first-read, unmarked Documents into relevance
 packets. `kind: screening` supplies four exact examples in `after`, every distinct textual
-label in `context`, and a `screening` extent. Prose remains fully visible. Decide whether
-the area has a concrete maintenance target; do not audit every unshown number. When values
+cell value in `context`, and a `screening` extent. Repeated text appears once per packet,
+with exact coordinates; identifiers, status and remarks remain visible. Prose remains fully visible.
+Decide whether the area has a concrete maintenance target; do not audit every unshown number. When values or row associations
 matter (a matching Dataset, known issue, contradiction, anomaly, or uncertainty), expand
 that packet before judging them. Never infer unshown values from examples. Do not expand
 all packets mechanically. A relevance assessment is explicitly not a full numeric read.
@@ -145,7 +146,7 @@ is making progress.
    mark it for processing, change policy or switch plugins to force a retry.
    For each work item, use `get_maintenance_changes`. It returns the next unacknowledged
    page of changed passages, removed text and neighboring context against a previously reviewed
-   revision. `full` may contain server-prepared numeric relevance packets; all other supplied
+   revision. `full` may contain server-prepared numeric or mixed-table relevance packets; all other supplied
    source passages require full assessment. For
    `metadata_changed`, also compare the record fields using `get_knowledge` with
    `includeMetadata: true` and `list_knowledge_revisions`; the passage page covers body text.
@@ -155,7 +156,7 @@ is making progress.
    Process each page through the steps below before advancing. Persist its resulting
    changes or review proposals; do not leave decisions only in chat memory. If a passage
    needs more context, obtain it before acknowledging.
-   To open numeric areas, call `checkpoint_maintenance_work` with `stage: expand`, the
+   To open screened areas, call `checkpoint_maintenance_work` with `stage: expand`, the
    current page hash/progress version/fence, a new operation UUID, and `expandPositions`
    listing the selected `screening.position` values. Omit `review`. This replaces only
    those packets with all exact passages, advances no coverage, and returns `nextSourcePage`.

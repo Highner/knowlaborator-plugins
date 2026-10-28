@@ -5,7 +5,7 @@
     "email": "info@appligator.de"
   },
   "description": "Membership-aware Knowlaborator plugins for Claude Code.",
-  "version": "7.7.0",
+  "version": "7.7.1",
   "plugins": [
     {
       "author": {
@@ -24,7 +24,7 @@
       ],
       "name": "knowlaborator",
       "source": "./plugins/claude/knowlaborator",
-      "version": "7.7.0"
+      "version": "7.7.1"
     },
     {
       "author": {
@@ -42,7 +42,7 @@
       ],
       "name": "knowlaborator-maintenance",
       "source": "./plugins/claude/knowlaborator-maintenance",
-      "version": "7.7.0"
+      "version": "7.7.1"
     }
   ]
 }
