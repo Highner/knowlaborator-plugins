@@ -1,6 +1,6 @@
 ---
 name: knowlaborator-maintenance
-description: Maintain filed Knowlaborator sources incrementally, including relationships, evidence, issues, decision drafts, CRM fields, keyed Dataset rows and Document descriptions. Use for requested or scheduled knowledge maintenance.
+description: Maintain filed Knowlaborator sources incrementally, including relationships, evidence, reviewed text corrections, issues, decision drafts, CRM fields, keyed Dataset rows and Document descriptions. Use for requested or scheduled knowledge maintenance.
 ---
 
 # Knowlaborator Maintenance
@@ -20,6 +20,9 @@ protocol links the operation details to read only when a passage needs them.
 - Use the server's numeric and mixed-table relevance packets. Expand selected areas only when a concrete
   maintenance signal needs their values or row associations. Assess all ordinary passages and returned context;
   the server closes empty context. Report screened passages separately from full reads.
+- Propose narrow source-backed text corrections when needed. Every text correction waits
+  for explicit human approval, including Apply mode and personally marked work. Never
+  accept one automatically or bypass its review through another write operation.
 - Preserve exact evidence, policy and human review boundaries. Maintenance is not an
   exhaustive audit of the source's subject.
 - Email inputs are indexed snapshots and exact persisted Process selections through

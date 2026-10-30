@@ -1,4 +1,4 @@
-# CRM, Dataset rows and Document descriptions
+# CRM, Dataset rows, Document descriptions and generated summaries
 
 Read when a passage supplies identifiable contact/account fields, values for a keyed Dataset, or the identity of an undescribed Document. Use the leased submit/apply and checkpoint flow in [the maintenance protocol](maintenance.md).
 
@@ -40,3 +40,28 @@ Read when a passage supplies identifiable contact/account fields, values for a k
 - Name a missing record or a correction only for a lasting fact about one specific
   subject. Forecasts, KPIs, prices, balances, status snapshots and dated summaries of
   one source ("Stand …") stay in their source, which stays readable and searchable.
+
+## Refresh a Google Document summary
+
+`refresh_document_summary` is a change kind of `submit_maintenance_change`. It targets
+only the Document being maintained. Its `documentSummary` carries `summary` (at most
+4,000 characters), the exact `documentVersionId`, `representationId`, `sourceGeneration`,
+`metadataFingerprint`, and `expectedSummaryRevision` (zero before the first summary).
+Get current summary metadata from `get_document` and generation/fingerprint from the
+leased work. The generated summary is separate from the person's description; never
+replace that description or create a knowledge card containing the summary.
+
+Read the whole readable representation for this pass. Relevance-screened numeric packets
+are insufficient: expand them through the existing checkpoint protocol before acknowledging.
+Preserve material qualifications and limitations. A capture whose completeness is unverified,
+no readable text, or unreadable visual content blocks a whole-document summary. Report
+`DOCUMENT_SUMMARY_COVERAGE_INCOMPLETE` as blocked upkeep; do not label a partial reading current.
+
+Save the summary proposal after reading the final source page, before acknowledging that
+page, so it remains part of the pass even when context is empty. Acknowledge source coverage
+with the saved proposal ID, then apply the proposal once source coverage is complete. The
+server checks generation, metadata, representation, full coverage, lease, concurrency and
+Workspace policy inside the write. Proposals-only waits for human review; Off remains
+paused. A newer source observation supersedes the pass and any pending summary proposal.
+Continue related-record review through the same context and settlement protocol. A summary
+write does not trigger extraction or another source-change pass.

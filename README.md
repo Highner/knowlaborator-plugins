@@ -16,9 +16,10 @@ use `list_organizations` and `set_active_organization` to select the active cont
 Install Knowlaborator Maintenance for scheduled or unattended knowledge maintenance. Its
 connector is https://orgapp-production-1b56.up.railway.app/mcp/maintenance, with only the tools that maintenance needs:
 it keeps relations and the support of existing records current from filed sources,
-proposes answers, records decision evidence, and prepares useful decision drafts with
-their contributing sources. It never finalizes decisions or rewrites existing knowledge. Install it
-on its own for an unattended run.
+records issue and decision evidence, prepares useful decision drafts, and proposes narrow,
+source-backed text corrections. Every text correction requires explicit human approval,
+including automatic mode and personally marked work. It never finalizes decisions.
+Install it on its own for an unattended run.
 
 The repository contains generated skills, client-specific manifests, and public MCP
 URLs. It contains no credentials, installation keys, documents, or organization data.

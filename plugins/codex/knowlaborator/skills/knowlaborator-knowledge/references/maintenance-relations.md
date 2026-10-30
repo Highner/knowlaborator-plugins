@@ -39,3 +39,34 @@ Read when a passage supports, contradicts or changes a relationship or an existi
 - Decisions, issues and saved emails, messages and notes take no `add_support`:
   decisions and issues use their own evidence flows, and a saved source is
   evidence itself.
+
+
+## Concrete text corrections
+
+When a newer source establishes a replacement for an existing ordinary Knowledge passage, prepare
+`correct_knowledge_text` through `submit_maintenance_change`. First read the exact current record and
+all relevant assertions. Reuse open contradiction claim IDs; if none exist, submit/apply the existing
+negated `add_support` mark first. Do not duplicate a marker merely to attach a correction.
+
+Supply `change.targetId` and `change.textCorrection` with `expectedRevisionId`, `expectedVersion` and
+`edits`: exact UTF-16 `start`, `oldText`, concrete `newText`, zero-based `supportingClaimOrdinals` into
+this submission's claims, and `resolvesContradictionClaimIds`. Every edit must fully address each named
+contradiction, with exact current evidence. Use 1–8 ordered nonoverlapping edits, at most 4,000 characters
+per old/new passage, 16,000 replacement characters total and 50 distinct contradiction IDs. Keep unrelated
+corrections separately reviewable. Do not use the deprecated generic revision payload.
+
+Corrections ALWAYS wait for human approval, including automatic mode and Process-marked work. Never
+call ordinary authoring or switch plugins to bypass this review. Persist the correction before the page
+checkpoint and report it as awaiting approval separately from an automatically applied marker. Rejecting
+or deferring wording does not refute the contradiction. Only acceptance and successful saving resolve the
+explicitly named markers; other markers remain. If the target or evidence changed, reread and prepare a
+new reviewed version. Never pretend a stale correction was applied.
+
+A source reference does not authorize publishing its protected content. Cross-Workspace replacement
+text requires that the destination's readers can also read every supporting source. Otherwise keep it
+unpublished and use an explicitly authorized source-filing flow. Decisions, Issues and original snapshots
+retain their own write operations. This does not change Issue evidence boundaries.
+
+For old settled source work with open contradiction markers, an explicitly requested recheck may use
+`retry_maintenance_work` with its current fence/progress and a stable operation UUID, then claim and
+review the new pass. Do not restart historical work implicitly or create a Process mark to bypass policy.

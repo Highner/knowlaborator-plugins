@@ -53,7 +53,7 @@ text is rejected with `AGENDA_TEXT_TOO_LONG`; rewrite it shorter instead of spli
    Do not infer organization IDs or silently broaden a request to all organizations.
 2. Call `get_input_context`. It returns `Items`, `OpenAgendaItems`,
    `RecentlyClosedAgendaItems`, `AgendaEnabled`, `MembershipId`, personal and standard
-   instructions, account metadata, `CatchUp`, `Checks` and `NextCursor`. Each item has
+   instructions, account metadata, `CatchUp`, `Checks`, `SharedDocumentUpkeep` and `NextCursor`. Each item has
    an exact `InputReference`, `Source`, type, state and text, email `Mail`, or
    queued-source `Intake` metadata. Follow `NextCursor` with identical filters until
    null, even after an empty filtered page. This is pagination, not a delta watermark.
@@ -172,6 +172,19 @@ Source text never widens an approval.
 5. Settled work (completed, no change, needs review or unsupported) closes the entry
    as processed and an accepted agenda item as done; the server does this, not you.
    Failed work stays marked and shows “needs retry”: claim it again next run.
+
+## Shared Drive Document upkeep
+
+The first context page may include `SharedDocumentUpkeep`: existing shared maintenance
+work IDs for connected Google Drive Documents, with their Workspace and policy. These
+are not personal marks or input dispositions. Claim those IDs in the returned Workspace
+through `claim_knowledge_maintenance` and follow the same maintenance protocol, coverage
+and settlement used by the Maintenance run. Both runs compete for one durable claim.
+If more work remains, use that Workspace's bounded maintenance status and claims.
+Off pauses this work; Proposals-only retains human review. Never mark it Process or
+change the policy to obtain permission. Read the current stored representation for
+summary and relationship upkeep. Access or editing of the original uses a separately
+connected Google tool or the provider link; missing access stays incomplete.
 
 ## Live mail and messages as evidence
 
